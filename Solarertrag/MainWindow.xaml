@@ -1,12 +1,58 @@
-﻿<Window x:Class="Solarertrag.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Solarertrag"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+﻿<Window
+    x:Class="Solarertrag.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:libConverter="clr-namespace:EasyPrototypingNET.WPF.Converter;assembly=EasyPrototypingNET"
+    xmlns:libCore="clr-namespace:EasyPrototypingNET.Core;assembly=EasyPrototypingNET"
+    xmlns:libWPF="clr-namespace:EasyPrototypingNET.WPF;assembly=EasyPrototypingNET"
+    xmlns:local="clr-namespace:Solarertrag"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    Title="MainWindow"
+    Width="800"
+    Height="450"
+    mc:Ignorable="d">
+    <libWPF:SimpleGrid Columns="*" Rows="30,30,*,35">
 
-    </Grid>
+
+        <!--#region Statuszeile-->
+        <StatusBar
+            Grid.Row="3"
+            Grid.ColumnSpan="2"
+            Background="Transparent"
+            FontSize="13">
+            <StatusBarItem DockPanel.Dock="Left">
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="{StaticResource ResourceKey=IconUser}" />
+                    <Label x:Name="statusbarUserDomainName" />
+                </StackPanel>
+            </StatusBarItem>
+
+            <StatusBarItem DockPanel.Dock="Right">
+                <StackPanel Orientation="Horizontal">
+                    <Label x:Name="dtStatusBarDate" />
+                    <Label Content="{StaticResource ResourceKey=IconCalendar}" />
+                </StackPanel>
+            </StatusBarItem>
+
+            <Separator Background="Transparent" />
+
+            <StatusBarItem x:Name="sbiMonitor" DockPanel.Dock="Left">
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="{StaticResource ResourceKey=IconScreen}" />
+                    <Label x:Name="tbMonitorSize" />
+                </StackPanel>
+            </StatusBarItem>
+
+            <StatusBarItem x:Name="sbiDatabase" DockPanel.Dock="Left">
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="{StaticResource ResourceKey=IconDatabase}" />
+                    <Label Content="(0) Databasename" />
+                </StackPanel>
+            </StatusBarItem>
+
+        </StatusBar>
+        <!--#endregion Statuszeile-->
+    </libWPF:SimpleGrid>
 </Window>

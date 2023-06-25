@@ -13,9 +13,32 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Font\Font Awesome 6 Brands-Regular-400.otf" />
+    <None Remove="Resources\Font\Font Awesome 6 Free-Regular-400.otf" />
+    <None Remove="Resources\Font\Font Awesome 6 Free-Solid-900.otf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="LiteDB" Version="5.0.16" />
+    <PackageReference Include="System.Management" Version="7.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="EasyPrototypingNET">
       <HintPath>..\_Lib\EasyPrototypingNET.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Resources\XamlIcon\" />
+    <Folder Include="Resources\Style\" />
+    <Folder Include="View\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Font\Font Awesome 6 Brands-Regular-400.otf" />
+    <Resource Include="Resources\Font\Font Awesome 6 Free-Regular-400.otf" />
+    <Resource Include="Resources\Font\Font Awesome 6 Free-Solid-900.otf" />
   </ItemGroup>
 
 </Project>
