@@ -12,6 +12,11 @@
     Title="MainWindow"
     Width="800"
     Height="450"
+    MaxHeight="1150"
+    MaxWidth="1920"
+    Style="{DynamicResource ResourceKey=CustomWindowStyle}"
+    TextOptions.TextFormattingMode="Display"
+    WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
 
     <Window.Resources>
@@ -19,7 +24,7 @@
             <Setter Property="WindowChrome.WindowChrome">
                 <Setter.Value>
                     <WindowChrome
-                        CaptionHeight="30"
+                        CaptionHeight="40"
                         CornerRadius="5"
                         GlassFrameThickness="0"
                         NonClientFrameEdges="None"
@@ -27,9 +32,123 @@
                         UseAeroCaptionButtons="False" />
                 </Setter.Value>
             </Setter>
+
+            <Setter Property="BorderBrush" Value="LightBlue" />
+            <Setter Property="Background" Value="WhiteSmoke" />
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Window}">
+                        <Grid>
+                            <Border
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="5,40,5,5">
+                                <AdornerDecorator>
+                                    <ContentPresenter />
+                                </AdornerDecorator>
+                            </Border>
+
+                            <DockPanel
+                                Height="35"
+                                VerticalAlignment="Top"
+                                LastChildFill="False">
+
+                                <Image
+                                    Width="32"
+                                    Height="32"
+                                    Margin="5,0,0,0"
+                                    DockPanel.Dock="Left"
+                                    Source="/ApplicationIcon.ico" />
+
+                                <TextBlock
+                                    Margin="5,0,0,0"
+                                    VerticalAlignment="Center"
+                                    DockPanel.Dock="Left"
+                                    FontSize="16"
+                                    FontWeight="Medium"
+                                    Foreground="Blue"
+                                    Text="App-Version" />
+
+                                <Button
+                                    x:Name="btnClose"
+                                    Width="35"
+                                    Height="35"
+                                    Background="Transparent"
+                                    BorderBrush="Transparent"
+                                    Content="{StaticResource ResourceKey=IconUser}"
+                                    DockPanel.Dock="Right"
+                                    ToolTip="Beenden"
+                                    WindowChrome.IsHitTestVisibleInChrome="True" />
+
+                                <Button
+                                    x:Name="btnRestore"
+                                    Width="35"
+                                    Height="35"
+                                    Background="Transparent"
+                                    BorderBrush="Transparent"
+                                    Click="MaximizeRestoreClick"
+                                    Content="{StaticResource ResourceKey=IconDatabase}"
+                                    DockPanel.Dock="Right"
+                                    ToolTip="Fenter vergrößern"
+                                    WindowChrome.IsHitTestVisibleInChrome="True" />
+
+                                <Button
+                                    x:Name="btnMinimize"
+                                    Width="35"
+                                    Height="35"
+                                    Background="Transparent"
+                                    BorderBrush="Transparent"
+                                    Click="MinimizeClick"
+                                    Content="{StaticResource ResourceKey=IconScreen2}"
+                                    DockPanel.Dock="Right"
+                                    ToolTip="Fenter verkleinern"
+                                    WindowChrome.IsHitTestVisibleInChrome="True" />
+
+                                <Button
+                                    x:Name="btnHelp"
+                                    Width="40"
+                                    Margin="5"
+                                    VerticalContentAlignment="Bottom"
+                                    Background="Transparent"
+                                    BorderBrush="Transparent"
+                                    Content="Hilfe"
+                                    DockPanel.Dock="Right"
+                                    FontWeight="Bold"
+                                    ToolTip="Hilfe aufrufen (oder F1 drücken)"
+                                    WindowChrome.IsHitTestVisibleInChrome="True" />
+
+                                <Button
+                                    x:Name="btnMenu"
+                                    Width="40"
+                                    Margin="5"
+                                    VerticalContentAlignment="Bottom"
+                                    Background="Transparent"
+                                    BorderBrush="Transparent"
+                                    DockPanel.Dock="Right"
+                                    ToolTip="Menü anzeigen"
+                                    WindowChrome.IsHitTestVisibleInChrome="True">
+                                    <Button.Content>
+                                        <Path
+                                            x:Name="BtnArrow"
+                                            Width="Auto"
+                                            Height="Auto"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Center"
+                                            Data="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z"
+                                            Fill="Blue"
+                                            Stretch="Uniform" />
+                                    </Button.Content>
+                                </Button>
+
+                            </DockPanel>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
     </Window.Resources>
-    
+
     <libWPF:SimpleGrid Columns="*" Rows="30,30,*,35">
 
         <!--#region Statuszeile-->
@@ -38,7 +157,7 @@
             Grid.ColumnSpan="2"
             Background="Transparent"
             FontSize="13">
-            <StatusBarItem DockPanel.Dock="Left">
+            <StatusBarItem x:Name="statusBarItemUserDomainName" DockPanel.Dock="Left">
                 <StackPanel Orientation="Horizontal">
                     <Label Content="{StaticResource ResourceKey=IconUser}" />
                     <Label x:Name="statusbarUserDomainName" />

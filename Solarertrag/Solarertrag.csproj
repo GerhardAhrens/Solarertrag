@@ -14,6 +14,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="ApplicationIcon.ico" />
     <None Remove="Resources\Font\Font Awesome 6 Brands-Regular-400.otf" />
     <None Remove="Resources\Font\Font Awesome 6 Free-Regular-400.otf" />
     <None Remove="Resources\Font\Font Awesome 6 Free-Solid-900.otf" />
@@ -46,6 +47,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="ApplicationIcon.ico" />
     <Resource Include="Resources\Font\Font Awesome 6 Brands-Regular-400.otf" />
     <Resource Include="Resources\Font\Font Awesome 6 Free-Regular-400.otf" />
     <Resource Include="Resources\Font\Font Awesome 6 Free-Solid-900.otf" />
