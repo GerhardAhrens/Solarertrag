@@ -10,12 +10,22 @@
     <Copyright>Gerhard Ahrens, Lifeprojects.de</Copyright>
     <AssemblyVersion>1.0.2023.1</AssemblyVersion>
     <FileVersion>1.0.2023.1</FileVersion>
+    <ApplicationIcon>Resources\Picture\ApplicationIcon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Resources\Font\Font Awesome 6 Brands-Regular-400.otf" />
     <None Remove="Resources\Font\Font Awesome 6 Free-Regular-400.otf" />
     <None Remove="Resources\Font\Font Awesome 6 Free-Solid-900.otf" />
+    <None Remove="Resources\Picture\ApplicationIcon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\Picture\ApplicationIcon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Picture\ApplicationIcon.ico" />
   </ItemGroup>
 
   <ItemGroup>
