@@ -12,8 +12,8 @@
     Title="MainWindow"
     Width="800"
     Height="450"
-    MaxHeight="1150"
     MaxWidth="1920"
+    MaxHeight="1150"
     Style="{DynamicResource ResourceKey=CustomWindowStyle}"
     TextOptions.TextFormattingMode="Display"
     WindowStartupLocation="CenterScreen"
@@ -76,9 +76,8 @@
                                     Height="35"
                                     Background="Transparent"
                                     BorderBrush="Transparent"
-                                    Content="{StaticResource ResourceKey=IconUser}"
+                                    Content="{StaticResource ResourceKey=IconWindowClose}"
                                     DockPanel.Dock="Right"
-                                    ToolTip="Beenden"
                                     WindowChrome.IsHitTestVisibleInChrome="True" />
 
                                 <Button
@@ -88,9 +87,8 @@
                                     Background="Transparent"
                                     BorderBrush="Transparent"
                                     Click="MaximizeRestoreClick"
-                                    Content="{StaticResource ResourceKey=IconDatabase}"
+                                    Content="{StaticResource ResourceKey=IconWindowMaximize}"
                                     DockPanel.Dock="Right"
-                                    ToolTip="Fenter vergrößern"
                                     WindowChrome.IsHitTestVisibleInChrome="True" />
 
                                 <Button
@@ -100,9 +98,8 @@
                                     Background="Transparent"
                                     BorderBrush="Transparent"
                                     Click="MinimizeClick"
-                                    Content="{StaticResource ResourceKey=IconScreen2}"
+                                    Content="{StaticResource ResourceKey=IconWindowMinimize}"
                                     DockPanel.Dock="Right"
-                                    ToolTip="Fenter verkleinern"
                                     WindowChrome.IsHitTestVisibleInChrome="True" />
 
                                 <Button
