@@ -2,22 +2,17 @@
 {
     using System;
     using System.Collections;
-    using System.Collections.Generic;
-    using System.Configuration;
-    using System.Data;
     using System.Diagnostics;
     using System.Globalization;
     using System.IO;
-    using System.Linq;
     using System.Reflection;
     using System.Text;
     using System.Threading;
-    using System.Threading.Tasks;
     using System.Windows;
-    using System.Windows.Automation;
     using System.Windows.Markup;
     using System.Windows.Threading;
 
+    using EasyPrototypingNET.Core;
     using EasyPrototypingNET.Pattern;
 
     /// <summary>
@@ -42,6 +37,7 @@
                 exeName = Path.GetFileName(exePath);
                 EventAgg = new EventAggregator();
                 InitializeCultures(DEFAULTLANGUAGE);
+                RunningOn = DevelopmentTarget.GetPlatform(Assembly.GetEntryAssembly());
             }
             catch (Exception ex)
             {
@@ -52,6 +48,8 @@
                 Application.Current.Shutdown(0);
             }
         }
+
+        public static DevelopmentTarget RunningOn { get; set; }
 
         public static string DatePattern { get; set; }
 

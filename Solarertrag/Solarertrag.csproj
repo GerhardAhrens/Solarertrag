@@ -11,6 +11,7 @@
     <AssemblyVersion>1.0.2023.1</AssemblyVersion>
     <FileVersion>1.0.2023.1</FileVersion>
     <ApplicationIcon>Resources\Picture\ApplicationIcon.ico</ApplicationIcon>
+    <AssemblyName>Solarertrag.dev</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
@@ -44,6 +45,7 @@
     <Folder Include="Resources\XamlIcon\" />
     <Folder Include="Resources\Style\" />
     <Folder Include="View\" />
+    <Folder Include="_Lib\" />
   </ItemGroup>
 
   <ItemGroup>
