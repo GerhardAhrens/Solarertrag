@@ -69,7 +69,7 @@
                                     FontSize="16"
                                     FontWeight="Medium"
                                     Foreground="Blue"
-                                    Text="App-Version" />
+                                    Text="{Binding Path=ApplicationVersion, UpdateSourceTrigger=PropertyChanged}" />
 
                                 <Button
                                     x:Name="btnClose"
@@ -190,7 +190,7 @@
             <StatusBarItem x:Name="sbiDatabase" DockPanel.Dock="Left">
                 <StackPanel Orientation="Horizontal">
                     <Label Content="{StaticResource ResourceKey=IconDatabase}" />
-                    <Label Content="(0) Databasename" />
+                    <Label Content="{Binding Path=StatuslineDescription, UpdateSourceTrigger=PropertyChanged}" />
                 </StackPanel>
             </StatusBarItem>
 

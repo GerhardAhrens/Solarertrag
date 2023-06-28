@@ -16,6 +16,7 @@
 namespace Solarertrag.ViewModel
 {
     using System.ComponentModel;
+    using System.IO;
     using System.Runtime.Versioning;
     using System.Windows;
     using System.Windows.Input;
@@ -40,14 +41,13 @@ namespace Solarertrag.ViewModel
         /// </summary>
         public MainWindowVM()
         {
-            mainWindow = Application.Current.Windows.LastActiveWindow();
-
-            this.InitCommands();
+            this.mainWindow = Application.Current.Windows.LastActiveWindow();
             this.ApplicationVersion = ApplicationProperties.VersionWithName;
-            Mouse.OverrideCursor = null;
+            this.InitCommands();
 
-            this.IsFilterContentFound = true;
-            this.NewDatabaseHandler();
+            this.StatuslineDescription = $"(0) {Path.GetFileName(App.DatabasePath)}";
+
+            Mouse.OverrideCursor = null;
         }
 
         #region Get/Set Properties
