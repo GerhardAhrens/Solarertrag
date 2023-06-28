@@ -23,9 +23,11 @@ namespace Solarertrag.ViewModel
     using EasyPrototypingNET.BaseClass;
     using EasyPrototypingNET.Core;
     using EasyPrototypingNET.Interface;
+    using EasyPrototypingNET.Pattern;
     using EasyPrototypingNET.WPF;
 
     using Solarertrag.Core;
+    using Solarertrag.DataRepository;
 
     [SupportedOSPlatform("windows")]
     //[ViewModel]
@@ -45,6 +47,7 @@ namespace Solarertrag.ViewModel
             Mouse.OverrideCursor = null;
 
             this.IsFilterContentFound = true;
+            this.NewDatabaseHandler();
         }
 
         #region Get/Set Properties
@@ -115,6 +118,24 @@ namespace Solarertrag.ViewModel
                 {
                     currentWindow.Close();
                 }
+            }
+        }
+
+        private void NewDatabaseHandler()
+        {
+            Result<bool> createResult = null;
+            using (DatabaseManager dm = new DatabaseManager(App.DatabasePath))
+            {
+                createResult = dm.CreateNewDatabase();
+            }
+        }
+
+        private void LoadDatabaseHandler()
+        {
+            Result<bool> openResult = null;
+            using (DatabaseManager dm = new DatabaseManager(App.DatabasePath))
+            {
+                openResult = dm.OpenDatabase();
             }
         }
     }
