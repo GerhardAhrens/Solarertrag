@@ -44,7 +44,6 @@ namespace Solarertrag.ViewModel
             this.ApplicationVersion = ApplicationProperties.VersionWithName;
             Mouse.OverrideCursor = null;
 
-            this.ExitQuestion = true;
             this.IsFilterContentFound = true;
         }
 
@@ -88,7 +87,6 @@ namespace Solarertrag.ViewModel
 
         private string CurrentDatabaseFile { get; set; }
 
-        private bool ExitQuestion { get; set; }
         #endregion Get/Set Properties
 
         protected sealed override void InitCommands()
@@ -98,7 +96,7 @@ namespace Solarertrag.ViewModel
 
         private void WindowCloseHandler()
         {
-            if (this.ExitQuestion == true)
+            if (App.ExitQuestion == true)
             {
                 DialogResultsEx dialogResult = AppMsgDialog.ApplicationExit();
                 if (dialogResult == DialogResultsEx.Yes)

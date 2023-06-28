@@ -8,3 +8,9 @@ In dem Projekt wird noch ein zusätzliche Pakete verwendet
 |:---:|:---:|
 | [LiteDB](https://github.com/mbdavid/LiteDB) | NoSQL Datenbank |
 
+```xml
+<PublishSingleFile>true</PublishSingleFile>
+<SelfContained>true</SelfContained>
+<EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+<IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+´´´

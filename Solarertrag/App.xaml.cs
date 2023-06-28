@@ -11,6 +11,7 @@
     using System.Windows;
     using System.Windows.Markup;
     using System.Windows.Threading;
+    using Console.ApplicationSettings;
 
     using EasyPrototypingNET.Core;
     using EasyPrototypingNET.Pattern;
@@ -33,11 +34,27 @@
 
             try
             {
-                exePath = Assembly.GetExecutingAssembly().Location;
-                exeName = Path.GetFileName(exePath);
+                string assemblyName = ApplicationProperties.AssemblyName;
+                exePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                exeName = $"{assemblyName}.exe";
                 EventAgg = new EventAggregator();
                 InitializeCultures(DEFAULTLANGUAGE);
                 RunningOn = DevelopmentTarget.GetPlatform(Assembly.GetEntryAssembly());
+
+                using (SettingsManager sm = new SettingsManager())
+                {
+                    if (sm.IsExist ==  false)
+                    {
+                        string databaseFullPath = Path.Combine(exePath, $"{assemblyName}.db");
+                        sm.Database = databaseFullPath;
+                        DatabasePath = databaseFullPath;
+                    }
+                    else
+                    {
+                        DatabasePath = Path.Combine(exePath, sm.Database);
+                        ExitQuestion = sm.ExitQuestion;
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -49,11 +66,15 @@
             }
         }
 
-        public static DevelopmentTarget RunningOn { get; set; }
+        public static DevelopmentTarget RunningOn { get; private set; }
 
-        public static string DatePattern { get; set; }
+        public static string DatePattern { get; private set; }
 
         public static EventAggregator EventAgg { get; private set; }
+
+        public static string DatabasePath { get; private set; }
+
+        public static bool ExitQuestion { get; private set; }
 
         public static void ErrorMessage(Exception ex, string message = "")
         {
