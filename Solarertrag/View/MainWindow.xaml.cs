@@ -3,12 +3,12 @@
     using System;
     using System.ComponentModel;
     using System.Windows;
-    using System.Windows.Input;
-    using System.Windows.Interop;
     using System.Windows.Threading;
 
     using EasyPrototypingNET.Core;
     using EasyPrototypingNET.Core.SystemMetrics;
+
+    using Solarertrag.ViewModel;
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -17,6 +17,7 @@
     {
         private const string DateFormat = "dd.MM.yy HH:mm";
         private DispatcherTimer statusBarDate = null;
+        private readonly MainWindowVM rootVM = null;
 
         public MainWindow()
         {
@@ -30,6 +31,13 @@
                 this.InitTimer();
                 this.InfoDeviceType = SystemMetricsInfo.DetectingDeviceType();
                 this.statusbarUserDomainName.Content = UserInfo.TS().CurrentDomainUser;
+
+                if (this.rootVM == null)
+                {
+                    this.rootVM = new MainWindowVM();
+                }
+
+                this.DataContext = this.rootVM;
             }
             catch (Exception ex)
             {

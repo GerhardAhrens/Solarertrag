@@ -14,6 +14,7 @@
     Height="450"
     MaxWidth="1920"
     MaxHeight="1150"
+    libWPF:ActionDialogClosing.RaiseClosingHandler="True"
     Style="{DynamicResource ResourceKey=CustomWindowStyle}"
     TextOptions.TextFormattingMode="Display"
     WindowStartupLocation="CenterScreen"
@@ -76,6 +77,7 @@
                                     Height="35"
                                     Background="Transparent"
                                     BorderBrush="Transparent"
+                                    Command="{Binding Path=CmdAgg[WindowCloseCommand]}"
                                     Content="{StaticResource ResourceKey=IconWindowClose}"
                                     DockPanel.Dock="Right"
                                     WindowChrome.IsHitTestVisibleInChrome="True" />
@@ -144,8 +146,16 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <libWPF:CommandReference x:Key="WindowCloseCmdKey" Command="{Binding Path=CmdAgg[WindowCloseCommand]}" />
     </Window.Resources>
 
+    <Window.InputBindings>
+        <KeyBinding
+            Key="X"
+            Command="{StaticResource ResourceKey=WindowCloseCmdKey}"
+            Modifiers="Alt" />
+    </Window.InputBindings>
     <libWPF:SimpleGrid Columns="*" Rows="30,30,*,35">
 
         <!--#region Statuszeile-->

@@ -49,6 +49,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Core\" />
+    <Folder Include="ViewModel\" />
     <Folder Include="Resources\XamlIcon\" />
     <Folder Include="Resources\Style\" />
   </ItemGroup>
