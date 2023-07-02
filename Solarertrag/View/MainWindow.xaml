@@ -120,25 +120,13 @@
                                 <Button
                                     x:Name="btnMenu"
                                     Width="40"
-                                    Margin="5"
                                     VerticalContentAlignment="Bottom"
                                     Background="Transparent"
                                     BorderBrush="Transparent"
+                                    Content="{StaticResource ResourceKey=IconMainMenu}"
                                     DockPanel.Dock="Right"
                                     ToolTip="Menü anzeigen"
-                                    WindowChrome.IsHitTestVisibleInChrome="True">
-                                    <Button.Content>
-                                        <Path
-                                            x:Name="BtnArrow"
-                                            Width="Auto"
-                                            Height="Auto"
-                                            HorizontalAlignment="Right"
-                                            VerticalAlignment="Center"
-                                            Data="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z"
-                                            Fill="Blue"
-                                            Stretch="Uniform" />
-                                    </Button.Content>
-                                </Button>
+                                    WindowChrome.IsHitTestVisibleInChrome="True" />
 
                             </DockPanel>
                         </Grid>
