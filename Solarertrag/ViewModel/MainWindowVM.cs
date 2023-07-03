@@ -94,7 +94,7 @@ namespace Solarertrag.ViewModel
 
         protected sealed override void InitCommands()
         {
-            this.CmdAgg.AddOrSetCommand("WindowCloseCommand", new RelayCommand(p1 => this.WindowCloseHandler(), p2 => true));
+            this.CmdAgg.AddOrSetCommand(MenuCommands.WindowClose, new RelayCommand(p1 => this.WindowCloseHandler(), p2 => true));
         }
 
         private void WindowCloseHandler()
