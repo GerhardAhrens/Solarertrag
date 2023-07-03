@@ -3,6 +3,8 @@
     using System;
     using System.ComponentModel;
     using System.Windows;
+    using System.Windows.Controls.Primitives;
+    using System.Windows.Controls;
     using System.Windows.Threading;
 
     using EasyPrototypingNET.Core;
@@ -99,5 +101,15 @@
             window.WindowState = System.Windows.WindowState.Minimized;
         }
 
+        private void OnContextMenuClick(object sender, RoutedEventArgs e)
+        {
+            if (sender != null && sender is Button button)
+            {
+                button.ContextMenu.IsEnabled = true;
+                button.ContextMenu.PlacementTarget = button;
+                button.ContextMenu.Placement = PlacementMode.Bottom;
+                button.ContextMenu.IsOpen = true;
+            }
+        }
     }
 }

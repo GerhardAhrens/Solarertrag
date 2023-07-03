@@ -1,0 +1,26 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ContextMenu x:Key="MainContextMenu" x:Shared="true">
+        <MenuItem
+            Height="28"
+            Command="{Binding Path=CmdAgg[AddEntryCommand]}"
+            Header="Neuer Eintrag (Ctrl-N)">
+            <MenuItem.Icon>
+                <StaticResource ResourceKey="IconAddItem" />
+            </MenuItem.Icon>
+        </MenuItem>
+
+        <MenuItem
+            Command="{Binding Path=CmdAgg[DeleteEntryCommand]}"
+            Header="Aktueller Eintrag löschen (Ctrl-D)"
+            Icon="{StaticResource ResourceKey=IconDeleteItem}" />
+
+        <MenuItem
+            Command="{Binding Path=CmdAgg[EditEntryCommand]}"
+            Header="Aktueller Eintrag ändern (Ctrl-E)"
+            Icon="{StaticResource ResourceKey=IconEditItem}" />
+
+        <Separator />
+    </ContextMenu>
+
+</ResourceDictionary>
