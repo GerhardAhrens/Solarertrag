@@ -31,9 +31,10 @@ namespace Solarertrag.ViewModel
 
     using Solarertrag.Core;
     using Solarertrag.DataRepository;
+    using Solarertrag.Factory;
 
     [SupportedOSPlatform("windows")]
-    //[ViewModel]
+    [ViewModel]
     public partial class MainWindowVM : ViewModelBase<MainWindowVM>, IViewModel
     {
         private readonly Window mainWindow = null;
@@ -50,6 +51,7 @@ namespace Solarertrag.ViewModel
             this.StatuslineDescription = $"(0) {Path.GetFileName(App.DatabasePath)}";
 
             Mouse.OverrideCursor = null;
+            this.LoadContent(MenuButtons.MainOverview);
         }
 
         #region Get/Set Properties
@@ -155,6 +157,8 @@ namespace Solarertrag.ViewModel
                 this.CurrentControl = null;
                 GC.Collect();
                 GC.WaitForPendingFinalizers();
+
+                this.CurrentControl = ViewObjectFactory.GetControl(targetPage);
                 if (this.CurrentControl != null)
                 {
                     this.CurrentControl.Focusable = true;

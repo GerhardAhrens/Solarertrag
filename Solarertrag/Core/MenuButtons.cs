@@ -16,11 +16,14 @@
 namespace Solarertrag.Core
 {
     using System;
+    using System.ComponentModel;
 
     public enum MenuButtons : int
     {
         None = 0,
+        [Description("Hauptdialog")]
         MainOverview = 1,
-        mainDetail = 2
+        [Description("Bearbeitungsdialog")]
+        MainDetail = 2
     }
 }
