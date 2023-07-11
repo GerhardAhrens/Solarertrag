@@ -147,6 +147,31 @@
             Modifiers="Alt" />
     </Window.InputBindings>
     <libWPF:SimpleGrid Columns="*" Rows="30,30,*,35">
+        <Border
+            Grid.Row="0"
+            BorderBrush="Red"
+            BorderThickness="2" />
+        <Border
+            Grid.Row="1"
+            BorderBrush="Blue"
+            BorderThickness="2" />
+
+        <Border
+            Grid.Row="2"
+            Grid.Column="0"
+            BorderBrush="Red"
+            BorderThickness="2">
+            <ContentControl
+                x:Name="mainContent"
+                Grid.Row="2"
+                Grid.Column="0"
+                Background="Silver"
+                Content="{Binding Path=CurrentControl, UpdateSourceTrigger=PropertyChanged}"
+                KeyboardNavigation.IsTabStop="False"
+                KeyboardNavigation.TabNavigation="None"
+                ScrollViewer.CanContentScroll="True"
+                Visibility="Visible" />
+        </Border>
 
         <!--#region Statuszeile-->
         <StatusBar

@@ -15,10 +15,12 @@
 
 namespace Solarertrag.ViewModel
 {
+    using System;
     using System.ComponentModel;
     using System.IO;
     using System.Runtime.Versioning;
     using System.Windows;
+    using System.Windows.Controls;
     using System.Windows.Input;
 
     using EasyPrototypingNET.BaseClass;
@@ -86,6 +88,13 @@ namespace Solarertrag.ViewModel
             private set { this.Set(value); }
         }
 
+        [PropertyBinding]
+        public UserControl CurrentControl
+        {
+            get { return this.Get<UserControl>(); }
+            private set { this.Set(value); }
+        }
+
         private string ExportProjectName { get; set; }
 
         private string CurrentDatabaseFile { get; set; }
@@ -136,6 +145,26 @@ namespace Solarertrag.ViewModel
             using (DatabaseManager dm = new DatabaseManager(App.DatabasePath))
             {
                 openResult = dm.OpenDatabase();
+            }
+        }
+
+        private void LoadContent(MenuButtons targetPage)
+        {
+            try
+            {
+                this.CurrentControl = null;
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                if (this.CurrentControl != null)
+                {
+                    this.CurrentControl.Focusable = true;
+                    this.CurrentControl.Focus();
+                }
+            }
+            catch (Exception ex)
+            {
+                string errorText = ex.Message;
+                throw;
             }
         }
     }
