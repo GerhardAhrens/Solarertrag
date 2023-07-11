@@ -25,6 +25,7 @@ namespace Solarertrag.ViewModel
 
     using EasyPrototypingNET.BaseClass;
     using EasyPrototypingNET.Core;
+    using EasyPrototypingNET.ExceptionHandling;
     using EasyPrototypingNET.Interface;
     using EasyPrototypingNET.Pattern;
     using EasyPrototypingNET.WPF;
@@ -47,6 +48,10 @@ namespace Solarertrag.ViewModel
             this.mainWindow = Application.Current.Windows.LastActiveWindow();
             this.ApplicationVersion = ApplicationProperties.VersionWithName;
             this.InitCommands();
+
+            App.EventAgg.Subscribe<SwitchDialogEventArgs<IViewModel>>(this.HandleSwitchDialogRequest);
+
+            this.NewDatabaseHandler();
 
             this.StatuslineDescription = $"(0) {Path.GetFileName(App.DatabasePath)}";
 
@@ -135,18 +140,24 @@ namespace Solarertrag.ViewModel
         private void NewDatabaseHandler()
         {
             Result<bool> createResult = null;
-            using (DatabaseManager dm = new DatabaseManager(App.DatabasePath))
+            if (File.Exists(App.DatabasePath) == false)
             {
-                createResult = dm.CreateNewDatabase();
+                using (DatabaseManager dm = new DatabaseManager(App.DatabasePath))
+                {
+                    createResult = dm.CreateNewDatabase();
+                }
             }
         }
 
         private void LoadDatabaseHandler()
         {
             Result<bool> openResult = null;
-            using (DatabaseManager dm = new DatabaseManager(App.DatabasePath))
+            if (File.Exists(App.DatabasePath) == true)
             {
-                openResult = dm.OpenDatabase();
+                using (DatabaseManager dm = new DatabaseManager(App.DatabasePath))
+                {
+                    openResult = dm.OpenDatabase();
+                }
             }
         }
 
@@ -167,8 +178,19 @@ namespace Solarertrag.ViewModel
             }
             catch (Exception ex)
             {
-                string errorText = ex.Message;
-                throw;
+                ExceptionViewer.Show(ex, this.GetType().Name);
+            }
+        }
+
+        private void HandleSwitchDialogRequest(SwitchDialogEventArgs<IViewModel> obj)
+        {
+            try
+            {
+                this.LoadContent(obj.TargetPage);
+            }
+            catch (Exception ex)
+            {
+                ExceptionViewer.Show(ex, this.GetType().Name);
             }
         }
     }

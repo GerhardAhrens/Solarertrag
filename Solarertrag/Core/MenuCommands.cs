@@ -20,6 +20,8 @@ namespace Solarertrag.Core
     public enum MenuCommands : int
     {
         None = 0,
-        WindowClose = 1
+        WindowClose = 1,
+        Edit = 2,
+        CloseDetail = 3
     }
 }
