@@ -3,7 +3,7 @@
     <ContextMenu x:Key="MainContextMenu" x:Shared="true">
         <MenuItem
             Height="28"
-            Command="{Binding Path=CmdAgg[AddEntryCommand]}"
+            Command="{Binding Path=CmdAgg[NewDetailCommand]}"
             Header="Neuer Eintrag (Ctrl-N)">
             <MenuItem.Icon>
                 <StaticResource ResourceKey="IconAddItem" />

@@ -91,7 +91,7 @@ namespace Solarertrag.Factory
 
             if (viewObject.ViewControl != null)
             {
-                if (viewObject.ViewControl.GetConstructors().Count() == 1)
+                if (viewObject.ViewControl.GetConstructors().Count() >= 1)
                 {
                     if (viewObject.ViewControl.GetConstructors()[0].GetParameters().Count() == 1)
                     {

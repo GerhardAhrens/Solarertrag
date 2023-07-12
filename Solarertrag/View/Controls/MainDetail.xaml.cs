@@ -1,5 +1,6 @@
 ﻿namespace Solarertrag.View.Controls
 {
+    using System;
     using System.Windows.Controls;
 
     using Solarertrag.ViewModel;
