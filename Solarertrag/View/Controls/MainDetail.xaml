@@ -3,16 +3,17 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:libConverter="clr-namespace:EasyPrototypingNET.WPF.Converter;assembly=EasyPrototypingNET"
     xmlns:libCore="clr-namespace:EasyPrototypingNET.Core;assembly=EasyPrototypingNET"
     xmlns:libWPF="clr-namespace:EasyPrototypingNET.WPF;assembly=EasyPrototypingNET"
     xmlns:local="clr-namespace:Solarertrag.View.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:wpfBehavior="clr-namespace:EasyPrototypingNET.WPF.Behavior;assembly=EasyPrototypingNET"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
     <libWPF:SimpleGrid Columns="*" Rows="Auto,Auto,Auto">
-        <TextBlock Grid.Row="1" Text="Bearbeitung Details" />
         <ToolBar Grid.Row="0">
             <ToolBar.Resources>
                 <Style TargetType="{x:Type ToolBarPanel}">
@@ -39,6 +40,98 @@
                 WindowChrome.IsHitTestVisibleInChrome="True" />
         </ToolBar>
 
+        <!--#region Dialogtitel and Icon-->
+        <DockPanel
+            Grid.Row="1"
+            Height="Auto"
+            Background="LightYellow"
+            LastChildFill="False">
+            <TextBlock
+                x:Name="tbDialogDescription"
+                Grid.Row="0"
+                Margin="5,0"
+                VerticalAlignment="Center"
+                DockPanel.Dock="Left"
+                FontSize="22"
+                FontWeight="Medium"
+                Text="{Binding Path=DialogDescription, UpdateSourceTrigger=PropertyChanged}" />
+
+            <Image
+                Width="32"
+                Height="32"
+                Margin="5,0,0,0"
+                DockPanel.Dock="Right"
+                Source="/ApplicationIcon.ico" />
+        </DockPanel>
+        <!--#endregion Dialogtitel and Icon-->
+
+        <libWPF:AutoGrid
+            Grid.Row="2"
+            Grid.Column="0"
+            VerticalAlignment="Top"
+            ChildHorizontalAlignment="Stretch"
+            ChildMargin="5"
+            ChildVerticalAlignment="Center"
+            IsAutoIndexing="True"
+            KeyboardNavigation.TabNavigation="Continue">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Text="Ertragsjahr" />
+            <libWPF:TextBoxEx
+                x:Name="txtJahr"
+                Width="100"
+                HorizontalAlignment="Left"
+                KeyboardNavigation.IsTabStop="True"
+                KeyboardNavigation.TabIndex="10"
+                MaxLength="4"
+                Text="{Binding Path=Year, UpdateSourceTrigger=PropertyChanged}">
+                <i:Interaction.Behaviors>
+                    <wpfBehavior:TextBoxInputBehavior InputMode="DigitInput" />
+                </i:Interaction.Behaviors>
+            </libWPF:TextBoxEx>
+
+            <TextBlock Text="Ertragsmonat" />
+            <libWPF:TextBoxEx
+                x:Name="txtMonat"
+                Width="100"
+                HorizontalAlignment="Left"
+                KeyboardNavigation.IsTabStop="True"
+                KeyboardNavigation.TabIndex="11"
+                MaxLength="2"
+                Text="{Binding Path=Month, UpdateSourceTrigger=PropertyChanged}">
+                <i:Interaction.Behaviors>
+                    <wpfBehavior:TextBoxInputBehavior InputMode="DigitInput" />
+                </i:Interaction.Behaviors>
+            </libWPF:TextBoxEx>
+
+
+            <TextBlock Text="Ertrag KW/h" />
+            <libWPF:TextBoxEx
+                x:Name="txtErtrag"
+                Width="100"
+                HorizontalAlignment="Left"
+                KeyboardNavigation.IsTabStop="True"
+                KeyboardNavigation.TabIndex="12"
+                MaxLength="2"
+                Text="{Binding Path=Ertrag, UpdateSourceTrigger=PropertyChanged}">
+                <i:Interaction.Behaviors>
+                    <wpfBehavior:TextBoxInputBehavior DecimalPlace="1" InputMode="DecimalInput" />
+                </i:Interaction.Behaviors>
+            </libWPF:TextBoxEx>
+
+            <TextBlock Text="Beschreibung" />
+            <libWPF:TextBoxEx
+                x:Name="txtDescription"
+                Width="500"
+                HorizontalAlignment="Left"
+                KeyboardNavigation.IsTabStop="True"
+                KeyboardNavigation.TabIndex="13"
+                MaxLength="200"
+                Text="{Binding Path=Description, UpdateSourceTrigger=PropertyChanged}" />
+        </libWPF:AutoGrid>
 
     </libWPF:SimpleGrid>
 </UserControl>

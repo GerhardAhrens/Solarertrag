@@ -12,6 +12,8 @@
     Title="MainWindow"
     Width="800"
     Height="450"
+    MinWidth="500"
+    MinHeight="350"
     MaxWidth="1920"
     MaxHeight="1150"
     libWPF:ActionDialogClosing.RaiseClosingHandler="True"
