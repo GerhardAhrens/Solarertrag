@@ -146,21 +146,12 @@
             Command="{StaticResource ResourceKey=WindowCloseCmdKey}"
             Modifiers="Alt" />
     </Window.InputBindings>
-    <libWPF:SimpleGrid Columns="*" Rows="30,30,*,35">
+    <libWPF:SimpleGrid Columns="*" Rows="*,35">
         <Border
             Grid.Row="0"
-            BorderBrush="Red"
-            BorderThickness="2" />
-        <Border
-            Grid.Row="1"
-            BorderBrush="Blue"
-            BorderThickness="2" />
-
-        <Border
-            Grid.Row="2"
             Grid.Column="0"
-            BorderBrush="Red"
-            BorderThickness="2">
+            BorderBrush="Black"
+            BorderThickness="1">
             <ContentControl
                 x:Name="mainContent"
                 Grid.Row="2"

@@ -51,6 +51,7 @@ namespace Solarertrag.ViewModel
         protected sealed override void InitCommands()
         {
             this.CmdAgg.AddOrSetCommand(MenuCommands.CloseDetail, new RelayCommand(p1 => this.CloseHandler(), p2 => true));
+            this.CmdAgg.AddOrSetCommand(MenuCommands.SaveDetail, new RelayCommand(p1 => this.SaveDetailHandler(), p2 => true));
         }
 
         private void CloseHandler()
@@ -71,6 +72,11 @@ namespace Solarertrag.ViewModel
             {
                 ExceptionViewer.Show(ex, this.GetType().Name);
             }
+        }
+
+        private void SaveDetailHandler()
+        {
+
         }
     }
 }

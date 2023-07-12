@@ -44,6 +44,16 @@ namespace Solarertrag.ViewModel
             this.InitCommands();
         }
 
+        #region Get/Set Properties
+        [PropertyBinding]
+        public string FilterText
+        {
+            get { return this.Get<string>(); }
+            set { this.Set(value); }
+        }
+
+        #endregion Get/Set Properties
+
         protected sealed override void InitCommands()
         {
             this.CmdAgg.AddOrSetCommand(MenuCommands.Edit, new RelayCommand(p1 => this.EditHandler(), p2 => true));

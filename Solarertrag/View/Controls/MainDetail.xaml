@@ -14,11 +14,29 @@
     <libWPF:SimpleGrid Columns="*" Rows="Auto,Auto,Auto">
         <TextBlock Grid.Row="1" Text="Bearbeitung Details" />
         <ToolBar Grid.Row="0">
-            <Button
+            <ToolBar.Resources>
+                <Style TargetType="{x:Type ToolBarPanel}">
+                    <Setter Property="Orientation" Value="Horizontal" />
+                </Style>
+            </ToolBar.Resources>
+
+            <libWPF:GeometryButton
                 Width="100"
                 Height="30"
                 Command="{Binding Path=CmdAgg[CloseDetailCommand]}"
-                Content="{StaticResource ResourceKey=IconCloseDialog}" />
+                Foreground="Black"
+                PathData="{StaticResource ResourceKey=DialogClose}"
+                Text="Schließen"
+                WindowChrome.IsHitTestVisibleInChrome="True" />
+
+            <libWPF:GeometryButton
+                Width="100"
+                Height="30"
+                Command="{Binding Path=CmdAgg[SaveDetailCommand]}"
+                Foreground="Black"
+                PathData="{StaticResource ResourceKey=SaveDialog}"
+                Text="Speichern"
+                WindowChrome.IsHitTestVisibleInChrome="True" />
         </ToolBar>
 
 
