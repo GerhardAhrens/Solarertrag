@@ -13,7 +13,7 @@
 // </summary>
 //-----------------------------------------------------------------------
 
-namespace EVOSnext.Core
+namespace Solarertrag.Core
 {
     using System;
     using System.Collections.Generic;

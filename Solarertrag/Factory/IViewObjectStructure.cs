@@ -13,7 +13,7 @@
 // </summary>
 //-----------------------------------------------------------------------
 
-namespace EVOSnext.Core
+namespace Solarertrag.Core
 {
     using EasyPrototyping.Core;
 

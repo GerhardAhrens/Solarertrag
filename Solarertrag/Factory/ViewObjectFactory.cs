@@ -25,8 +25,6 @@ namespace Solarertrag.Factory
 
     using EasyPrototypingNET.WPF;
 
-    using EVOSnext.Core;
-
     using Solarertrag.Core;
     using Solarertrag.View.Controls;
 
