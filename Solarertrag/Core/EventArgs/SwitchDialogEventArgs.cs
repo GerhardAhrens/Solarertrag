@@ -36,6 +36,11 @@ namespace Solarertrag.Core
         public IViewModel DataType { get; set; }
 
         /// <summary>
+        /// Id des Entity Objektes
+        /// </summary>
+        public Guid EntityId { get; set; }
+
+        /// <summary>
         /// Wechsel von Dialog
         /// </summary>
         public MenuButtons FromPage { get; set; }

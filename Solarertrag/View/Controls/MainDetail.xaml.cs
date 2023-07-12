@@ -17,7 +17,7 @@
             InitializeComponent();
             if (this.controlVM == null)
             {
-                this.controlVM = new MainDetailVM();
+                this.controlVM = new MainDetailVM(Guid.Empty);
             }
 
             this.DataContext = this.controlVM;

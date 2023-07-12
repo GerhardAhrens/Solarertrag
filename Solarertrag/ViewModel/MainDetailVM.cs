@@ -38,11 +38,15 @@ namespace Solarertrag.ViewModel
         /// <summary>
         /// Initializes a new instance of the <see cref="MainDetailVM"/> class.
         /// </summary>
-        public MainDetailVM()
+        public MainDetailVM(Guid entityId)
         {
+            this.Id = entityId;
             this.mainWindow = Application.Current.Windows.LastActiveWindow();
             this.InitCommands();
         }
+
+
+        private Guid Id { get; set; }
 
         protected sealed override void InitCommands()
         {
@@ -57,10 +61,11 @@ namespace Solarertrag.ViewModel
                     new SwitchDialogEventArgs<IViewModel>
                     {
                         Sender = this,
+                        EntityId = Guid.Empty,
                         DataType = this as IViewModel,
                         FromPage = MenuButtons.MainDetail,
                         TargetPage = MenuButtons.MainOverview
-                    });
+                    }); ;
             }
             catch (Exception ex)
             {

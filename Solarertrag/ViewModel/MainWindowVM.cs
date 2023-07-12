@@ -140,7 +140,7 @@ namespace Solarertrag.ViewModel
 
         private void NewDetailHandler()
         {
-            this.LoadContent(MenuButtons.MainDetail);
+            this.LoadContent(MenuButtons.MainDetail, Guid.Empty);
         }
 
         private void NewDatabaseHandler()
@@ -188,11 +188,32 @@ namespace Solarertrag.ViewModel
             }
         }
 
+        private void LoadContent(MenuButtons targetPage, Guid entityId)
+        {
+            try
+            {
+                this.CurrentControl = null;
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+
+                this.CurrentControl = ViewObjectFactory.GetControl(targetPage);
+                if (this.CurrentControl != null)
+                {
+                    this.CurrentControl.Focusable = true;
+                    this.CurrentControl.Focus();
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionViewer.Show(ex, this.GetType().Name);
+            }
+        }
+
         private void HandleSwitchDialogRequest(SwitchDialogEventArgs<IViewModel> obj)
         {
             try
             {
-                this.LoadContent(obj.TargetPage);
+                this.LoadContent(obj.TargetPage, obj.EntityId);
             }
             catch (Exception ex)
             {
