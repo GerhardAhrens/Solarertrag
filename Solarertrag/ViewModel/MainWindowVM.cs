@@ -221,6 +221,10 @@ namespace Solarertrag.ViewModel
                 {
                     this.LoadContent(obj.TargetPage, obj.EntityId, obj.RowPosition);
                 }
+                else if (obj.EntityId == Guid.Empty && obj.RowPosition == -2)
+                {
+                    this.LoadContent(obj.TargetPage, obj.EntityId, -1);
+                }
                 else
                 {
                     this.LoadContent(obj.TargetPage, obj.RowPosition);

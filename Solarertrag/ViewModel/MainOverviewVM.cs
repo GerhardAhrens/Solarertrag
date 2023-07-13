@@ -91,12 +91,20 @@ namespace Solarertrag.ViewModel
             set { this.Set(value); }
         }
 
+        [PropertyBinding]
+        public string ErtragFull
+        {
+            get { return this.Get<string>(); }
+            set { this.Set(value); }
+        }
+
         private int RowPosition { get; set; }
         #endregion Get/Set Properties
 
         protected sealed override void InitCommands()
         {
-            this.CmdAgg.AddOrSetCommand(MenuCommands.EditDetail, new RelayCommand(p1 => this.EditHandler(), p2 => true));
+            this.CmdAgg.AddOrSetCommand(MenuCommands.EditDetail, new RelayCommand(p1 => this.EditDetailHandler(), p2 => true));
+            this.CmdAgg.AddOrSetCommand(MenuCommands.NewDetail, new RelayCommand(p1 => this.NewDetailHandler(), p2 => true));
             this.CmdAgg.AddOrSetCommand("SelectionChangedCommand", new RelayCommand(p1 => this.SelectionChangedHandler(p1), p2 => true));
         }
 
@@ -172,10 +180,40 @@ namespace Solarertrag.ViewModel
 
         private void RefreshDefaultFilter(string value)
         {
+            if (value != null && this.DialogDataView != null)
+            {
+                try
+                {
+                    this.DialogDataView.Refresh();
+                    this.MaxRowCount = this.DialogDataView.Cast<SolarertragMonat>().Count();
+                    this.DialogDataView.MoveCurrentToFirst();
 
+                    if (this.MaxRowCount > 0)
+                    {
+                        this.IsFilterContentFound = false;
+
+                        double ertragFull = 0;
+                        foreach (SolarertragMonat item in this.DialogDataView.Cast<SolarertragMonat>())
+                        {
+                            ertragFull += item.Ertrag;
+                        }
+
+                        this.ErtragFull = ertragFull.ToString("0.0");
+                    }
+                    else
+                    {
+                        this.IsFilterContentFound = true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ExceptionViewer.Show(ex, this.GetType().Name);
+                    throw;
+                }
+            }
         }
 
-        private void EditHandler()
+        private void EditDetailHandler()
         {
             Guid currentId = this.CurrentSelectedItem.Id;
             int selectedItemPos = this.DialogDataView.CurrentPosition;
@@ -200,6 +238,31 @@ namespace Solarertrag.ViewModel
             }
         }
 
+        private void NewDetailHandler()
+        {
+            Guid currentId = this.CurrentSelectedItem.Id;
+            int selectedItemPos = this.DialogDataView.CurrentPosition;
+
+            try
+            {
+                App.EventAgg.Publish<SwitchDialogEventArgs<IViewModel>>(
+                    new SwitchDialogEventArgs<IViewModel>
+                    {
+                        Sender = this,
+                        DataType = this as IViewModel,
+                        EntityId = Guid.Empty,
+                        RowPosition = -2,
+                        FromPage = MenuButtons.MainOverview,
+                        TargetPage = MenuButtons.MainDetail
+                    });
+            }
+            catch (Exception ex)
+            {
+                ExceptionViewer.Show(ex, this.GetType().Name);
+                throw;
+            }
+        }
+
         private void SelectionChangedHandler(object commandParameter)
         {
             if (commandParameter != null)
@@ -212,19 +275,41 @@ namespace Solarertrag.ViewModel
                 else if (itemsCollection.Count() == 1)
                 {
                     this.IsContextMenuEnabled = true;
+
+                    double ertragCurretYear = 0;
+                    double ertragTotal = 0;
+                    foreach (SolarertragMonat item in this.DialogDataView.Cast<SolarertragMonat>())
+                    {
+                        if (item.Year == DateTime.Now.Year)
+                        {
+                            ertragCurretYear += item.Ertrag;
+                        }
+
+                        ertragTotal += item.Ertrag;
+                    }
+
+                    this.ErtragFull = $"{ertragTotal.ToString("0.0")} KW/h, in {DateTime.Now.Year} {ertragCurretYear.ToString("0.0")} KW/h";
+
+                    App.EventAgg.Publish<CurrentIdEventArgs<IViewModel>>(
+                        new CurrentIdEventArgs<IViewModel>
+                        {
+                            Sender = this,
+                            DataType = this as IViewModel,
+                            EntityId = this.CurrentSelectedItem.Id,
+                        });
                 }
                 else if (itemsCollection.Count() > 1)
                 {
                     this.IsContextMenuEnabled = false;
-                }
 
-                App.EventAgg.Publish<CurrentIdEventArgs<IViewModel>>(
-                    new CurrentIdEventArgs<IViewModel>
+                    double ertragFull = 0;
+                    foreach (SolarertragMonat item in itemsCollection)
                     {
-                        Sender = this,
-                        DataType = this as IViewModel,
-                        EntityId = this.CurrentSelectedItem.Id,
-                    });
+                        ertragFull += item.Ertrag;
+                    }
+
+                    this.ErtragFull = $"Total {ertragFull.ToString("0.0")} KW/h ";
+                }
             }
         }
     }

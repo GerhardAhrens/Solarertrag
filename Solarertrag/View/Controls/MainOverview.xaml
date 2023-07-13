@@ -18,18 +18,24 @@
             Key="E"
             Command="{Binding Path=CmdAgg[EditDetailCommand]}"
             Modifiers="Ctrl" />
+
+        <KeyBinding
+            Key="N"
+            Command="{Binding Path=CmdAgg[NewDetailCommand]}"
+            Modifiers="Ctrl" />
     </UserControl.InputBindings>
 
     <libWPF:SimpleGrid Columns="*" Rows="30,*">
         <libWPF:SimpleGrid
             Grid.Row="0"
             Grid.Column="0"
-            Columns="Auto,*,Auto"
+            Columns="Auto,*,Auto,Auto"
             Rows="30">
             <TextBlock
                 Grid.Row="0"
                 Grid.Column="0"
-                Width="100"
+                Width="70"
+                Margin="10,0"
                 VerticalAlignment="Center"
                 Text="Filter" />
 
@@ -38,10 +44,22 @@
             <TextBlock
                 Grid.Row="0"
                 Grid.Column="2"
-                Width="100"
+                Width="70"
                 Margin="10,0"
                 VerticalAlignment="Center"
-                Text="Anzahl" />
+                Text="Anzahl:  ">
+                <Run Foreground="Blue" Text="{Binding Path=MaxRowCount, UpdateSourceTrigger=PropertyChanged}" />
+            </TextBlock>
+
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="3"
+                Width="220"
+                Margin="10,0"
+                VerticalAlignment="Center"
+                Text="Ertrag:  ">
+                <Run Foreground="Blue" Text="{Binding Path=ErtragFull}" />
+            </TextBlock>
         </libWPF:SimpleGrid>
 
         <!--#region ListView Definition-->
