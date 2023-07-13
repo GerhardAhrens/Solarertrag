@@ -52,7 +52,6 @@
   <ItemGroup>
     <Folder Include="Core\Base\" />
     <Folder Include="Core\Settings\" />
-    <Folder Include="Resources\Style\" />
   </ItemGroup>
 
   <ItemGroup>

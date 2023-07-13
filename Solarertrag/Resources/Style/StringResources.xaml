@@ -1,0 +1,9 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <!--  Kontext Main Menü  MainWindow.xaml  -->
+    <sys:String x:Key="TestString">Neue Datenbank</sys:String>
+
+</ResourceDictionary>

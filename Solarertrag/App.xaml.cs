@@ -16,6 +16,8 @@
     using EasyPrototypingNET.Core;
     using EasyPrototypingNET.Pattern;
 
+    using Solarertrag.Core;
+
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>

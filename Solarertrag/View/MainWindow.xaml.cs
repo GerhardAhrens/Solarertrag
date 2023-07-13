@@ -11,6 +11,7 @@
     using EasyPrototypingNET.Core.SystemMetrics;
 
     using Solarertrag.ViewModel;
+    using Solarertrag.Core;
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -27,6 +28,8 @@
             WeakEventManager<Window, RoutedEventArgs>.AddHandler(this, "Loaded", this.OnLoaded);
             WeakEventManager<Window, CancelEventArgs>.AddHandler(this, "Closing", this.OnClosing);
             WeakEventManager<Window, RoutedEventArgs>.AddHandler(this, "SizeChanged", this.OnSizeChanged);
+
+            string v = ResourceObject.GetAs<string>("TestString");
 
             try
             {
