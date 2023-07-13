@@ -41,9 +41,10 @@ namespace Solarertrag.ViewModel
         /// <summary>
         /// Initializes a new instance of the <see cref="MainDetailVM"/> class.
         /// </summary>
-        public MainDetailVM(Guid entityId)
+        public MainDetailVM(Guid entityId, int rowPosition)
         {
             this.CurrentId = entityId;
+            this.RowPosition = rowPosition;
             this.mainWindow = Application.Current.Windows.LastActiveWindow();
             this.InitCommands();
 
@@ -55,6 +56,8 @@ namespace Solarertrag.ViewModel
             {
                 this.DialogDescription = "Gewählter Eintrag bearbeiten";
             }
+
+            this.LoadDataHandler();
         }
 
         #region Get/Set Properties
@@ -87,9 +90,9 @@ namespace Solarertrag.ViewModel
         }
 
         [PropertyBinding]
-        public double Ertrag
+        public string Ertrag
         {
-            get { return this.Get<double>(); }
+            get { return this.Get<string>(); }
             set { this.Set(value); }
         }
 
@@ -101,6 +104,8 @@ namespace Solarertrag.ViewModel
         }
 
         private Guid CurrentId { get; set; }
+
+        private int RowPosition { get; set; }
         #endregion Get/Set Properties
 
         protected sealed override void InitCommands()
@@ -117,15 +122,25 @@ namespace Solarertrag.ViewModel
                 {
                     using (SolarertragMonatRepository repository = new SolarertragMonatRepository(App.DatabasePath))
                     {
+                        this.CurrentSelectedItem = repository.ListById(this.CurrentId);
+                        this.Year = this.CurrentSelectedItem.Year;
+                        this.Month = this.CurrentSelectedItem.Month;
+                        this.Ertrag = this.CurrentSelectedItem.Ertrag.ToString();
+                        this.Description = this.CurrentSelectedItem.Description;
                     }
                 }
                 else
                 {
+                    this.Year = DateTime.Now.Year;
+                    this.Month = DateTime.Now.Month;
+                    this.Ertrag = "0";
+                    this.Description = string.Empty;
                 }
             }
             catch (Exception ex)
             {
                 ExceptionViewer.Show(ex, this.GetType().Name);
+                throw;
             }
         }
 
@@ -145,6 +160,7 @@ namespace Solarertrag.ViewModel
                     {
                         Sender = this,
                         EntityId = Guid.Empty,
+                        RowPosition = this.RowPosition,
                         DataType = this as IViewModel,
                         FromPage = MenuButtons.MainDetail,
                         TargetPage = MenuButtons.MainOverview
@@ -153,12 +169,48 @@ namespace Solarertrag.ViewModel
             catch (Exception ex)
             {
                 ExceptionViewer.Show(ex, this.GetType().Name);
+                throw;
             }
         }
 
         private void SaveDetailHandler()
         {
-
+            try
+            {
+                using (SolarertragMonatRepository repository = new SolarertragMonatRepository(App.DatabasePath))
+                {
+                    if (this.CurrentId != Guid.Empty)
+                    {
+                        SolarertragMonat original = SolarertragMonat.ToClone(this.CurrentSelectedItem);
+                        if (original != null)
+                        {
+                            original.Year = this.Year;
+                            original.Month = this.Month;
+                            original.Ertrag = this.Ertrag.ToDouble();
+                            original.Description = this.Description;
+                            original.ModifiedBy = UserInfo.TS().CurrentUser;
+                            original.ModifiedOn = UserInfo.TS().CurrentTime;
+                            repository.Update(original);
+                        }
+                    }
+                    else
+                    {
+                        SolarertragMonat original = new SolarertragMonat();
+                        original.Year = this.Year;
+                        original.Month = this.Month;
+                        original.Ertrag = this.Ertrag.ToDouble();
+                        original.Description = this.Description;
+                        original.CreatedBy = UserInfo.TS().CurrentUser;
+                        original.CreatedOn = UserInfo.TS().CurrentTime;
+                        repository.Add(original);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionViewer.Show(ex, this.GetType().Name);
+                throw;
+            }
         }
         #endregion Command Handler
     }

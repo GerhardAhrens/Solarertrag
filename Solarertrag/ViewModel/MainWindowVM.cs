@@ -33,6 +33,7 @@ namespace Solarertrag.ViewModel
     using Solarertrag.Core;
     using Solarertrag.DataRepository;
     using Solarertrag.Factory;
+    using Solarertrag.View.Controls;
 
     [SupportedOSPlatform("windows")]
     [ViewModel]
@@ -50,6 +51,7 @@ namespace Solarertrag.ViewModel
             this.InitCommands();
 
             App.EventAgg.Subscribe<SwitchDialogEventArgs<IViewModel>>(this.HandleSwitchDialogRequest);
+            App.EventAgg.Subscribe<CurrentIdEventArgs<IViewModel>>(this.CurrentIdRequest);
 
             this.NewDatabaseHandler();
 
@@ -75,36 +77,13 @@ namespace Solarertrag.ViewModel
         }
 
         [PropertyBinding]
-        public bool IsDatabaseOpen
-        {
-            get { return this.Get<bool>(); }
-            set { this.Set(value); }
-        }
-
-        [PropertyBinding]
-        public bool IsFilterContentFound
-        {
-            get { return this.Get<bool>(); }
-            set { this.Set(value); }
-        }
-
-        [PropertyBinding]
-        public ICollectionView DialogDataView
-        {
-            get { return this.Get<ICollectionView>(); }
-            private set { this.Set(value); }
-        }
-
-        [PropertyBinding]
         public UserControl CurrentControl
         {
             get { return this.Get<UserControl>(); }
             private set { this.Set(value); }
         }
 
-        private string ExportProjectName { get; set; }
-
-        private string CurrentDatabaseFile { get; set; }
+        public Guid CurrentId { get; set; }
 
         #endregion Get/Set Properties
 
@@ -112,6 +91,7 @@ namespace Solarertrag.ViewModel
         {
             this.CmdAgg.AddOrSetCommand(MenuCommands.WindowClose, new RelayCommand(p1 => this.WindowCloseHandler(), p2 => true));
             this.CmdAgg.AddOrSetCommand(MenuCommands.NewDetail, new RelayCommand(p1 => this.NewDetailHandler(), p2 => true));
+            this.CmdAgg.AddOrSetCommand(MenuCommands.EditDetail, new RelayCommand(p1 => this.EditDetailHandler(), p2 => true));
         }
 
         private void WindowCloseHandler()
@@ -143,6 +123,14 @@ namespace Solarertrag.ViewModel
             this.LoadContent(MenuButtons.MainDetail, Guid.Empty);
         }
 
+        private void EditDetailHandler()
+        {
+            if (this.CurrentId != Guid.Empty)
+            {
+                this.LoadContent(MenuButtons.MainDetail, this.CurrentId);
+            }
+        }
+
         private void NewDatabaseHandler()
         {
             Result<bool> createResult = null;
@@ -167,7 +155,7 @@ namespace Solarertrag.ViewModel
             }
         }
 
-        private void LoadContent(MenuButtons targetPage)
+        private void LoadContent(MenuButtons targetPage, int rowPosition = -1)
         {
             try
             {
@@ -178,8 +166,14 @@ namespace Solarertrag.ViewModel
                 this.CurrentControl = ViewObjectFactory.GetControl(targetPage);
                 if (this.CurrentControl != null)
                 {
-                    this.CurrentControl.Focusable = true;
-                    this.CurrentControl.Focus();
+                    if (targetPage == MenuButtons.MainOverview)
+                    {
+                        MainOverviewVM controlVM = new MainOverviewVM(rowPosition);
+                        this.CurrentControl.Focusable = true;
+                        this.CurrentControl.Focus();
+                        this.CurrentControl.DataContext = controlVM;
+                        ((MainOverview)this.CurrentControl).RowPosition = rowPosition;
+                    }
                 }
             }
             catch (Exception ex)
@@ -188,7 +182,7 @@ namespace Solarertrag.ViewModel
             }
         }
 
-        private void LoadContent(MenuButtons targetPage, Guid entityId)
+        private void LoadContent(MenuButtons targetPage, Guid entityId, int rowPosition = -1)
         {
             try
             {
@@ -199,21 +193,38 @@ namespace Solarertrag.ViewModel
                 this.CurrentControl = ViewObjectFactory.GetControl(targetPage);
                 if (this.CurrentControl != null)
                 {
-                    this.CurrentControl.Focusable = true;
-                    this.CurrentControl.Focus();
+                    if (targetPage == MenuButtons.MainDetail)
+                    {
+                        MainDetailVM controlVM = new MainDetailVM(entityId, rowPosition);
+                        this.CurrentControl.Focusable = true;
+                        this.CurrentControl.Focus();
+                        this.CurrentControl.DataContext = controlVM;
+                    }
                 }
             }
             catch (Exception ex)
             {
                 ExceptionViewer.Show(ex, this.GetType().Name);
             }
+        }
+
+        private void CurrentIdRequest(CurrentIdEventArgs<IViewModel> obj)
+        {
+            this.CurrentId = obj.EntityId;
         }
 
         private void HandleSwitchDialogRequest(SwitchDialogEventArgs<IViewModel> obj)
         {
             try
             {
-                this.LoadContent(obj.TargetPage, obj.EntityId);
+                if (obj.EntityId != Guid.Empty)
+                {
+                    this.LoadContent(obj.TargetPage, obj.EntityId, obj.RowPosition);
+                }
+                else
+                {
+                    this.LoadContent(obj.TargetPage, obj.RowPosition);
+                }
             }
             catch (Exception ex)
             {

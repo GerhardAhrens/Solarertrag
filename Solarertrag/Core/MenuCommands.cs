@@ -21,9 +21,10 @@ namespace Solarertrag.Core
     {
         None = 0,
         WindowClose = 1,
-        Edit = 2,
+        EditDetail = 2,
         CloseDetail = 3,
         NewDetail = 4,
-        SaveDetail = 5
+        SaveDetail = 5,
+        DeleteDetail = 6
     }
 }

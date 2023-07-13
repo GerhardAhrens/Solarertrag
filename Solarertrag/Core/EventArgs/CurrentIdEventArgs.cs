@@ -23,7 +23,7 @@ namespace Solarertrag.Core
     /// Argument beim Wechslem zwischen den UserControl-Dialogen
     /// </summary>
     /// <typeparam name="IViewModel"></typeparam>
-    public class SwitchDialogEventArgs<IViewModel> : EventArgs, IPayload
+    public class CurrentIdEventArgs<IViewModel> : EventArgs, IPayload
     {
         /// <summary>
         /// UserControl-Dialog Content
@@ -39,17 +39,5 @@ namespace Solarertrag.Core
         /// Id des Entity Objektes
         /// </summary>
         public Guid EntityId { get; set; }
-
-        public int RowPosition { get; set; }
-
-        /// <summary>
-        /// Wechsel von Dialog
-        /// </summary>
-        public MenuButtons FromPage { get; set; }
-
-        /// <summary>
-        /// Wechsel zu Dialog
-        /// </summary>
-        public MenuButtons TargetPage { get; set; }
     }
 }

@@ -115,10 +115,10 @@
                 HorizontalAlignment="Left"
                 KeyboardNavigation.IsTabStop="True"
                 KeyboardNavigation.TabIndex="12"
-                MaxLength="2"
+                MaxLength="6"
                 Text="{Binding Path=Ertrag, UpdateSourceTrigger=PropertyChanged}">
                 <i:Interaction.Behaviors>
-                    <wpfBehavior:TextBoxInputBehavior DecimalPlace="1" InputMode="DecimalInput" />
+                    <wpfBehavior:TextBoxInputBehavior DecimalPlace="2" InputMode="DecimalInput" />
                 </i:Interaction.Behaviors>
             </libWPF:TextBoxEx>
 

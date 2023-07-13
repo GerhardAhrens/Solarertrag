@@ -13,20 +13,11 @@
     /// </summary>
     public partial class MainDetail : UserControl
     {
-        private readonly MainDetailVM controlVM = null;
-
         public MainDetail()
         {
             InitializeComponent();
             WeakEventManager<UserControl, RoutedEventArgs>.AddHandler(this, "Loaded", this.OnLoaded);
             WeakEventManager<UserControl, KeyEventArgs>.AddHandler(this, "KeyDown", this.OnKeyDown);
-
-            if (this.controlVM == null)
-            {
-                this.controlVM = new MainDetailVM(Guid.Empty);
-            }
-
-            this.DataContext = this.controlVM;
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)

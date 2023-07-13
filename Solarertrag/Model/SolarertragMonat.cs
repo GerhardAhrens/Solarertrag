@@ -50,12 +50,15 @@ namespace Solarertrag.Model
 
         public Guid Id { get; set; }
 
+        [SearchFilter]
         public int Year { get; set; }
 
+        [SearchFilter]
         public int Month { get; set; }
 
-        public decimal Ertrag { get; set; }
+        public double Ertrag { get; set; }
 
+        [SearchFilter]
         public string Description { get; set; }
 
         public string CreatedBy { get; set; }

@@ -11,12 +11,12 @@
         </MenuItem>
 
         <MenuItem
-            Command="{Binding Path=CmdAgg[DeleteEntryCommand]}"
+            Command="{Binding Path=CmdAgg[DeleteDetailCommand]}"
             Header="Aktueller Eintrag löschen (Ctrl-D)"
             Icon="{StaticResource ResourceKey=IconDeleteItem}" />
 
         <MenuItem
-            Command="{Binding Path=CmdAgg[EditEntryCommand]}"
+            Command="{Binding Path=CmdAgg[EditDetailCommand]}"
             Header="Aktueller Eintrag ändern (Ctrl-E)"
             Icon="{StaticResource ResourceKey=IconEditItem}" />
 
