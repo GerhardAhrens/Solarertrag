@@ -123,6 +123,7 @@ namespace Solarertrag.ViewModel
                             this.DialogDataView.Filter = rowItem => this.DataDefaultFilter(rowItem as SolarertragMonat);
                             this.DialogDataView.SortDescriptions.Clear();
                             this.DialogDataView.SortDescriptions.Add(new SortDescription("Year", ListSortDirection.Ascending));
+                            this.DialogDataView.SortDescriptions.Add(new SortDescription("Month", ListSortDirection.Ascending));
                             if (this.RowPosition == -1)
                             {
                                 this.DialogDataView.MoveCurrentToFirst();
@@ -240,7 +241,13 @@ namespace Solarertrag.ViewModel
 
         private void NewDetailHandler()
         {
-            Guid currentId = this.CurrentSelectedItem.Id;
+            Guid currentId = Guid.Empty;
+
+            if (this.CurrentSelectedItem != null)
+            {
+                currentId = this.CurrentSelectedItem.Id;
+            }
+
             int selectedItemPos = this.DialogDataView.CurrentPosition;
 
             try

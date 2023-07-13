@@ -205,6 +205,8 @@ namespace Solarertrag.ViewModel
                         repository.Add(original);
                     }
                 }
+
+                this.CloseHandler();
             }
             catch (Exception ex)
             {

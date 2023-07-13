@@ -36,6 +36,8 @@
 
             try
             {
+                FrameworkCompatibilityPreferences.KeepTextBoxDisplaySynchronizedWithTextProperty = false;
+
                 string assemblyName = ApplicationProperties.AssemblyName;
                 exePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                 exeName = $"{assemblyName}.exe";
