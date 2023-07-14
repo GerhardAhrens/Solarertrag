@@ -31,13 +31,11 @@
         {
             string exePath = string.Empty;
             string exeName = string.Empty;
-
+            FrameworkCompatibilityPreferences.KeepTextBoxDisplaySynchronizedWithTextProperty = false;
             WeakEventManager<Application, DispatcherUnhandledExceptionEventArgs>.AddHandler(this, "DispatcherUnhandledException", this.OnDispatcherUnhandledException);
 
             try
             {
-                FrameworkCompatibilityPreferences.KeepTextBoxDisplaySynchronizedWithTextProperty = false;
-
                 string assemblyName = ApplicationProperties.AssemblyName;
                 exePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                 exeName = $"{assemblyName}.exe";

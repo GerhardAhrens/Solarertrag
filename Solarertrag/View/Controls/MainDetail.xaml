@@ -13,6 +13,21 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
+
+    <UserControl.InputBindings>
+        <KeyBinding
+            Key="F4"
+            Command="{Binding Path=CmdAgg[CloseDetailCommand]}"
+            Modifiers="Ctrl" />
+
+        <KeyBinding Key="Esc" Command="{Binding Path=CmdAgg[CloseDetailCommand]}" />
+
+        <KeyBinding
+            Key="S"
+            Command="{Binding Path=CmdAgg[SaveDetailCommand]}"
+            Modifiers="Ctrl" />
+    </UserControl.InputBindings>
+
     <libWPF:SimpleGrid Columns="*" Rows="Auto,Auto,Auto">
         <ToolBar Grid.Row="0">
             <ToolBar.Resources>
@@ -87,7 +102,7 @@
                 KeyboardNavigation.IsTabStop="True"
                 KeyboardNavigation.TabIndex="10"
                 MaxLength="4"
-                Text="{Binding Path=Year, UpdateSourceTrigger=PropertyChanged}">
+                Text="{Binding Path=Year, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                 <i:Interaction.Behaviors>
                     <wpfBehavior:TextBoxInputBehavior InputMode="DigitInput" />
                 </i:Interaction.Behaviors>

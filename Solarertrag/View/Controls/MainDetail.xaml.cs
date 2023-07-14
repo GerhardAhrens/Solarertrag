@@ -16,9 +16,6 @@
         public MainDetail()
         {
             InitializeComponent();
-
-            //FrameworkCompatibilityPreferences.KeepTextBoxDisplaySynchronizedWithTextProperty = false;
-
             WeakEventManager<UserControl, RoutedEventArgs>.AddHandler(this, "Loaded", this.OnLoaded);
             WeakEventManager<UserControl, KeyEventArgs>.AddHandler(this, "KeyDown", this.OnKeyDown);
         }

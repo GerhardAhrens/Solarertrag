@@ -51,6 +51,7 @@
 
   <ItemGroup>
     <Folder Include="Core\Base\" />
+    <Folder Include="Core\Validation\" />
     <Folder Include="Core\Settings\" />
   </ItemGroup>
 
