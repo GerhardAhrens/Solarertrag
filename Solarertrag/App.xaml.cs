@@ -11,12 +11,11 @@
     using System.Windows;
     using System.Windows.Markup;
     using System.Windows.Threading;
+
     using Console.ApplicationSettings;
 
     using EasyPrototypingNET.Core;
     using EasyPrototypingNET.Pattern;
-
-    using Solarertrag.Core;
 
     /// <summary>
     /// Interaction logic for App.xaml
