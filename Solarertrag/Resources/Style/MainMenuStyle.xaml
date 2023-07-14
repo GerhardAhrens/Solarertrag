@@ -21,6 +21,16 @@
             Icon="{StaticResource ResourceKey=IconEditItem}" />
 
         <Separator />
+
+        <MenuItem
+            Command="{Binding Path=CmdAgg[SettingsCommand]}"
+            Header="Einstellungen (Ctrl-I)"
+            Icon="{StaticResource ResourceKey=IconSettingsItem}" />
+
+        <MenuItem
+            Command="{Binding Path=CmdAgg[ExportCommand]}"
+            Header="Export (Ctrl-P)"
+            Icon="{StaticResource ResourceKey=IconExcelItem}" />
     </ContextMenu>
 
 </ResourceDictionary>

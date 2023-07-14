@@ -12,6 +12,8 @@
     <FileVersion>1.0.2023.1</FileVersion>
     <ApplicationIcon>Resources\Picture\ApplicationIcon.ico</ApplicationIcon>
     <AssemblyName>Solarertrag.dev</AssemblyName>
+    <Authors></Authors>
+    <Product>Solarertrag</Product>
 </PropertyGroup>
 
   <ItemGroup>

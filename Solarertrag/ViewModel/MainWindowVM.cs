@@ -92,6 +92,8 @@ namespace Solarertrag.ViewModel
             this.CmdAgg.AddOrSetCommand(MenuCommands.WindowClose, new RelayCommand(p1 => this.WindowCloseHandler(), p2 => true));
             this.CmdAgg.AddOrSetCommand(MenuCommands.NewDetail, new RelayCommand(p1 => this.NewDetailHandler(), p2 => true));
             this.CmdAgg.AddOrSetCommand(MenuCommands.EditDetail, new RelayCommand(p1 => this.EditDetailHandler(), p2 => true));
+            this.CmdAgg.AddOrSetCommand(MenuCommands.Export, new RelayCommand(p1 => this.ExportHandler(), p2 => true));
+            this.CmdAgg.AddOrSetCommand(MenuCommands.Settings, new RelayCommand(p1 => this.SettingsHandler(), p2 => true));
         }
 
         private void WindowCloseHandler()
@@ -141,6 +143,14 @@ namespace Solarertrag.ViewModel
                     createResult = dm.CreateNewDatabase();
                 }
             }
+        }
+
+        private void ExportHandler()
+        {
+        }
+
+        private void SettingsHandler()
+        {
         }
 
         private void LoadDatabaseHandler()
