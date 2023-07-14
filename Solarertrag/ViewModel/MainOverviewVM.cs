@@ -105,6 +105,7 @@ namespace Solarertrag.ViewModel
         {
             this.CmdAgg.AddOrSetCommand(MenuCommands.EditDetail, new RelayCommand(p1 => this.EditDetailHandler(), p2 => true));
             this.CmdAgg.AddOrSetCommand(MenuCommands.NewDetail, new RelayCommand(p1 => this.NewDetailHandler(), p2 => true));
+            this.CmdAgg.AddOrSetCommand(MenuCommands.DeleteDetail, new RelayCommand(p1 => this.DeleteDetailHandler(), p2 => true));
             this.CmdAgg.AddOrSetCommand("SelectionChangedCommand", new RelayCommand(p1 => this.SelectionChangedHandler(p1), p2 => true));
         }
 
@@ -267,6 +268,19 @@ namespace Solarertrag.ViewModel
             {
                 ExceptionViewer.Show(ex, this.GetType().Name);
                 throw;
+            }
+        }
+
+        private void DeleteDetailHandler()
+        {
+            if (AppMsgDialog.DeleteDetail(this.CurrentSelectedItem.FullName) == DialogResultsEx.Yes)
+            {
+                using (SolarertragMonatRepository repository = new SolarertragMonatRepository(App.DatabasePath))
+                {
+                    repository.Delete(this.CurrentSelectedItem.Id);
+                }
+
+                this.LoadDataHandler();
             }
         }
 

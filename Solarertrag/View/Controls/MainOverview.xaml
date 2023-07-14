@@ -23,6 +23,13 @@
             Key="N"
             Command="{Binding Path=CmdAgg[NewDetailCommand]}"
             Modifiers="Ctrl" />
+
+        <KeyBinding
+            Key="D"
+            Command="{Binding Path=CmdAgg[DeleteDetailCommand]}"
+            Modifiers="Ctrl" />
+
+        <KeyBinding Key="Delete" Command="{Binding Path=CmdAgg[DeleteDetailCommand]}" />
     </UserControl.InputBindings>
 
     <libWPF:SimpleGrid Columns="*" Rows="30,*">
@@ -92,6 +99,21 @@
                     CommandParameter="{Binding ElementName=lvwMain, Path=SelectedItem}" />
             </ListView.InputBindings>
 
+            <ListView.ContextMenu>
+                <ContextMenu Focusable="True" IsEnabled="{Binding Path=IsContextMenuEnabled, UpdateSourceTrigger=PropertyChanged}">
+                    <MenuItem
+                        Command="{Binding Path=CmdAgg[DeleteDetailCommand]}"
+                        Header="Aktueller Eintrag löschen (Ctrl-D)"
+                        Icon="{StaticResource ResourceKey=IconDeleteItem}" />
+
+                    <MenuItem
+                        Command="{Binding Path=CmdAgg[EditDetailCommand]}"
+                        Header="Aktueller Eintrag ändern (Ctrl-E)"
+                        Icon="{StaticResource ResourceKey=IconEditItem}" />
+
+                </ContextMenu>
+            </ListView.ContextMenu>
+
             <ListView.View>
                 <GridView>
                     <GridViewColumn
@@ -111,6 +133,12 @@
                         Width="60"
                         DisplayMemberBinding="{Binding Path=Ertrag}"
                         Header="Ertrag"
+                        HeaderContainerStyle="{StaticResource lvwHeaderLeft}" />
+
+                    <GridViewColumn
+                        Width="400"
+                        DisplayMemberBinding="{Binding Path=Description}"
+                        Header="Beschreibung/Hinweis"
                         HeaderContainerStyle="{StaticResource lvwHeaderLeft}" />
                 </GridView>
             </ListView.View>
