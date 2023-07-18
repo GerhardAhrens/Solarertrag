@@ -19,6 +19,7 @@ namespace Solarertrag.ViewModel
 {
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.Linq;
     using System.Reflection;
@@ -63,6 +64,7 @@ namespace Solarertrag.ViewModel
                 this.DialogDescription = "Gewählter Eintrag bearbeiten";
             }
 
+            this.ValidationErrors = new ObservableCollectionEx<string>();
             this.RegisterValidations();
             this.LoadDataHandler();
         }
@@ -86,27 +88,34 @@ namespace Solarertrag.ViewModel
         public string Year
         {
             get { return this.Get<string>(); }
-            set { this.Set(value); }
+            set { this.Set(value, this.CheckContent); }
         }
 
         [PropertyBinding]
         public string Month
         {
             get { return this.Get<string>(); }
-            set { this.Set(value); }
+            set { this.Set(value, this.CheckContent); }
         }
 
         [PropertyBinding]
         public string Ertrag
         {
             get { return this.Get<string>(); }
-            set { this.Set(value); }
+            set { this.Set(value, this.CheckContent); }
         }
 
         [PropertyBinding]
         public string Description
         {
             get { return this.Get<string>(); }
+            set { this.Set(value); }
+        }
+
+        [PropertyBinding]
+        public ObservableCollectionEx<string> ValidationErrors
+        {
+            get { return this.Get<ObservableCollectionEx<string>>(); }
             set { this.Set(value); }
         }
 
@@ -286,6 +295,16 @@ namespace Solarertrag.ViewModel
             {
                 return SolarErtragValidation<MainDetailVM>.This(this).InRangeYear(x => x.Year, 2020, 2100);
             });
+
+            this.validationDelegates.Add(nameof(this.Month), () =>
+            {
+                return SolarErtragValidation<MainDetailVM>.This(this).InRangeMonth(x => x.Month, 1, 12);
+            });
+
+            this.validationDelegates.Add(nameof(this.Ertrag), () =>
+            {
+                return SolarErtragValidation<MainDetailVM>.This(this).GreaterThanZero(x => x.Ertrag);
+            });
         }
         #endregion Validierung
 
@@ -314,6 +333,17 @@ namespace Solarertrag.ViewModel
             if (propValue.Equals(value) == false)
             {
                 this.IsDirty = true;
+            }
+
+            Func<Result<string>> function = null;
+            if (validationDelegates.TryGetValue(propertyName, out function) == true)
+            {
+                Result<string> ruleText = this.DoValidation(function, propertyName);
+                if (string.IsNullOrEmpty(ruleText.Value) == false)
+                {
+                    this.HasValidationsErrors = (bool)ruleText.ResultState;
+                    this.ValidationErrors.Add(ruleText.Value);
+                }
             }
         }
 

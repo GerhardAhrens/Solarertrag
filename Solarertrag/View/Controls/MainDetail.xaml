@@ -14,6 +14,11 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
 
+    <UserControl.Resources>
+        <libConverter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+
+    </UserControl.Resources>
+
     <UserControl.InputBindings>
         <KeyBinding
             Key="F4"
@@ -28,7 +33,7 @@
             Modifiers="Ctrl" />
     </UserControl.InputBindings>
 
-    <libWPF:SimpleGrid Columns="*" Rows="Auto,Auto,Auto">
+    <libWPF:SimpleGrid Columns="*" Rows="Auto,Auto,Auto,Auto">
         <ToolBar Grid.Row="0">
             <ToolBar.Resources>
                 <Style TargetType="{x:Type ToolBarPanel}">
@@ -80,73 +85,95 @@
         </DockPanel>
         <!--#endregion Dialogtitel and Icon-->
 
-        <libWPF:AutoGrid
+        <!--#region Notification Panel-->
+        <ScrollViewer
             Grid.Row="2"
             Grid.Column="0"
-            VerticalAlignment="Top"
-            ChildHorizontalAlignment="Stretch"
-            ChildMargin="5"
-            ChildVerticalAlignment="Center"
-            IsAutoIndexing="True"
-            KeyboardNavigation.TabNavigation="Continue">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
+            MaxHeight="50"
+            Background="Red"
+            VerticalScrollBarVisibility="Auto"
+            Visibility="{Binding Path=HasValidationsErrors, Converter={StaticResource BooleanToVisibleConverter}}">
+            <ListBox
+                Height="Auto"
+                Background="Transparent"
+                FontWeight="Bold"
+                Foreground="White"
+                IsSynchronizedWithCurrentItem="True"
+                ItemsSource="{Binding Path=ValidationErrors, UpdateSourceTrigger=PropertyChanged}"
+                SelectedIndex="0" />
+        </ScrollViewer>
+        <!--#endregion Notification Panel-->
 
-            <TextBlock Text="Ertragsjahr" />
-            <libWPF:TextBoxEx
-                x:Name="txtJahr"
-                Width="100"
-                HorizontalAlignment="Left"
-                KeyboardNavigation.IsTabStop="True"
-                KeyboardNavigation.TabIndex="10"
-                MaxLength="4"
-                Text="{Binding Path=Year, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
-                <i:Interaction.Behaviors>
-                    <wpfBehavior:TextBoxInputBehavior InputMode="DigitInput" />
-                </i:Interaction.Behaviors>
-            </libWPF:TextBoxEx>
+        <ScrollViewer
+            Grid.Row="3"
+            Grid.Column="0"
+            VerticalScrollBarVisibility="Auto">
+            <libWPF:AutoGrid
+                VerticalAlignment="Top"
+                ChildHorizontalAlignment="Stretch"
+                ChildMargin="5"
+                ChildVerticalAlignment="Center"
+                IsAutoIndexing="True"
+                KeyboardNavigation.TabNavigation="Continue">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
 
-            <TextBlock Text="Ertragsmonat" />
-            <libWPF:TextBoxEx
-                x:Name="txtMonat"
-                Width="100"
-                HorizontalAlignment="Left"
-                KeyboardNavigation.IsTabStop="True"
-                KeyboardNavigation.TabIndex="11"
-                MaxLength="2"
-                Text="{Binding Path=Month, UpdateSourceTrigger=PropertyChanged}">
-                <i:Interaction.Behaviors>
-                    <wpfBehavior:TextBoxInputBehavior InputMode="DigitInput" />
-                </i:Interaction.Behaviors>
-            </libWPF:TextBoxEx>
+                <TextBlock Text="Ertragsjahr" />
+                <libWPF:TextBoxEx
+                    x:Name="txtJahr"
+                    Width="100"
+                    HorizontalAlignment="Left"
+                    KeyboardNavigation.IsTabStop="True"
+                    KeyboardNavigation.TabIndex="10"
+                    MaxLength="4"
+                    Text="{Binding Path=Year, UpdateSourceTrigger=PropertyChanged}">
+                    <i:Interaction.Behaviors>
+                        <wpfBehavior:TextBoxInputBehavior InputMode="DigitInput" />
+                    </i:Interaction.Behaviors>
+                </libWPF:TextBoxEx>
+
+                <TextBlock Text="Ertragsmonat" />
+                <libWPF:TextBoxEx
+                    x:Name="txtMonat"
+                    Width="100"
+                    HorizontalAlignment="Left"
+                    KeyboardNavigation.IsTabStop="True"
+                    KeyboardNavigation.TabIndex="11"
+                    MaxLength="2"
+                    Text="{Binding Path=Month, UpdateSourceTrigger=PropertyChanged}">
+                    <i:Interaction.Behaviors>
+                        <wpfBehavior:TextBoxInputBehavior InputMode="DigitInput" />
+                    </i:Interaction.Behaviors>
+                </libWPF:TextBoxEx>
 
 
-            <TextBlock Text="Ertrag KW/h" />
-            <libWPF:TextBoxEx
-                x:Name="txtErtrag"
-                Width="100"
-                HorizontalAlignment="Left"
-                KeyboardNavigation.IsTabStop="True"
-                KeyboardNavigation.TabIndex="12"
-                MaxLength="6"
-                Text="{Binding Path=Ertrag, UpdateSourceTrigger=PropertyChanged}">
-                <i:Interaction.Behaviors>
-                    <wpfBehavior:TextBoxInputBehavior DecimalPlace="2" InputMode="DecimalInput" />
-                </i:Interaction.Behaviors>
-            </libWPF:TextBoxEx>
+                <TextBlock Text="Ertrag KW/h" />
+                <libWPF:TextBoxEx
+                    x:Name="txtErtrag"
+                    Width="100"
+                    HorizontalAlignment="Left"
+                    KeyboardNavigation.IsTabStop="True"
+                    KeyboardNavigation.TabIndex="12"
+                    MaxLength="6"
+                    Text="{Binding Path=Ertrag, UpdateSourceTrigger=PropertyChanged}">
+                    <i:Interaction.Behaviors>
+                        <wpfBehavior:TextBoxInputBehavior DecimalPlace="2" InputMode="DecimalInput" />
+                    </i:Interaction.Behaviors>
+                </libWPF:TextBoxEx>
 
-            <TextBlock Text="Beschreibung" />
-            <libWPF:TextBoxEx
-                x:Name="txtDescription"
-                Width="500"
-                HorizontalAlignment="Left"
-                KeyboardNavigation.IsTabStop="True"
-                KeyboardNavigation.TabIndex="13"
-                MaxLength="200"
-                Text="{Binding Path=Description, UpdateSourceTrigger=PropertyChanged}" />
-        </libWPF:AutoGrid>
+                <TextBlock Text="Beschreibung" />
+                <libWPF:TextBoxEx
+                    x:Name="txtDescription"
+                    Width="500"
+                    HorizontalAlignment="Left"
+                    KeyboardNavigation.IsTabStop="True"
+                    KeyboardNavigation.TabIndex="13"
+                    MaxLength="200"
+                    Text="{Binding Path=Description, UpdateSourceTrigger=PropertyChanged}" />
+            </libWPF:AutoGrid>
+        </ScrollViewer>
 
     </libWPF:SimpleGrid>
 </UserControl>
