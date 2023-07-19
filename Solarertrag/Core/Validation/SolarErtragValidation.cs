@@ -58,6 +58,11 @@ namespace Solarertrag.Core
             string propertyName = ExpressionPropertyName.For<TViewModel>(expression);
             object propertyValue = (object)validation.ThisObject.GetType().GetProperty(propertyName).GetValue(validation.ThisObject, null);
 
+            if (propertyValue == null)
+            {
+                return Result<string>.SuccessResult(result, resultValidError);
+            }
+
             if (propertyValue.IsEmpty() == false)
             {
                 if (propertyValue.ToInt().InRange(min, max) == false)
@@ -82,17 +87,22 @@ namespace Solarertrag.Core
             string propertyName = ExpressionPropertyName.For<TViewModel>(expression);
             object propertyValue = (object)validation.ThisObject.GetType().GetProperty(propertyName).GetValue(validation.ThisObject, null);
 
+            if (propertyValue == null)
+            {
+                return Result<string>.SuccessResult(result, resultValidError);
+            }
+
             if (propertyValue.IsEmpty() == false)
             {
                 if (propertyValue.ToInt().InRange(min, max) == false)
                 {
-                    result = $"Der Monat muß zwischen {min} und {max} liegen";
+                    result = $"Der Ertragsmonat muß zwischen {min} und {max} liegen";
                     resultValidError = true;
                 }
             }
             else
             {
-                result = $"Das Feld 'Monat' darf nicht leer sein.";
+                result = $"Das Feld 'Ertragsmonat' darf nicht leer sein.";
                 resultValidError = true;
             }
 
@@ -105,6 +115,11 @@ namespace Solarertrag.Core
             bool resultValidError = false;
             string propertyName = ExpressionPropertyName.For<TViewModel>(expression);
             object propertyValue = (object)validation.ThisObject.GetType().GetProperty(propertyName).GetValue(validation.ThisObject, null);
+
+            if (propertyValue == null)
+            {
+                return Result<string>.SuccessResult(result, resultValidError);
+            }
 
             if (propertyValue.IsEmpty() == false)
             {

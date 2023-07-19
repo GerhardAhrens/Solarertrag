@@ -77,6 +77,10 @@ namespace Solarertrag.Factory
                     viewObject = new ViewObjectContent();
                     viewObject.AddUserControl(MenuButtons.MainDetail, MenuButtons.MainDetail.ToDescription(), typeof(MainDetail));
                     ViewObjects.Add(viewObject);
+
+                    viewObject = new ViewObjectContent();
+                    viewObject.AddUserControl(MenuButtons.Settings, MenuButtons.Settings.ToDescription(), typeof(Settings));
+                    ViewObjects.Add(viewObject);
                 }
             }
             catch (Exception)

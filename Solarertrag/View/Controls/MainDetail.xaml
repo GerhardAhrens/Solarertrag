@@ -16,7 +16,6 @@
 
     <UserControl.Resources>
         <libConverter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-
     </UserControl.Resources>
 
     <UserControl.InputBindings>
@@ -34,6 +33,7 @@
     </UserControl.InputBindings>
 
     <libWPF:SimpleGrid Columns="*" Rows="Auto,Auto,Auto,Auto">
+        <!--#region Toolbar-->
         <ToolBar Grid.Row="0">
             <ToolBar.Resources>
                 <Style TargetType="{x:Type ToolBarPanel}">
@@ -59,6 +59,7 @@
                 Text="Speichern"
                 WindowChrome.IsHitTestVisibleInChrome="True" />
         </ToolBar>
+        <!--#endregion Toolbar-->
 
         <!--#region Dialogtitel and Icon-->
         <DockPanel
@@ -89,10 +90,10 @@
         <ScrollViewer
             Grid.Row="2"
             Grid.Column="0"
-            MaxHeight="50"
+            MaxHeight="60"
             Background="Red"
             VerticalScrollBarVisibility="Auto"
-            Visibility="{Binding Path=HasValidationsErrors, Converter={StaticResource BooleanToVisibleConverter}}">
+            Visibility="{Binding Path=ValidationErrors.Count, Converter={StaticResource BooleanToVisibleConverter}}">
             <ListBox
                 Height="Auto"
                 Background="Transparent"

@@ -24,6 +24,8 @@ namespace Solarertrag.Core
         [Description("Hauptdialog")]
         MainOverview = 1,
         [Description("Bearbeitungsdialog")]
-        MainDetail = 2
+        MainDetail = 2,
+        [Description("Einstellungen")]
+        Settings = 3
     }
 }

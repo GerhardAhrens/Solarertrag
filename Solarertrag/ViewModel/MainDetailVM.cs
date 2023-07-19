@@ -20,7 +20,6 @@ namespace Solarertrag.ViewModel
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
-    using System.ComponentModel;
     using System.Linq;
     using System.Reflection;
     using System.Runtime.Versioning;
@@ -40,10 +39,11 @@ namespace Solarertrag.ViewModel
 
     [SupportedOSPlatform("windows")]
     [ViewModel]
-    public class MainDetailVM : ViewModelBase<MainDetailVM>, IViewModel, IDataErrorInfo
+    public class MainDetailVM : ViewModelBase<MainDetailVM>, IViewModel
     {
         private readonly Window mainWindow = null;
         private readonly Dictionary<string, Func<Result<string>>> validationDelegates = new Dictionary<string, Func<Result<string>>>();
+        private readonly HashSet<string> propertyNames = new HashSet<string>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainDetailVM"/> class.
@@ -64,6 +64,7 @@ namespace Solarertrag.ViewModel
                 this.DialogDescription = "Gewählter Eintrag bearbeiten";
             }
 
+            this.propertyNames = this.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly).Select(s => s.Name).ToHashSet();
             this.ValidationErrors = new ObservableCollectionEx<string>();
             this.RegisterValidations();
             this.LoadDataHandler();
@@ -119,52 +120,12 @@ namespace Solarertrag.ViewModel
             set { this.Set(value); }
         }
 
-        [PropertyBinding]
-        public int ErrorsCount
-        {
-            get { return this.Get<int>(); }
-            set { this.Set(value); }
-        }
-
-        [PropertyBinding]
-        public bool HasValidationsErrors
-        {
-            get { return this.Get<bool>(); }
-            set { this.Set(value); }
-        }
-
         private Guid CurrentId { get; set; }
 
         private int RowPosition { get; set; }
 
         private bool IsDirty { get; set; }
 
-        public string this[string propName]
-        {
-            get
-            {
-                Func<Result<string>> function = null;
-                if (validationDelegates.TryGetValue(propName, out function) == true)
-                {
-                    this.HasValidationsErrors = this.CounFieldError();
-
-                    Result<string> ruleText = this.DoValidation(function, propName);
-                    if (string.IsNullOrEmpty(ruleText.Value) == false)
-                    {
-                        this.HasValidationsErrors = (bool)ruleText.ResultState;
-                        return ruleText.Value;
-                    }
-                    else
-                    {
-                        return ruleText.Value;
-                    }
-                }
-                else
-                {
-                    return string.Empty;
-                }
-            }
-        }
         #endregion Get/Set Properties
 
         protected sealed override void InitCommands()
@@ -230,7 +191,7 @@ namespace Solarertrag.ViewModel
                         DataType = this as IViewModel,
                         FromPage = MenuButtons.MainDetail,
                         TargetPage = MenuButtons.MainOverview
-                    }); ;
+                    });
             }
             catch (Exception ex)
             {
@@ -241,7 +202,7 @@ namespace Solarertrag.ViewModel
 
         private bool CanSaveDetailHandler()
         {
-            return this.HasValidationsErrors == true ? false : true;
+            return this.ValidationErrors.Count.ToBool() == true ? false : true;
         }
 
 
@@ -335,32 +296,19 @@ namespace Solarertrag.ViewModel
                 this.IsDirty = true;
             }
 
-            Func<Result<string>> function = null;
-            if (validationDelegates.TryGetValue(propertyName, out function) == true)
+            this.ValidationErrors.Clear();
+            foreach (string property in this.propertyNames)
             {
-                Result<string> ruleText = this.DoValidation(function, propertyName);
-                if (string.IsNullOrEmpty(ruleText.Value) == false)
+                Func<Result<string>> function = null;
+                if (validationDelegates.TryGetValue(property, out function) == true)
                 {
-                    this.HasValidationsErrors = (bool)ruleText.ResultState;
-                    this.ValidationErrors.Add(ruleText.Value);
+                    Result<string> ruleText = this.DoValidation(function, property);
+                    if (string.IsNullOrEmpty(ruleText.Value) == false)
+                    {
+                        this.ValidationErrors.Add(ruleText.Value);
+                    }
                 }
             }
         }
-
-        private bool CounFieldError()
-        {
-            int countError = 0;
-            foreach (var item in validationDelegates)
-            {
-                Result<string> ruleResult = item.Value.Invoke();
-                if (ruleResult.Value.IsEmpty() == false)
-                {
-                    countError++;
-                }
-            }
-
-            return countError.ToBool();
-        }
-
     }
 }

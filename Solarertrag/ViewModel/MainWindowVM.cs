@@ -151,6 +151,7 @@ namespace Solarertrag.ViewModel
 
         private void SettingsHandler()
         {
+            this.LoadContent(MenuButtons.Settings);
         }
 
         private void LoadDatabaseHandler()
@@ -183,6 +184,13 @@ namespace Solarertrag.ViewModel
                         this.CurrentControl.Focus();
                         this.CurrentControl.DataContext = controlVM;
                         ((MainOverview)this.CurrentControl).RowPosition = rowPosition;
+                    }
+                    else if (targetPage == MenuButtons.Settings)
+                    {
+                        SettingsVM controlVM = new SettingsVM();
+                        this.CurrentControl.Focusable = true;
+                        this.CurrentControl.Focus();
+                        this.CurrentControl.DataContext = controlVM;
                     }
                 }
             }
