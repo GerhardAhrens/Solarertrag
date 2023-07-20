@@ -145,6 +145,7 @@
                                                         VerticalAlignment="Bottom"
                                                         FontSize="20"
                                                         FontStyle="Normal"
+                                                        FontWeight="Medium"
                                                         Foreground="Blue"
                                                         Text="{Binding Path=DataContext.ErtragCurrentYear, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}}"
                                                         Visibility="{Binding Path=Name, Converter={StaticResource ResourceKey=YearToVisibilityConverter}}" />
@@ -153,6 +154,7 @@
                                                         VerticalAlignment="Bottom"
                                                         FontSize="20"
                                                         FontStyle="Normal"
+                                                        FontWeight="Medium"
                                                         Foreground="Blue"
                                                         Text=" KW/h"
                                                         Visibility="{Binding Path=Name, Converter={StaticResource ResourceKey=YearToVisibilityConverter}}" />

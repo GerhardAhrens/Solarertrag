@@ -23,6 +23,7 @@
             </ToolBar.Resources>
 
             <libWPF:GeometryButton
+                x:Name="BtnCloseDetail"
                 Width="100"
                 Height="30"
                 Command="{Binding Path=CmdAgg[CloseDetailCommand]}"

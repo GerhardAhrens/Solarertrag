@@ -148,6 +148,7 @@ namespace Solarertrag.ViewModel
                 }
                 else
                 {
+                    this.CurrentSelectedItem = new SolarertragMonat();
                     this.ShowData();
                 }
             }

@@ -44,6 +44,7 @@ namespace Solarertrag.Model
         /// </summary>
         public SolarertragMonat()
         {
+            this.Id = Guid.NewGuid();
             this.CreatedBy = UserInfo.TS().CurrentDomainUser;
             this.CreatedOn = UserInfo.TS().CurrentTime;
         }
