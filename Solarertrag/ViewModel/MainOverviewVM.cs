@@ -25,6 +25,7 @@ namespace Solarertrag.ViewModel
     using System.Runtime.Versioning;
     using System.Windows;
     using System.Windows.Data;
+    using System.Windows.Media.Animation;
 
     using EasyPrototypingNET.BaseClass;
     using EasyPrototypingNET.Core;
@@ -98,6 +99,13 @@ namespace Solarertrag.ViewModel
             set { this.Set(value); }
         }
 
+        [PropertyBinding]
+        public string ErtragCurrentYear
+        {
+            get { return this.Get<string>(); }
+            set { this.Set(value); }
+        }
+
         private int RowPosition { get; set; }
         #endregion Get/Set Properties
 
@@ -125,6 +133,7 @@ namespace Solarertrag.ViewModel
                             this.DialogDataView.SortDescriptions.Clear();
                             this.DialogDataView.SortDescriptions.Add(new SortDescription("Year", ListSortDirection.Ascending));
                             this.DialogDataView.SortDescriptions.Add(new SortDescription("Month", ListSortDirection.Ascending));
+                            this.DialogDataView.GroupDescriptions.Add(new PropertyGroupDescription("Year"));
                             if (this.RowPosition == -1)
                             {
                                 this.DialogDataView.MoveCurrentToFirst();
@@ -135,6 +144,8 @@ namespace Solarertrag.ViewModel
                             }
 
                             this.MaxRowCount = this.DialogDataView.Count<SolarertragMonat>();
+                            double currentYear = this.DialogDataView.Cast<SolarertragMonat>().Where(w => w.Year == DateTime.Now.Year).Sum(x => x.Ertrag);
+                            this.ErtragCurrentYear = currentYear.ToString("0.0");
                         }
                     }
                 }

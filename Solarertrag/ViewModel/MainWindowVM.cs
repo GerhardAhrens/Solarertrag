@@ -16,7 +16,6 @@
 namespace Solarertrag.ViewModel
 {
     using System;
-    using System.ComponentModel;
     using System.IO;
     using System.Runtime.Versioning;
     using System.Windows;

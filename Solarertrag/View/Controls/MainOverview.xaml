@@ -8,10 +8,16 @@
     xmlns:libCore="clr-namespace:EasyPrototypingNET.Core;assembly=EasyPrototypingNET"
     xmlns:libWPF="clr-namespace:EasyPrototypingNET.WPF;assembly=EasyPrototypingNET"
     xmlns:local="clr-namespace:Solarertrag.View.Controls"
+    xmlns:localConverter="clr-namespace:Solarertrag.Converter"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <localConverter:YearToGroupExpanderConverter x:Key="YearToGroupExpanderConverter" />
+        <localConverter:YearToVisibilityConverter x:Key="YearToVisibilityConverter" />
+    </UserControl.Resources>
 
     <UserControl.InputBindings>
         <KeyBinding
@@ -76,11 +82,14 @@
             Grid.ColumnSpan="2"
             libWPF:ListViewSort.AutoSort="True"
             Background="WhiteSmoke"
+            IsSynchronizedWithCurrentItem="True"
             ItemContainerStyle="{StaticResource ResourceKey=lvwItemContainerStyle}"
             ItemsSource="{Binding Path=DialogDataView, UpdateSourceTrigger=PropertyChanged}"
             SelectedItem="{Binding Path=CurrentSelectedItem, UpdateSourceTrigger=PropertyChanged}"
             SelectionMode="Extended"
-            Style="{StaticResource ResourceKey=lvwMainStyle}">
+            Style="{StaticResource ResourceKey=lvwMainStyle}"
+            VirtualizingPanel.IsVirtualizing="True"
+            VirtualizingPanel.IsVirtualizingWhenGrouping="True">
 
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseDoubleClick">
@@ -98,6 +107,66 @@
                     Command="{Binding Path=DataContext.CmdAgg[EditDetailCommand], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}}"
                     CommandParameter="{Binding ElementName=lvwMain, Path=SelectedItem}" />
             </ListView.InputBindings>
+
+            <ListView.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.ContainerStyle>
+                        <Style TargetType="{x:Type GroupItem}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate>
+                                        <Expander IsExpanded="{Binding Path=Name, Mode=OneWay, Converter={StaticResource ResourceKey=YearToGroupExpanderConverter}}">
+                                            <Expander.Header>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock
+                                                        VerticalAlignment="Bottom"
+                                                        FontSize="20"
+                                                        FontWeight="Bold"
+                                                        Foreground="Blue"
+                                                        Text="{Binding Path=Name}" />
+
+                                                    <TextBlock
+                                                        Margin="10,0,0,0"
+                                                        VerticalAlignment="Bottom"
+                                                        FontSize="20"
+                                                        FontStyle="Italic"
+                                                        FontWeight="Bold"
+                                                        Foreground="Green"
+                                                        Text="{Binding Path=ItemCount}" />
+
+                                                    <TextBlock
+                                                        VerticalAlignment="Bottom"
+                                                        FontSize="20"
+                                                        FontStyle="Italic"
+                                                        Foreground="Silver"
+                                                        Text=" item(s) " />
+
+                                                    <TextBlock
+                                                        VerticalAlignment="Bottom"
+                                                        FontSize="20"
+                                                        FontStyle="Normal"
+                                                        Foreground="Blue"
+                                                        Text="{Binding Path=DataContext.ErtragCurrentYear, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}}"
+                                                        Visibility="{Binding Path=Name, Converter={StaticResource ResourceKey=YearToVisibilityConverter}}" />
+
+                                                    <TextBlock
+                                                        VerticalAlignment="Bottom"
+                                                        FontSize="20"
+                                                        FontStyle="Normal"
+                                                        Foreground="Blue"
+                                                        Text=" KW/h"
+                                                        Visibility="{Binding Path=Name, Converter={StaticResource ResourceKey=YearToVisibilityConverter}}" />
+                                                </StackPanel>
+                                            </Expander.Header>
+                                            <ItemsPresenter />
+                                        </Expander>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </GroupStyle.ContainerStyle>
+                </GroupStyle>
+            </ListView.GroupStyle>
 
             <ListView.ContextMenu>
                 <ContextMenu Focusable="True" IsEnabled="{Binding Path=IsContextMenuEnabled, UpdateSourceTrigger=PropertyChanged}">

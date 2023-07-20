@@ -55,7 +55,6 @@
     <Folder Include="Core\Base\" />
     <Folder Include="Core\Validation\" />
     <Folder Include="Core\Settings\" />
-    <Folder Include="Converter\" />
   </ItemGroup>
 
   <ItemGroup>
