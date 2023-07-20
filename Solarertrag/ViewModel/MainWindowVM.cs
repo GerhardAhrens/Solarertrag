@@ -91,7 +91,7 @@ namespace Solarertrag.ViewModel
             this.CmdAgg.AddOrSetCommand(MenuCommands.WindowClose, new RelayCommand(p1 => this.WindowCloseHandler(), p2 => true));
             this.CmdAgg.AddOrSetCommand(MenuCommands.NewDetail, new RelayCommand(p1 => this.NewDetailHandler(), p2 => true));
             this.CmdAgg.AddOrSetCommand(MenuCommands.EditDetail, new RelayCommand(p1 => this.EditDetailHandler(), p2 => true));
-            this.CmdAgg.AddOrSetCommand(MenuCommands.Export, new RelayCommand(p1 => this.ExportHandler(), p2 => true));
+            this.CmdAgg.AddOrSetCommand(MenuCommands.ExcelExport, new RelayCommand(p1 => this.ExcelExportHandler(), p2 => true));
             this.CmdAgg.AddOrSetCommand(MenuCommands.Settings, new RelayCommand(p1 => this.SettingsHandler(), p2 => true));
         }
 
@@ -144,8 +144,9 @@ namespace Solarertrag.ViewModel
             }
         }
 
-        private void ExportHandler()
+        private void ExcelExportHandler()
         {
+            this.LoadContent(MenuButtons.ExcelExport);
         }
 
         private void SettingsHandler()
@@ -187,6 +188,13 @@ namespace Solarertrag.ViewModel
                     else if (targetPage == MenuButtons.Settings)
                     {
                         SettingsVM controlVM = new SettingsVM();
+                        this.CurrentControl.Focusable = true;
+                        this.CurrentControl.Focus();
+                        this.CurrentControl.DataContext = controlVM;
+                    }
+                    else if (targetPage == MenuButtons.ExcelExport)
+                    {
+                        ExcelExportVM controlVM = new ExcelExportVM();
                         this.CurrentControl.Focusable = true;
                         this.CurrentControl.Focus();
                         this.CurrentControl.DataContext = controlVM;

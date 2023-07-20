@@ -36,7 +36,7 @@
             try
             {
                 string assemblyName = ApplicationProperties.AssemblyName;
-                exePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                exePath = ApplicationProperties.ProgramDataPath;
                 exeName = $"{assemblyName}.exe";
                 EventAgg = new EventAggregator();
                 InitializeCultures(DEFAULTLANGUAGE);

@@ -3,11 +3,11 @@
     using System.Windows.Controls;
 
     /// <summary>
-    /// Interaktionslogik für Settings.xaml
+    /// Interaktionslogik für ExcelExport.xaml
     /// </summary>
-    public partial class Settings : UserControl
+    public partial class ExcelExport : UserControl
     {
-        public Settings()
+        public ExcelExport()
         {
             this.InitializeComponent();
         }

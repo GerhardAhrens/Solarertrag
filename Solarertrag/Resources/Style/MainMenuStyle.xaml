@@ -28,7 +28,7 @@
             Icon="{StaticResource ResourceKey=IconSettingsItem}" />
 
         <MenuItem
-            Command="{Binding Path=CmdAgg[ExportCommand]}"
+            Command="{Binding Path=CmdAgg[ExcelExportCommand]}"
             Header="Export (Ctrl-P)"
             Icon="{StaticResource ResourceKey=IconExcelItem}" />
     </ContextMenu>

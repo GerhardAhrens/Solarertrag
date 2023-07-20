@@ -68,6 +68,12 @@
     <Compile Update="ViewModel\MainDetailVM.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="ViewModel\ExcelExportVM.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\Controls\ExcelExport.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 
 </Project>

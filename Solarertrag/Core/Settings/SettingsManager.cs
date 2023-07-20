@@ -39,18 +39,20 @@ namespace Console.ApplicationSettings
         private const string DATABASE = "Database";
         private const string LASTEDIT = "LastEdit";
         private const string EXITQUESTION = "ExitQuestion";
+        private const string LASTEXPORTFILE = "LastExportFile";
 
         private LocalSettings localSettings = null;
         private string database = string.Empty;
         private DateTime lastEdit = DateTime.Now.DefaultDate();
         private bool exitQuestion = true;
+        private string lastExportFile = string.Empty;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SettingsManager"/> class.
         /// </summary>
         public SettingsManager()
         {
-            this.localSettings = new LocalSettings(SettingsLocation.AssemblyLocation);
+            this.localSettings = new LocalSettings(SettingsLocation.ProgramData);
             if (this.localSettings != null)
             {
                 this.InitSettings();
@@ -89,6 +91,16 @@ namespace Console.ApplicationSettings
             }
         }
 
+        public string LastExportFile
+        {
+            get { return this.lastExportFile; }
+            set
+            {
+                this.lastExportFile = value;
+                this.UpdateSettings<string>(LASTEXPORTFILE, this.lastExportFile);
+            }
+        }
+
         public override void InitSettings()
         {
             if (this.localSettings.IsExitSettings() == false)
@@ -97,6 +109,7 @@ namespace Console.ApplicationSettings
                 this.localSettings.AddOrSet(DATABASE, typeof(string), string.Empty);
                 this.localSettings.AddOrSet(LASTEDIT, typeof(DateTime), DateTime.Now.DefaultDate());
                 this.localSettings.AddOrSet(EXITQUESTION, typeof(bool), true);
+                this.localSettings.AddOrSet(LASTEXPORTFILE, typeof(string), string.Empty);
                 this.localSettings.Save();
             }
             else
@@ -114,6 +127,42 @@ namespace Console.ApplicationSettings
                 else
                 {
                     this.Database = string.Empty;
+                }
+            }
+
+            if (localSettings.Exists(LASTEDIT) == true)
+            {
+                if (localSettings[LASTEDIT] != null)
+                {
+                    this.LastEdit = localSettings[LASTEDIT].ToDateTime();
+                }
+                else
+                {
+                    this.LastEdit = DateTime.Now;
+                }
+            }
+
+            if (localSettings.Exists(EXITQUESTION) == true)
+            {
+                if (localSettings[EXITQUESTION] != null)
+                {
+                    this.ExitQuestion = localSettings[EXITQUESTION].ToBool();
+                }
+                else
+                {
+                    this.ExitQuestion = true;
+                }
+            }
+
+            if (localSettings.Exists(LASTEXPORTFILE) == true)
+            {
+                if (localSettings[LASTEXPORTFILE] != null)
+                {
+                    this.LastExportFile = localSettings[LASTEXPORTFILE].ToString();
+                }
+                else
+                {
+                    this.LastExportFile = string.Empty;
                 }
             }
         }

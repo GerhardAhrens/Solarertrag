@@ -26,7 +26,7 @@ namespace Solarertrag.Core
         NewDetail = 4,
         SaveDetail = 5,
         DeleteDetail = 6,
-        Export = 7,
+        ExcelExport = 7,
         Settings = 8
     }
 }
