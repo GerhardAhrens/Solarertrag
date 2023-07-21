@@ -75,7 +75,7 @@
 
         public static string DatabasePath { get; private set; }
 
-        public static bool ExitQuestion { get; private set; }
+        public static bool ExitQuestion { get; set; }
 
         public static void ErrorMessage(Exception ex, string message = "")
         {
