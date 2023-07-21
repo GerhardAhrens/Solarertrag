@@ -36,7 +36,7 @@ namespace Solarertrag.ViewModel
 
     [SupportedOSPlatform("windows")]
     [ViewModel]
-    public class ExcelExportVM : ViewModelBase<MainDetailVM>, IViewModel
+    public class ExcelExportVM : ViewModelBase<ExcelExportVM>, IViewModel
     {
         private readonly Window mainWindow = null;
         /// <summary>
@@ -45,13 +45,25 @@ namespace Solarertrag.ViewModel
         public ExcelExportVM()
         {
             this.mainWindow = Application.Current.Windows.LastActiveWindow();
-
+            this.DialogDescription = "Ausgewählte Daten nach Excel exportieren";
             this.InitCommands();
         }
+
+        #region Get/Set Properties
+        [PropertyBinding]
+        public string DialogDescription
+        {
+            get { return this.Get<string>(); }
+            set { this.Set(value); }
+        }
+
+        #endregion Get/Set Properties
 
         protected sealed override void InitCommands()
         {
             this.CmdAgg.AddOrSetCommand(MenuCommands.CloseDetail, new RelayCommand(p1 => this.CloseHandler(), p2 => true));
+            this.CmdAgg.AddOrSetCommand(MenuCommands.ExcelExport, new RelayCommand(p1 => this.ExcelExportHandler(), p2 => true));
+            this.CmdAgg.AddOrSetCommand(MenuCommands.OpenFolder, new RelayCommand(p1 => this.OpenFolderHandler(), p2 => true));
         }
 
         #region Command Handler
@@ -75,6 +87,14 @@ namespace Solarertrag.ViewModel
                 ExceptionViewer.Show(ex, this.GetType().Name);
                 throw;
             }
+        }
+
+        private void OpenFolderHandler()
+        {
+        }
+
+        private void ExcelExportHandler()
+        {
         }
         #endregion Command Handler
     }
