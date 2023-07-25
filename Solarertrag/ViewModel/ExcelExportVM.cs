@@ -18,18 +18,19 @@
 namespace Solarertrag.ViewModel
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
-    using System.Linq;
+    using System.IO;
     using System.Runtime.Versioning;
-    using System.Text;
-    using System.Threading.Tasks;
     using System.Windows;
+
+    using Console.ApplicationSettings;
 
     using EasyPrototypingNET.BaseClass;
     using EasyPrototypingNET.Core;
     using EasyPrototypingNET.ExceptionHandling;
+    using EasyPrototypingNET.Exporter;
     using EasyPrototypingNET.Interface;
+    using EasyPrototypingNET.IO;
     using EasyPrototypingNET.WPF;
 
     using Solarertrag.Core;
@@ -47,11 +48,19 @@ namespace Solarertrag.ViewModel
             this.mainWindow = Application.Current.Windows.LastActiveWindow();
             this.DialogDescription = "Ausgewählte Daten nach Excel exportieren";
             this.InitCommands();
+            this.LoadDataHandler();
         }
 
         #region Get/Set Properties
         [PropertyBinding]
         public string DialogDescription
+        {
+            get { return this.Get<string>(); }
+            set { this.Set(value); }
+        }
+
+        [PropertyBinding]
+        public string ExcelExportPath
         {
             get { return this.Get<string>(); }
             set { this.Set(value); }
@@ -64,6 +73,14 @@ namespace Solarertrag.ViewModel
             this.CmdAgg.AddOrSetCommand(MenuCommands.CloseDetail, new RelayCommand(p1 => this.CloseHandler(), p2 => true));
             this.CmdAgg.AddOrSetCommand(MenuCommands.ExcelExport, new RelayCommand(p1 => this.ExcelExportHandler(), p2 => true));
             this.CmdAgg.AddOrSetCommand(MenuCommands.OpenFolder, new RelayCommand(p1 => this.OpenFolderHandler(), p2 => true));
+        }
+
+        private void LoadDataHandler()
+        {
+            using (SettingsManager sm = new SettingsManager())
+            {
+                this.ExcelExportPath = sm.LastExportFile;
+            }
         }
 
         #region Command Handler
@@ -91,10 +108,73 @@ namespace Solarertrag.ViewModel
 
         private void OpenFolderHandler()
         {
+            try
+            {
+                using (FolderBrowserDialogEx openFile = new FolderBrowserDialogEx())
+                {
+                    openFile.Title = "Verzeichnis für den Export auswählen";
+                    openFile.ShowNewFolderButton = true;
+                    openFile.RootFolder = Environment.SpecialFolder.MyComputer;
+                    openFile.OpenDialog();
+                    if (string.IsNullOrEmpty(openFile.SelectedPath) == false)
+                    {
+                        this.ExcelExportPath = openFile.SelectedPath;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionViewer.Show(ex, this.GetType().Name);
+            }
         }
 
         private void ExcelExportHandler()
         {
+            using (SettingsManager sm = new SettingsManager())
+            {
+                sm.LastExportFile = this.ExcelExportPath;
+            }
+
+            string exportName = Path.Combine(this.ExcelExportPath, "SolarErtrag.xlsx");
+
+            EasyPrototypingNET.Exporter.Style boldStyle = EasyPrototypingNET.Exporter.Style.BasicStyles.Bold;
+
+            EasyPrototypingNET.Exporter.Style headerStyle = new EasyPrototypingNET.Exporter.Style();
+            headerStyle.CurrentFill.SetColor("FFC0C0C0", EasyPrototypingNET.Exporter.Style.Fill.FillType.fillColor);
+            headerStyle.CurrentFont.Bold = true;
+            headerStyle.CurrentCellXf.HorizontalAlign = EasyPrototypingNET.Exporter.Style.CellXf.HorizontalAlignValue.left; 
+
+
+            Workbook workbook = new Workbook(exportName, "SolarErtrag");
+
+            List<object> values = new List<object>() { "Jahr", "Monat", "Ertrag in KW/h" , "Bemerkung"};
+            workbook.CurrentWorksheet.AddCellRange(values, new Cell.Address(0, 0), new Cell.Address(3, 0));
+            workbook.CurrentWorksheet.Cells["A1"].SetStyle(headerStyle);
+            workbook.CurrentWorksheet.Cells["B1"].SetStyle(headerStyle);
+            workbook.CurrentWorksheet.Cells["C1"].SetStyle(headerStyle);
+            workbook.CurrentWorksheet.Cells["D1"].SetStyle(headerStyle);
+
+            workbook.CurrentWorksheet.SetColumnWidth(0, 10f);
+            workbook.CurrentWorksheet.SetColumnWidth(1, 10f);
+            workbook.CurrentWorksheet.SetColumnWidth(2, 15f);
+            workbook.CurrentWorksheet.SetColumnWidth(3, 70f);
+
+            workbook.WorkbookMetadata.Title = "Solarertrag";
+            workbook.WorkbookMetadata.Subject = "Solarertrag für";
+            workbook.WorkbookMetadata.Creator = UserInfo.TS().CurrentUser;
+            workbook.WorkbookMetadata.Keywords = "Solarertrag;KW/h";
+
+            workbook.CurrentWorksheet.SetAutoFilter(0, 2);
+
+            workbook.CurrentWorksheet.GoToNextRow();
+            int row = 2;
+
+            workbook.CurrentWorksheet.AddCell(2023, $"A{row}");
+            workbook.CurrentWorksheet.AddCell(7, $"B{row}");
+            workbook.CurrentWorksheet.AddCell(32.9, $"C{row}");
+            workbook.CurrentWorksheet.AddCell("Test", $"D{row}");
+
+            workbook.Save();
         }
         #endregion Command Handler
     }

@@ -70,5 +70,40 @@
         </DockPanel>
         <!--#endregion Dialogtitel and Icon-->
 
+        <libWPF:SimpleGrid
+            Grid.Row="2"
+            Grid.Column="0"
+            Margin="0,10"
+            VerticalAlignment="Top"
+            Columns="170,*,40"
+            KeyboardNavigation.TabNavigation="Continue"
+            Rows="Auto,Auto,Auto">
+
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="0"
+                Text="Excelexport nach" />
+            <StackPanel
+                Grid.Row="0"
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                Orientation="Horizontal">
+                <libWPF:TextBoxEx Width="540" Text="{Binding Path=ExcelExportPath, UpdateSourceTrigger=PropertyChanged}" />
+
+                <libWPF:GeometryButton
+                    Width="Auto"
+                    Height="Auto"
+                    Margin="5,0"
+                    Command="{Binding Path=CmdAgg[OpenFolderCommand]}"
+                    PathData="{StaticResource ResourceKey=IconOpenFolder}" />
+
+                <libWPF:GeometryButton
+                    Width="Auto"
+                    Height="Auto"
+                    Command="{Binding Path=CmdAgg[ExcelExportCommand]}"
+                    PathData="{StaticResource ResourceKey=IconExcelExport}" />
+            </StackPanel>
+
+        </libWPF:SimpleGrid>
     </libWPF:SimpleGrid>
 </UserControl>
