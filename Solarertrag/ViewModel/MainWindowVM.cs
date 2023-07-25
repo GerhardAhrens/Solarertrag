@@ -180,6 +180,8 @@ namespace Solarertrag.ViewModel
                 {
                     if (targetPage == MenuButtons.MainOverview)
                     {
+                        this.ClearViewState();
+
                         MainOverviewVM controlVM = new MainOverviewVM(rowPosition);
                         this.CurrentControl.Focusable = true;
                         this.CurrentControl.Focus();
