@@ -51,7 +51,7 @@ namespace Solarertrag.ViewModel
 
             this.InitCommands();
             this.LoadDataHandler();
-            this.CurrentData = currentData;
+            this.CurrentDataExport = currentData;
         }
 
         #region Get/Set Properties
@@ -69,7 +69,7 @@ namespace Solarertrag.ViewModel
             set { this.Set(value); }
         }
 
-        private List<SolarertragMonat> CurrentData { get; set; }
+        private List<SolarertragMonat> CurrentDataExport { get; set; }
         #endregion Get/Set Properties
 
         protected sealed override void InitCommands()
@@ -171,12 +171,17 @@ namespace Solarertrag.ViewModel
             workbook.CurrentWorksheet.SetAutoFilter(0, 2);
 
             workbook.CurrentWorksheet.GoToNextRow();
-            int row = 2;
+            int rowExcel = 2;
 
-            workbook.CurrentWorksheet.AddCell(2023, $"A{row}");
-            workbook.CurrentWorksheet.AddCell(7, $"B{row}");
-            workbook.CurrentWorksheet.AddCell(32.9, $"C{row}");
-            workbook.CurrentWorksheet.AddCell("Test", $"D{row}");
+            foreach (SolarertragMonat row in this.CurrentDataExport)
+            {
+                workbook.CurrentWorksheet.AddCell(row.Year, $"A{rowExcel}");
+                workbook.CurrentWorksheet.AddCell(row.Month, $"B{rowExcel}");
+                workbook.CurrentWorksheet.AddCell(row.Ertrag, $"C{rowExcel}");
+                workbook.CurrentWorksheet.AddCell(row.Description, $"D{rowExcel}");
+                workbook.CurrentWorksheet.GoToNextRow();
+                rowExcel++;
+            }
 
             workbook.Save();
         }
