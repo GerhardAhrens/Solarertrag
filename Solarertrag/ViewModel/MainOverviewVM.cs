@@ -146,6 +146,13 @@ namespace Solarertrag.ViewModel
                             this.MaxRowCount = this.DialogDataView.Count<SolarertragMonat>();
                             double currentYear = this.DialogDataView.Cast<SolarertragMonat>().Where(w => w.Year == DateTime.Now.Year).Sum(x => x.Ertrag);
                             this.ErtragCurrentYear = currentYear.ToString("0.0");
+
+                            App.EventAgg.Publish<SelectedDataEventArgs>(
+                                new SelectedDataEventArgs
+                                {
+                                    Sender = this,
+                                    Data = this.DialogDataView.Cast<SolarertragMonat>().ToList(),
+                                });
                         }
                     }
                 }
@@ -217,6 +224,13 @@ namespace Solarertrag.ViewModel
                     {
                         this.IsFilterContentFound = true;
                     }
+
+                    App.EventAgg.Publish<SelectedDataEventArgs>(
+                        new SelectedDataEventArgs
+                        {
+                            Sender = this,
+                            Data = this.DialogDataView.Cast<SolarertragMonat>().ToList(),
+                        });
                 }
                 catch (Exception ex)
                 {

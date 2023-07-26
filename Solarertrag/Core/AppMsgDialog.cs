@@ -35,6 +35,27 @@ namespace Solarertrag.Core
             return dialogResult;
         }
 
+        public static DialogResultsEx DeleteDetail(string addText = "")
+        {
+            DialogResultsEx dialogResult = DialogResultsEx.None;
+
+            dialogResult = MessageBoxEx.Show(APPLICATIONNAME, "Wollen Sie den gewählten Eintrag löschen?", $"Der Datensatz '{addText}' wird vollständig gelöscht.", MessageBoxButton.YesNo, InstructionIcon.Question, DialogResultsEx.No);
+
+            return dialogResult;
+        }
+
+        public static DialogResultsEx NoDataFound()
+        {
+            DialogResultsEx dialogResult = DialogResultsEx.None;
+
+            dialogResult = MessageBoxEx.Show("Keine Daten",
+                $"Es sind keine Daten für den Export vorhanden!!",
+                "Für einen Datenexport müssen Daten vorhanden sein. Prüfen Sie gegebenenfalls den Filter.",
+                MessageBoxButton.OK, InstructionIcon.Information);
+
+            return dialogResult;
+        }
+
         public static DialogResultsEx FuncNotImplementation(string addText = "")
         {
             DialogResultsEx dialogResult = DialogResultsEx.None;
@@ -43,15 +64,6 @@ namespace Solarertrag.Core
                 $"Die Funktion '{addText}' ist nicht vorhanden!!",
                 "Die aufgerufene Funktion wurde noch nicht implementiert. Versuchen Sie es zu einem späteren Zeitpunkt.",
                 MessageBoxButton.OK, InstructionIcon.Information);
-
-            return dialogResult;
-        }
-
-        public static DialogResultsEx DeleteDetail(string addText = "")
-        {
-            DialogResultsEx dialogResult = DialogResultsEx.None;
-
-            dialogResult = MessageBoxEx.Show(APPLICATIONNAME, "Wollen Sie den gewählten Eintrag löschen?", $"Der Datensatz '{addText}' wird vollständig gelöscht.", MessageBoxButton.YesNo, InstructionIcon.Question, DialogResultsEx.No);
 
             return dialogResult;
         }

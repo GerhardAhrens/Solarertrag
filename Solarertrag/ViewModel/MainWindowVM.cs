@@ -16,6 +16,7 @@
 namespace Solarertrag.ViewModel
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Runtime.Versioning;
     using System.Windows;
@@ -33,6 +34,7 @@ namespace Solarertrag.ViewModel
     using Solarertrag.Core;
     using Solarertrag.DataRepository;
     using Solarertrag.Factory;
+    using Solarertrag.Model;
     using Solarertrag.View.Controls;
 
     [SupportedOSPlatform("windows")]
@@ -52,6 +54,7 @@ namespace Solarertrag.ViewModel
 
             App.EventAgg.Subscribe<SwitchDialogEventArgs<IViewModel>>(this.HandleSwitchDialogRequest);
             App.EventAgg.Subscribe<CurrentIdEventArgs<IViewModel>>(this.CurrentIdRequest);
+            App.EventAgg.Subscribe<SelectedDataEventArgs>(this.SelectedDataRequest);
 
             this.NewDatabaseHandler();
 
@@ -83,7 +86,10 @@ namespace Solarertrag.ViewModel
             private set { this.Set(value); }
         }
 
-        public Guid CurrentId { get; set; }
+        private Guid CurrentId { get; set; }
+
+
+        private List<SolarertragMonat> CurrentData { get; set; }
 
         #endregion Get/Set Properties
 
@@ -197,6 +203,13 @@ namespace Solarertrag.ViewModel
                     }
                     else if (targetPage == MenuButtons.ExcelExport)
                     {
+                        if (this.CurrentData == null || this.CurrentData.Count == 0)
+                        {
+                            AppMsgDialog.NoDataFound();
+                            this.LoadContent(MenuButtons.MainOverview);
+                            return;
+                        }
+
                         ExcelExportVM controlVM = new ExcelExportVM();
                         this.CurrentControl.Focusable = true;
                         this.CurrentControl.Focus();
@@ -262,6 +275,11 @@ namespace Solarertrag.ViewModel
             {
                 ExceptionViewer.Show(ex, this.GetType().Name);
             }
+        }
+
+        private void SelectedDataRequest(SelectedDataEventArgs args)
+        {
+            this.CurrentData = args.Data;
         }
     }
 }

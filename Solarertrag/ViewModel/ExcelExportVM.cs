@@ -47,6 +47,7 @@ namespace Solarertrag.ViewModel
         {
             this.mainWindow = Application.Current.Windows.LastActiveWindow();
             this.DialogDescription = "Ausgewählte Daten nach Excel exportieren";
+
             this.InitCommands();
             this.LoadDataHandler();
         }
