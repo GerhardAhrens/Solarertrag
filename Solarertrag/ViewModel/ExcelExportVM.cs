@@ -34,6 +34,7 @@ namespace Solarertrag.ViewModel
     using EasyPrototypingNET.WPF;
 
     using Solarertrag.Core;
+    using Solarertrag.Model;
 
     [SupportedOSPlatform("windows")]
     [ViewModel]
@@ -43,13 +44,14 @@ namespace Solarertrag.ViewModel
         /// <summary>
         /// Initializes a new instance of the <see cref="ExcelExportVM"/> class.
         /// </summary>
-        public ExcelExportVM()
+        public ExcelExportVM(List<SolarertragMonat> currentData)
         {
             this.mainWindow = Application.Current.Windows.LastActiveWindow();
             this.DialogDescription = "Ausgewählte Daten nach Excel exportieren";
 
             this.InitCommands();
             this.LoadDataHandler();
+            this.CurrentData = currentData;
         }
 
         #region Get/Set Properties
@@ -67,6 +69,7 @@ namespace Solarertrag.ViewModel
             set { this.Set(value); }
         }
 
+        private List<SolarertragMonat> CurrentData { get; set; }
         #endregion Get/Set Properties
 
         protected sealed override void InitCommands()

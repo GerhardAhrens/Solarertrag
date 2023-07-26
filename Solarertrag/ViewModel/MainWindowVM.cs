@@ -210,7 +210,7 @@ namespace Solarertrag.ViewModel
                             return;
                         }
 
-                        ExcelExportVM controlVM = new ExcelExportVM();
+                        ExcelExportVM controlVM = new ExcelExportVM(this.CurrentData);
                         this.CurrentControl.Focusable = true;
                         this.CurrentControl.Focus();
                         this.CurrentControl.DataContext = controlVM;
