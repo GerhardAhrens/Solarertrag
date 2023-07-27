@@ -20,6 +20,7 @@ namespace Solarertrag.ViewModel
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using System.Runtime.Versioning;
     using System.Windows;
 
@@ -183,7 +184,21 @@ namespace Solarertrag.ViewModel
                 rowExcel++;
             }
 
+            rowExcel++;
+            workbook.CurrentWorksheet.GoToNextRow();
+            workbook.CurrentWorksheet.AddCell("Summe", $"B{rowExcel}", boldStyle);
+            string summe = $"{this.CurrentDataExport.Sum(s => s.Ertrag)} KW/h";
+            workbook.CurrentWorksheet.AddCell(summe, $"C{rowExcel}", boldStyle);
+
             workbook.Save();
+
+            if (File.Exists(exportName) == true)
+            {
+                using (RunFileExplorer openFile = new RunFileExplorer())
+                {
+                    openFile.SelectFile(exportName);
+                }
+            }
         }
         #endregion Command Handler
     }

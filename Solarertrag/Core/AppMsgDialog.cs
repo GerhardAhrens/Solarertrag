@@ -56,6 +56,18 @@ namespace Solarertrag.Core
             return dialogResult;
         }
 
+        public static DialogResultsEx ExportFinished(string addText = "")
+        {
+            DialogResultsEx dialogResult = DialogResultsEx.None;
+
+            dialogResult = MessageBoxEx.Show("Export Daten",
+                $"Der Export für die ausgewählten Darten wurde bendet!!",
+                "Die ausgewählten Daten wurde nach '{addText}' exportiert.",
+                MessageBoxButton.OK, InstructionIcon.Information);
+
+            return dialogResult;
+        }
+
         public static DialogResultsEx FuncNotImplementation(string addText = "")
         {
             DialogResultsEx dialogResult = DialogResultsEx.None;
