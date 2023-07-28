@@ -57,7 +57,7 @@ namespace Solarertrag.ViewModel
 
             this.NewDatabaseHandler();
 
-            this.StatuslineDescription = $"(0) {Path.GetFileName(App.DatabasePath)}";
+            this.StatuslineDescription = $"Datenbank: {Path.GetFileName(App.DatabasePath)}";
 
             Mouse.OverrideCursor = null;
             this.LoadContent(MenuButtons.MainOverview);

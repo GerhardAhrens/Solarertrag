@@ -4,7 +4,7 @@
         <MenuItem
             Height="28"
             Command="{Binding Path=CmdAgg[NewDetailCommand]}"
-            Header="Neuer Eintrag (Ctrl-N)">
+            Header="{StaticResource ResourceKey=WindowMainMenuNewTT}">
             <MenuItem.Icon>
                 <StaticResource ResourceKey="IconAddItem" />
             </MenuItem.Icon>
@@ -12,24 +12,24 @@
 
         <MenuItem
             Command="{Binding Path=CmdAgg[DeleteDetailCommand]}"
-            Header="Aktueller Eintrag löschen (Ctrl-D)"
+            Header="{StaticResource ResourceKey=WindowMainMenuDeleteTT}"
             Icon="{StaticResource ResourceKey=IconDeleteItem}" />
 
         <MenuItem
             Command="{Binding Path=CmdAgg[EditDetailCommand]}"
-            Header="Aktueller Eintrag ändern (Ctrl-E)"
+            Header="{StaticResource ResourceKey=WindowMainMenuEditTT}"
             Icon="{StaticResource ResourceKey=IconEditItem}" />
 
         <Separator />
 
         <MenuItem
             Command="{Binding Path=CmdAgg[SettingsCommand]}"
-            Header="Einstellungen (Ctrl-I)"
+            Header="{StaticResource ResourceKey=WindowMainMenuSettingsTT}"
             Icon="{StaticResource ResourceKey=IconSettingsItem}" />
 
         <MenuItem
             Command="{Binding Path=CmdAgg[ExcelExportCommand]}"
-            Header="Export (Ctrl-P)"
+            Header="{StaticResource ResourceKey=WindowMainMenuExportTT}"
             Icon="{StaticResource ResourceKey=IconExcelItem}" />
     </ContextMenu>
 

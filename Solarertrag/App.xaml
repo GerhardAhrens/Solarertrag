@@ -6,16 +6,11 @@
     StartupUri="View\MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
-            <!--  https://fontawesome.com/  -->
-            <FontFamily x:Key="FontAW5BR">/Resources/Font/Font Awesome 6 Brands-Regular-400.otf#Font Awesome 6 Brands Regular</FontFamily>
-            <FontFamily x:Key="FontAW5FR">/Resources/Font/Font Awesome 6 Free-Regular-400.otf#Font Awesome 6 Free Regular</FontFamily>
-            <FontFamily x:Key="FontAW5Solid">/Resources/Font/Font Awesome 6 Free-Solid-900.otf#Font Awesome 6 Free Solid</FontFamily>
-
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources\Style\StringResources.xaml" />
                 <ResourceDictionary Source="Resources\Style\IconFontString.xaml" />
                 <ResourceDictionary Source="Resources\Style\MainMenuStyle.xaml" />
                 <ResourceDictionary Source="Resources\Style\ListViewStyle.xaml" />
-                <ResourceDictionary Source="Resources\Style\StringResources.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/EasyPrototypingNET;component/Themes/Generic.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
