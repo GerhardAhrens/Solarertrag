@@ -27,6 +27,7 @@ namespace Solarertrag.ViewModel
     using EasyPrototypingNET.Core;
     using EasyPrototypingNET.ExceptionHandling;
     using EasyPrototypingNET.Interface;
+    using EasyPrototypingNET.Logger;
     using EasyPrototypingNET.Pattern;
     using EasyPrototypingNET.WPF;
 
@@ -49,6 +50,9 @@ namespace Solarertrag.ViewModel
         {
             this.mainWindow = Application.Current.Windows.LastActiveWindow();
             this.ApplicationVersion = ApplicationProperties.VersionWithName;
+
+            TraceLogger.LogInformation($"AppVersion: {this.ApplicationVersion}");
+
             this.InitCommands();
 
             App.EventAgg.Subscribe<SwitchDialogEventArgs<IViewModel>>(this.HandleSwitchDialogRequest);

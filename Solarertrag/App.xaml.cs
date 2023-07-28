@@ -15,6 +15,7 @@
     using Console.ApplicationSettings;
 
     using EasyPrototypingNET.Core;
+    using EasyPrototypingNET.Logger;
     using EasyPrototypingNET.Pattern;
 
     /// <summary>
@@ -38,9 +39,26 @@
                 string assemblyName = ApplicationProperties.AssemblyName;
                 exePath = ApplicationProperties.ProgramDataPath;
                 exeName = $"{assemblyName}.exe";
+
+                /*
+                string fileName = $"c:\\Temp\\Solarertrag.log";
+                TraceLoggerConfiguration traceConfig = new TraceLoggerConfiguration().ForFile(fileName);
+                traceConfig.MaxLogFiles = 2;
+                TraceLogger logger = new TraceLogger(traceConfig);
+                logger.Level(TraceLevel.Off);
+
+                TraceLogger.LogInformation($"AssemblyName: {assemblyName}");
+                TraceLogger.LogInformation($"Programmpfad: {exePath}\\{exeName}");
+                */
+
                 EventAgg = new EventAggregator();
                 InitializeCultures(DEFAULTLANGUAGE);
                 RunningOn = DevelopmentTarget.GetPlatform(Assembly.GetEntryAssembly());
+
+                /*
+                TraceLogger.LogInformation($"Default Language: {DEFAULTLANGUAGE}");
+                TraceLogger.LogInformation($"GetPlatform: {RunningOn}");
+                */
 
                 using (SettingsManager sm = new SettingsManager())
                 {
@@ -56,6 +74,11 @@
                         ExitQuestion = sm.ExitQuestion;
                     }
                 }
+
+                /*
+                TraceLogger.LogInformation($"Datenbank: {DatabasePath}");
+                TraceLogger.LogInformation($"ExitQuestion: {ExitQuestion}");
+                */
             }
             catch (Exception ex)
             {
@@ -138,20 +161,7 @@
         {
             string app = Path.GetFileNameWithoutExtension(AppDomain.CurrentDomain.FriendlyName);
             Debug.WriteLine($"{app}-{(e.Exception as Exception).Message}");
-        }
-
-        private string CurrentAssemblyName()
-        {
-            string assmName = Assembly.GetExecutingAssembly().GetName().Name;
-
-            if (assmName.Contains(".") == true)
-            {
-                return assmName.Split('.')[0];
-            }
-            else
-            {
-                return Assembly.GetExecutingAssembly().GetName().Name;
-            }
+            /*TraceLogger.LogError((e.Exception as Exception).Message);*/
         }
 
         private void ApplicationExit()
