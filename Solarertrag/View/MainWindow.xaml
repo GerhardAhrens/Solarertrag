@@ -82,6 +82,7 @@
                                     Command="{Binding Path=CmdAgg[WindowCloseCommand]}"
                                     Content="{StaticResource ResourceKey=IconWindowClose}"
                                     DockPanel.Dock="Right"
+                                    ToolTip="{StaticResource ResourceKey=WindowExitTT}"
                                     WindowChrome.IsHitTestVisibleInChrome="True" />
 
                                 <Button
@@ -93,6 +94,7 @@
                                     Click="MaximizeRestoreClick"
                                     Content="{StaticResource ResourceKey=IconWindowMaximize}"
                                     DockPanel.Dock="Right"
+                                    ToolTip="{StaticResource ResourceKey=WindowMaximizeTT}"
                                     WindowChrome.IsHitTestVisibleInChrome="True" />
 
                                 <Button
@@ -104,6 +106,7 @@
                                     Click="MinimizeClick"
                                     Content="{StaticResource ResourceKey=IconWindowMinimize}"
                                     DockPanel.Dock="Right"
+                                    ToolTip="{StaticResource ResourceKey=WindowMinimizeTT}"
                                     WindowChrome.IsHitTestVisibleInChrome="True" />
 
                                 <Button
@@ -116,7 +119,7 @@
                                     Content="Hilfe"
                                     DockPanel.Dock="Right"
                                     FontWeight="Bold"
-                                    ToolTip="Hilfe aufrufen (oder F1 drücken)"
+                                    ToolTip="{StaticResource ResourceKey=WindowHelpTT}"
                                     WindowChrome.IsHitTestVisibleInChrome="True" />
 
                                 <Button
@@ -129,7 +132,7 @@
                                     Content="{StaticResource ResourceKey=IconMainMenu}"
                                     ContextMenu="{StaticResource ResourceKey=MainContextMenu}"
                                     DockPanel.Dock="Right"
-                                    ToolTip="Menü anzeigen"
+                                    ToolTip="{StaticResource ResourceKey=WindowMainMenuTT}"
                                     WindowChrome.IsHitTestVisibleInChrome="True" />
 
                             </DockPanel>
@@ -174,13 +177,13 @@
             Background="Transparent"
             FontSize="13">
             <StatusBarItem x:Name="statusBarItemUserDomainName" DockPanel.Dock="Left">
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal" ToolTip="{StaticResource ResourceKey=StatusbarItemUserTT}">
                     <Label Content="{StaticResource ResourceKey=IconUser}" />
                     <Label x:Name="statusbarUserDomainName" />
                 </StackPanel>
             </StatusBarItem>
 
-            <StatusBarItem DockPanel.Dock="Right">
+            <StatusBarItem DockPanel.Dock="Right" ToolTip="{StaticResource ResourceKey=StatusbarItemClockTT}">
                 <StackPanel Orientation="Horizontal">
                     <Label x:Name="dtStatusBarDate" />
                     <Label Content="{StaticResource ResourceKey=IconCalendar}" />
@@ -189,14 +192,20 @@
 
             <Separator Background="Transparent" />
 
-            <StatusBarItem x:Name="sbiMonitor" DockPanel.Dock="Left">
+            <StatusBarItem
+                x:Name="sbiMonitor"
+                DockPanel.Dock="Left"
+                ToolTip="{StaticResource ResourceKey=StatusbarItemHardwareTT}">
                 <StackPanel Orientation="Horizontal">
                     <Label Content="{StaticResource ResourceKey=IconScreen}" />
                     <Label x:Name="tbMonitorSize" />
                 </StackPanel>
             </StatusBarItem>
 
-            <StatusBarItem x:Name="sbiDatabase" DockPanel.Dock="Left">
+            <StatusBarItem
+                x:Name="sbiDatabase"
+                DockPanel.Dock="Left"
+                ToolTip="{StaticResource ResourceKey=StatusbarItemDatabaseTT}">
                 <StackPanel Orientation="Horizontal">
                     <Label Content="{StaticResource ResourceKey=IconDatabase}" />
                     <Label Content="{Binding Path=StatuslineDescription, UpdateSourceTrigger=PropertyChanged}" />

@@ -4,13 +4,10 @@ das ist eine kleine Applikation in NET 7 und WPF. Mit dieser kleinen Applikation
 Aufgabe der kleinen Applikation soll sein, für jeden Tag den Tagesertrag einer Solaranlage zu erfassen. Die Daten werden in einer NoSql Datenbank (LiteDB) gespeichert und können dann vielfältig ausgewertet werden. 
 
 In dem Projekt wird noch ein zusätzliche Pakete verwendet
+
 | Paket | Beschreibung |
 |:---:|:---:|
 | [LiteDB](https://github.com/mbdavid/LiteDB) | NoSQL Datenbank |
 
-```xml
-<PublishSingleFile>true</PublishSingleFile>
-<SelfContained>true</SelfContained>
-<EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
-<IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
-´´´
+Das kleine Programm ist in einer Monolithische Architekr als "Singel-Page-Application" erstellt. Für die Applikation selbst gibt es nur eine ausführbares Programm ohne weitere Aufteilung der Fuktionen.
+

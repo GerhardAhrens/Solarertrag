@@ -22,7 +22,6 @@ namespace Solarertrag.ViewModel
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
-    using Console.ApplicationSettings;
 
     using EasyPrototypingNET.BaseClass;
     using EasyPrototypingNET.Core;

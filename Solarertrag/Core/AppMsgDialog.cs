@@ -44,6 +44,18 @@ namespace Solarertrag.Core
             return dialogResult;
         }
 
+        public static DialogResultsEx ExistContent(string param)
+        {
+            DialogResultsEx dialogResult = DialogResultsEx.None;
+
+            dialogResult = MessageBoxEx.Show(APPLICATIONNAME,
+                $"Der Eintrag ist bereits vorhanden und kann nicht gespeichert werden!!",
+                $"Es ist bereits ein Eintrag mit '{param}' vorhanden.",
+                MessageBoxButton.OK, InstructionIcon.Information);
+
+            return dialogResult;
+        }
+
         public static DialogResultsEx NoDataFound()
         {
             DialogResultsEx dialogResult = DialogResultsEx.None;

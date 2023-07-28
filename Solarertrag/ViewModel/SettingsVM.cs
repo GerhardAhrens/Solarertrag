@@ -18,13 +18,9 @@
 namespace Solarertrag.ViewModel
 {
     using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Runtime.Versioning;
-    using System.Text;
-    using System.Threading.Tasks;
     using System.Windows;
+
     using Console.ApplicationSettings;
 
     using EasyPrototypingNET.BaseClass;
@@ -47,7 +43,7 @@ namespace Solarertrag.ViewModel
         public SettingsVM()
         {
             this.mainWindow = Application.Current.Windows.LastActiveWindow();
-            this.DialogDescription = "Programmeinstellungen bearbeiten";
+            this.DialogDescription = ResourceObject.GetAs<string>("DialogDescriptionSettings");
             this.InitCommands();
             this.LoadDataHandler();
         }
@@ -141,7 +137,7 @@ namespace Solarertrag.ViewModel
             {
                 using (FolderBrowserDialogEx openFile = new FolderBrowserDialogEx())
                 {
-                    openFile.Title = "Verzeichnis für den Export auswählen";
+                    openFile.Title = ResourceObject.GetAs<string>("FolderBrowserDialogEx");
                     openFile.ShowNewFolderButton = true;
                     openFile.RootFolder = Environment.SpecialFolder.MyComputer;
                     openFile.OpenDialog();

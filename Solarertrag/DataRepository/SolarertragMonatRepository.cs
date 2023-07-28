@@ -119,23 +119,5 @@ namespace PertNET.DataRepository
 
             return false;
         }
-
-        public bool ExistEntry(int chapterA, int chapterB, int chapterC)
-        {
-            bool result = false;
-
-            try
-            {
-                ILiteCollection<SolarertragMonat> entityCollection = this.DatabaseIntern.GetCollection<SolarertragMonat>(nameof(SolarertragMonat));
-                //result = entityCollection.Find(f => f.ChapterA == chapterA && f.ChapterB == chapterB && f.ChapterC == chapterC).Any();
-            }
-            catch (Exception ex)
-            {
-                string errotrText = ex.Message;
-                throw;
-            }
-
-            return result;
-        }
     }
 }

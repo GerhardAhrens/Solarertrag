@@ -29,8 +29,6 @@
             WeakEventManager<Window, CancelEventArgs>.AddHandler(this, "Closing", this.OnClosing);
             WeakEventManager<Window, RoutedEventArgs>.AddHandler(this, "SizeChanged", this.OnSizeChanged);
 
-            string v = ResourceObject.GetAs<string>("TestString");
-
             try
             {
                 this.InitTimer();

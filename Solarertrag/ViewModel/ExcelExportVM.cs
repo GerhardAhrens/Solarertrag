@@ -48,11 +48,12 @@ namespace Solarertrag.ViewModel
         public ExcelExportVM(List<SolarertragMonat> currentData)
         {
             this.mainWindow = Application.Current.Windows.LastActiveWindow();
-            this.DialogDescription = "Ausgewählte Daten nach Excel exportieren";
+            this.DialogDescription = ResourceObject.GetAs<string>("DialogDescription");
 
             this.InitCommands();
             this.LoadDataHandler();
             this.CurrentDataExport = currentData;
+            this.Message = MessageFormat(currentData.Count);
         }
 
         #region Get/Set Properties
@@ -65,6 +66,13 @@ namespace Solarertrag.ViewModel
 
         [PropertyBinding]
         public string ExcelExportPath
+        {
+            get { return this.Get<string>(); }
+            set { this.Set(value); }
+        }
+
+        [PropertyBinding]
+        public string Message
         {
             get { return this.Get<string>(); }
             set { this.Set(value); }
@@ -117,7 +125,7 @@ namespace Solarertrag.ViewModel
             {
                 using (FolderBrowserDialogEx openFile = new FolderBrowserDialogEx())
                 {
-                    openFile.Title = "Verzeichnis für den Export auswählen";
+                    openFile.Title = ResourceObject.GetAs<string>("FolderBrowserDialogEx");
                     openFile.ShowNewFolderButton = true;
                     openFile.RootFolder = Environment.SpecialFolder.MyComputer;
                     openFile.OpenDialog();
@@ -201,5 +209,17 @@ namespace Solarertrag.ViewModel
             }
         }
         #endregion Command Handler
+
+        private string MessageFormat(int count)
+        {
+            if (count > 1)
+            {
+                return string.Format(ResourceObject.GetAs<string>("MessageSI"), count);
+            }
+            else
+            {
+                return ResourceObject.GetAs<string>("MessagePL");
+            }
+        }
     }
 }

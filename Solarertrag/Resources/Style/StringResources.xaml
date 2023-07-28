@@ -4,6 +4,28 @@
     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
     <!--  Kontext Main Menü  MainWindow.xaml  -->
-    <sys:String x:Key="TestString">Neue Datenbank</sys:String>
+    <sys:String x:Key="WindowExitTT">Programm beenden</sys:String>
+    <sys:String x:Key="WindowMaximizeTT">Fenster vergrößeren</sys:String>
+    <sys:String x:Key="WindowMinimizeTT">Fenster verkleinern</sys:String>
+    <sys:String x:Key="WindowHelpTT">Hilfe aufrufen (oder F1 drücken)</sys:String>
+    <sys:String x:Key="WindowMainMenuTT">Menü anzeigen</sys:String>
 
+    <sys:String x:Key="StatusbarItemUserTT">Angemeldeter Benutzer</sys:String>
+    <sys:String x:Key="StatusbarItemHardwareTT">Monitorauflösung (X*X:Anzahl Bildschirme) und Gerät</sys:String>
+    <sys:String x:Key="StatusbarItemDatabaseTT">Name der Datenbank und zusätzliche Informationen</sys:String>
+    <sys:String x:Key="StatusbarItemClockTT">Aktuelles Datum und Uhrzeit</sys:String>
+
+    <!--  Texte in MainDetailVM.cs  -->
+    <sys:String x:Key="DialogDescriptionNew">Neuer Eintrag erfassen</sys:String>
+    <sys:String x:Key="DialogDescriptionEdit">Gewählter Eintrag bearbeiten</sys:String>
+
+    <!--  Texte in ExcelExportVM.cs  -->
+    <sys:String x:Key="DialogDescription">Ausgewählte Daten nach Excel exportieren</sys:String>
+    <sys:String x:Key="MessageSI">Es können {0} Datensätze exportiert werden.</sys:String>
+    <sys:String x:Key="MessagePL">Es kann ein Datensatzt exportiert werden.</sys:String>
+    <sys:String x:Key="FolderBrowserDialogEx">Verzeichnis für den Export auswählen</sys:String>
+
+    <!--  Texte in SettingsVM.cs  -->
+    <sys:String x:Key="DialogDescriptionSettings">Programmeinstellungen bearbeiten</sys:String>
+    
 </ResourceDictionary>

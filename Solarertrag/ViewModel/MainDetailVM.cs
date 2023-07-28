@@ -57,11 +57,11 @@ namespace Solarertrag.ViewModel
 
             if (this.CurrentId == Guid.Empty)
             {
-                this.DialogDescription = "Neuer Eintrag erfassen";
+                this.DialogDescription = ResourceObject.GetAs<string>("DialogDescriptionNew");
             }
             else
             {
-                this.DialogDescription = "Gewählter Eintrag bearbeiten";
+                this.DialogDescription = ResourceObject.GetAs<string>("DialogDescriptionEdit");
             }
 
             this.propertyNames = this.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly).Select(s => s.Name).ToHashSet();
@@ -215,28 +215,51 @@ namespace Solarertrag.ViewModel
                 {
                     if (this.CurrentId != Guid.Empty)
                     {
-                        SolarertragMonat original = SolarertragMonat.ToClone(this.CurrentSelectedItem);
-                        if (original != null)
+                        SolarertragMonat newContent = SolarertragMonat.ToClone(this.CurrentSelectedItem);
+                        if (newContent != null)
                         {
-                            original.Year = this.Year.ToInt();
-                            original.Month = this.Month.ToInt();
-                            original.Ertrag = this.Ertrag.ToDouble();
-                            original.Description = this.Description;
-                            original.ModifiedBy = UserInfo.TS().CurrentUser;
-                            original.ModifiedOn = UserInfo.TS().CurrentTime;
-                            repository.Update(original);
+                            newContent.Year = this.Year.ToInt();
+                            newContent.Month = this.Month.ToInt();
+                            newContent.Ertrag = this.Ertrag.ToDouble();
+                            newContent.Description = this.Description;
+                            newContent.ModifiedBy = UserInfo.TS().CurrentUser;
+                            newContent.ModifiedOn = UserInfo.TS().CurrentTime;
+                            if (this.ContentKeyChanged(newContent, this.CurrentSelectedItem) == false)
+                            {
+                                repository.Update(newContent);
+                            }
+                            else
+                            {
+                                if (repository.Exist(y => y.Year == newContent.Year && y.Month == newContent.Month) == true)
+                                {
+                                    AppMsgDialog.ExistContent(newContent.FullName);
+                                }
+                                else
+                                {
+                                    newContent.Id = Guid.NewGuid();
+                                    repository.Add(newContent);
+                                }
+                            }
                         }
                     }
                     else
                     {
-                        SolarertragMonat original = new SolarertragMonat();
-                        original.Year = this.Year.ToInt();
-                        original.Month = this.Month.ToInt();
-                        original.Ertrag = this.Ertrag.ToDouble();
-                        original.Description = this.Description;
-                        original.CreatedBy = UserInfo.TS().CurrentUser;
-                        original.CreatedOn = UserInfo.TS().CurrentTime;
-                        repository.Add(original);
+                        SolarertragMonat newContent = new SolarertragMonat();
+                        newContent.Year = this.Year.ToInt();
+                        newContent.Month = this.Month.ToInt();
+                        newContent.Ertrag = this.Ertrag.ToDouble();
+                        newContent.Description = this.Description;
+                        newContent.CreatedBy = UserInfo.TS().CurrentUser;
+                        newContent.CreatedOn = UserInfo.TS().CurrentTime;
+
+                        if (repository.Exist(y => y.Year == newContent.Year && y.Month == newContent.Month) == false)
+                        {
+                            repository.Add(newContent);
+                        }
+                        else
+                        {
+                            AppMsgDialog.ExistContent(newContent.FullName);
+                        }
                     }
                 }
 
@@ -251,6 +274,16 @@ namespace Solarertrag.ViewModel
         #endregion Command Handler
 
         #region Validierung
+        private bool ContentKeyChanged(SolarertragMonat originalEntity, SolarertragMonat editEntity)
+        {
+            if (originalEntity.Year == editEntity.Year && originalEntity.Month == editEntity.Month)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         private void RegisterValidations()
         {
             this.validationDelegates.Add(nameof(this.Year), () =>

@@ -83,6 +83,7 @@
                 Grid.Row="0"
                 Grid.Column="0"
                 Text="Excelexport nach" />
+
             <StackPanel
                 Grid.Row="0"
                 Grid.Column="1"
@@ -103,6 +104,15 @@
                     Command="{Binding Path=CmdAgg[ExcelExportCommand]}"
                     PathData="{StaticResource ResourceKey=IconExcelExport}" />
             </StackPanel>
+
+            <Label Grid.Row="1" Height="10" />
+
+            <TextBlock
+                Grid.Row="2"
+                Grid.Column="1"
+                FontWeight="Medium"
+                Foreground="Blue"
+                Text="{Binding Path=Message}" />
 
         </libWPF:SimpleGrid>
     </libWPF:SimpleGrid>
