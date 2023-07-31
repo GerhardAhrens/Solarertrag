@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections;
+    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Globalization;
     using System.IO;
@@ -34,6 +35,16 @@
             FrameworkCompatibilityPreferences.KeepTextBoxDisplaySynchronizedWithTextProperty = false;
             WeakEventManager<Application, DispatcherUnhandledExceptionEventArgs>.AddHandler(this, "DispatcherUnhandledException", this.OnDispatcherUnhandledException);
 
+            /*
+            SinglePageApplicationWPF.MenuButtons mb = new SinglePageApplicationWPF.MenuButtons(1, "MB1");
+            mb.Add(2, "MB2");
+            var aa = mb.Count;
+
+            foreach (KeyValuePair<int,string> item in mb.Content)
+            {
+
+            }
+            */
             try
             {
                 string assemblyName = ApplicationProperties.AssemblyName;
