@@ -51,8 +51,6 @@ namespace Solarertrag.ViewModel
             this.mainWindow = Application.Current.Windows.LastActiveWindow();
             this.ApplicationVersion = ApplicationProperties.VersionWithName;
 
-            TraceLogger.LogInformation($"AppVersion: {this.ApplicationVersion}");
-
             this.InitCommands();
 
             App.EventAgg.Subscribe<SwitchDialogEventArgs<IViewModel>>(this.HandleSwitchDialogRequest);
