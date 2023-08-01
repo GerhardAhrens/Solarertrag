@@ -16,6 +16,7 @@
     <sys:String x:Key="StatusbarItemClockTT">Aktuelles Datum und Uhrzeit</sys:String>
 
     <!--  Kontext Main Menü MainMenuStyle.xaml  -->
+    <sys:String x:Key="WindowMainMenuHomeTT">Startseite (Ctrl-H)</sys:String>
     <sys:String x:Key="WindowMainMenuNewTT">Neuer Eintrag (Ctrl-N)</sys:String>
     <sys:String x:Key="WindowMainMenuDeleteTT">Aktueller Eintrag löschen (Ctrl-D)</sys:String>
     <sys:String x:Key="WindowMainMenuEditTT">Aktueller Eintrag ändern (Ctrl-E)</sys:String>

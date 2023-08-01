@@ -16,10 +16,13 @@
 namespace Solarertrag.Core
 {
     using System;
+    using System.ComponentModel;
 
     public enum MenuCommands : int
     {
-        None = 0,
+        [Description("Home")]
+        Home = 0,
+        [Description("Exit Application")]
         WindowClose = 1,
         EditDetail = 2,
         CloseDetail = 3,

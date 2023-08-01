@@ -3,6 +3,15 @@
     <ContextMenu x:Key="MainContextMenu" x:Shared="true">
         <MenuItem
             Height="28"
+            Command="{Binding Path=CmdAgg[HomeCommand]}"
+            Header="{StaticResource ResourceKey=WindowMainMenuHomeTT}">
+            <MenuItem.Icon>
+                <StaticResource ResourceKey="IconAddItem" />
+            </MenuItem.Icon>
+        </MenuItem>
+
+        <MenuItem
+            Height="28"
             Command="{Binding Path=CmdAgg[NewDetailCommand]}"
             Header="{StaticResource ResourceKey=WindowMainMenuNewTT}">
             <MenuItem.Icon>

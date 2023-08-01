@@ -1,0 +1,25 @@
+﻿<UserControl
+    x:Class="Solarertrag.View.Controls.EmptyPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:libConverter="clr-namespace:EasyPrototypingNET.WPF.Converter;assembly=EasyPrototypingNET"
+    xmlns:libCore="clr-namespace:EasyPrototypingNET.Core;assembly=EasyPrototypingNET"
+    xmlns:libWPF="clr-namespace:EasyPrototypingNET.WPF;assembly=EasyPrototypingNET"
+    xmlns:local="clr-namespace:Solarertrag.View.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <libWPF:SimpleGrid
+        Background="WhiteSmoke"
+        Columns="*"
+        Rows="*">
+        <TextBlock
+            Grid.Row="0"
+            Grid.Column="0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Text="Single page Application" />
+    </libWPF:SimpleGrid>
+</UserControl>
