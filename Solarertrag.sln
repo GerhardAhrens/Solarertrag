@@ -15,7 +15,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Doc", "_Doc", "{4669B9DC-6
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SinglePageApplicationWPF", "SinglePageApplicationWPF\SinglePageApplicationWPF.csproj", "{70D8C2EE-739B-476E-9775-B4C1292CC9A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SinglePageApplicationWPF", "SinglePageApplicationWPF\SinglePageApplicationWPF.csproj", "{70D8C2EE-739B-476E-9775-B4C1292CC9A5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Solarertrag.Test", "Solarertrag.Test\Solarertrag.Test.csproj", "{92FF1E4D-BE9E-450D-9E03-AB39DC5BABF7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +33,10 @@ Global
 		{70D8C2EE-739B-476E-9775-B4C1292CC9A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{70D8C2EE-739B-476E-9775-B4C1292CC9A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{70D8C2EE-739B-476E-9775-B4C1292CC9A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92FF1E4D-BE9E-450D-9E03-AB39DC5BABF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92FF1E4D-BE9E-450D-9E03-AB39DC5BABF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92FF1E4D-BE9E-450D-9E03-AB39DC5BABF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92FF1E4D-BE9E-450D-9E03-AB39DC5BABF7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
