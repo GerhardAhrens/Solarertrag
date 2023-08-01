@@ -20,7 +20,9 @@ namespace Solarertrag.Core
 
     public enum MenuButtons : int
     {
-        None = 0,
+        None = -1,
+        [Description("Home - Leere Seite")]
+        Home = 0,
         [Description("Hauptdialog")]
         MainOverview = 1,
         [Description("Bearbeitungsdialog")]

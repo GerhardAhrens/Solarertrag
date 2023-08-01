@@ -51,6 +51,8 @@ namespace Solarertrag.ViewModel
             this.mainWindow = Application.Current.Windows.LastActiveWindow();
             this.ApplicationVersion = ApplicationProperties.VersionWithName;
 
+            //TraceLogger.LogInformation($"AppVersion: {this.ApplicationVersion}");
+
             this.InitCommands();
 
             App.EventAgg.Subscribe<SwitchDialogEventArgs<IViewModel>>(this.HandleSwitchDialogRequest);
@@ -96,6 +98,7 @@ namespace Solarertrag.ViewModel
 
         protected sealed override void InitCommands()
         {
+            this.CmdAgg.AddOrSetCommand(MenuCommands.Home, new RelayCommand(p1 => this.LoadContent(MenuButtons.Home), p2 => true));
             this.CmdAgg.AddOrSetCommand(MenuCommands.WindowClose, new RelayCommand(p1 => this.WindowCloseHandler(), p2 => true));
             this.CmdAgg.AddOrSetCommand(MenuCommands.NewDetail, new RelayCommand(p1 => this.NewDetailHandler(), p2 => true));
             this.CmdAgg.AddOrSetCommand(MenuCommands.EditDetail, new RelayCommand(p1 => this.EditDetailHandler(), p2 => true));

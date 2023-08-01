@@ -58,6 +58,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SinglePageApplicationWPF\SinglePageApplicationWPF.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="ApplicationIcon.ico" />
   </ItemGroup>
 
