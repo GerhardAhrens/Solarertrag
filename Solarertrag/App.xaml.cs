@@ -35,17 +35,6 @@
             FrameworkCompatibilityPreferences.KeepTextBoxDisplaySynchronizedWithTextProperty = false;
             WeakEventManager<Application, DispatcherUnhandledExceptionEventArgs>.AddHandler(this, "DispatcherUnhandledException", this.OnDispatcherUnhandledException);
 
-            /*
-            SinglePageApplicationWPF.MenuButtons mb = new SinglePageApplicationWPF.MenuButtons(1, "MB1","Menübutton 1");
-            mb.Add(2, "MB2","Menübutton 2");
-            var aa = mb.Count;
-
-            foreach (KeyValuePair<int, string[]> item in mb.Content)
-            {
-
-            }
-            */
-
             try
             {
                 string assemblyName = ApplicationProperties.AssemblyName;

@@ -45,11 +45,16 @@ namespace SinglePageApplicationWPF
             this.menuButton.AddOrUpdate(key, valueList, (oldkey, oldvalue) => valueList);
         }
 
+        ~MenuButtons()
+        {
+            this.Dispose(false);
+        }
+
         new public int Count { get { return menuButton.Count; } }
 
         public Dictionary<int, string[]> Content { get {return   menuButton.ToDictionary(entry => entry.Key, entry => entry.Value);}}
 
-        public void Add(int key, string value, string description)
+        public void Add(int key, string value, string description = null)
         {
             if (menuButton == null)
             {
@@ -92,11 +97,6 @@ namespace SinglePageApplicationWPF
             }
 
             return result;
-        }
-
-        ~MenuButtons()
-        {
-            Dispose(false);
         }
 
         #region Dispose
