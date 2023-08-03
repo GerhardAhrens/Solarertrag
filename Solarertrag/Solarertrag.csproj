@@ -11,7 +11,7 @@
     <AssemblyVersion>1.0.2023.2</AssemblyVersion>
     <FileVersion>1.0.2023.2</FileVersion>
     <ApplicationIcon>Resources\Picture\ApplicationIcon.ico</ApplicationIcon>
-    <AssemblyName>Solarertrag.dev</AssemblyName>
+    <AssemblyName>Solarertrag.prod</AssemblyName>
     <Authors></Authors>
     <Product>Solarertrag</Product>
 
