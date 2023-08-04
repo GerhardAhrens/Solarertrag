@@ -18,6 +18,7 @@ namespace Solarertrag.Test
     using System;
     using System.Globalization;
     using System.Threading;
+    using EasyPrototypingNET.Core;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -41,8 +42,68 @@ namespace Solarertrag.Test
         }
 
         [TestMethod]
-        public void xyz_xyz()
+        public void CreateNoneButton()
         {
+            CommandButton noneButton = CommandButton.None;
+
+            Assert.AreEqual(noneButton, CommandButton.None);
+            Assert.AreEqual(noneButton.Key, 0);
+        }
+
+        [TestMethod]
+        public void GetAll()
+        {
+            CommandButton noneButton = CommandButton.None;
+
+            var list = CommandButton.GetAll<CommandButton>();
+            Assert.AreEqual(list.Count(), 2);
+        }
+
+        [TestMethod]
+        public void ParseCommandButton()
+        {
+            CommandButton outVar;
+            var result = CommandButton.TryGetFromValueOrName("None", out outVar);
+            Assert.AreEqual(typeof(CommandButton), outVar.GetType().BaseType);
+        }
+
+        [TestMethod]
+        public void GetDifference_IsEquals()
+        {
+            CommandButton noneButton1 = CommandButton.None;
+            CommandButton noneButton2 = CommandButton.None;
+            Assert.AreEqual(noneButton1, noneButton2);
+            Assert.AreEqual(CommandButton.GetDifference(noneButton1,noneButton2),0);
+        }
+
+        [TestMethod]
+        public void GetDifference_IsNotEquals()
+        {
+            CommandButton noneButton = CommandButton.None;
+            CommandButton overviewButton = CommandButton.Overview;
+            Assert.AreNotEqual(noneButton, overviewButton);
+            Assert.AreEqual(CommandButton.GetDifference(noneButton, overviewButton), 1);
+        }
+
+        [TestMethod]
+        public void GetFromValue()
+        {
+            CommandButton result = CommandButton.FromValue<CommandButton>(0);
+            Assert.AreEqual(result, CommandButton.None);
+        }
+
+        [TestMethod]
+        public void FromNameCaseSensitiv()
+        {
+            CommandButton result = CommandButton.FromName<CommandButton>("None");
+            Assert.AreEqual(result, CommandButton.None);
+        }
+
+        [TestMethod]
+        public void FromNameUpper()
+        {
+            CommandButton result = CommandButton.FromName<CommandButton>("NONE");
+            Assert.AreEqual(result, CommandButton.None);
         }
 
         [DataRow("", "")]
@@ -61,6 +122,36 @@ namespace Solarertrag.Test
             {
                 Assert.IsTrue(ex.GetType() == typeof(Exception));
             }
+        }
+    }
+
+    public abstract class CommandButton : EnumExtended
+    {
+        public static readonly CommandButton None = new NoneButton();
+        public static readonly CommandButton Overview = new OverviewButton();
+
+        private CommandButton(int value, string name = null, string description = null) : base(value, name, description)
+        {
+        }
+
+        public abstract string Code { get; }
+
+        private class NoneButton : CommandButton
+        {
+            public NoneButton() : base(0, "None")
+            {
+            }
+
+            public override string Code => "NO";
+        }
+
+        private class OverviewButton : CommandButton
+        {
+            public OverviewButton() : base(1, "Overview","Übersicht")
+            {
+            }
+
+            public override string Code => "OV";
         }
     }
 }
