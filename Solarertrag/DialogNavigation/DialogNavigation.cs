@@ -73,9 +73,14 @@ namespace Solarertrag.Core
 
             using (WaitCursor wc = new WaitCursor())
             {
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+
                 if (Views.ContainsKey(commandButton.Key) == true)
                 {
                     ctrlView = CreateInstance(commandButton.Key);
+                    ctrlView.Focusable = true;
+                    ctrlView.Focus();
                 }
                 else
                 {

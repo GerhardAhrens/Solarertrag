@@ -19,8 +19,6 @@ namespace Solarertrag.Core
 
     using EasyPrototypingNET.Pattern;
 
-    using Solarertrag.DialogNavigation;
-
     /// <summary>
     /// Argument beim Wechslem zwischen den UserControl-Dialogen
     /// </summary>

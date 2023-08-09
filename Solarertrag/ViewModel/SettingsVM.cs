@@ -31,7 +31,6 @@ namespace Solarertrag.ViewModel
     using EasyPrototypingNET.WPF;
 
     using Solarertrag.Core;
-    using Solarertrag.DialogNavigation;
 
     [SupportedOSPlatform("windows")]
     [ViewModel]

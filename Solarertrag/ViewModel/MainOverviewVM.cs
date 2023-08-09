@@ -25,7 +25,6 @@ namespace Solarertrag.ViewModel
     using System.Runtime.Versioning;
     using System.Windows;
     using System.Windows.Data;
-    using System.Windows.Media.Animation;
 
     using EasyPrototypingNET.BaseClass;
     using EasyPrototypingNET.Core;
@@ -36,7 +35,6 @@ namespace Solarertrag.ViewModel
     using PertNET.DataRepository;
 
     using Solarertrag.Core;
-    using Solarertrag.DialogNavigation;
     using Solarertrag.Model;
 
     [SupportedOSPlatform("windows")]

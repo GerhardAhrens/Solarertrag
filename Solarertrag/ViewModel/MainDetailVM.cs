@@ -35,7 +35,6 @@ namespace Solarertrag.ViewModel
     using PertNET.DataRepository;
 
     using Solarertrag.Core;
-    using Solarertrag.DialogNavigation;
     using Solarertrag.Model;
 
     [SupportedOSPlatform("windows")]

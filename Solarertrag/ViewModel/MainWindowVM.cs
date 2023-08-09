@@ -177,30 +177,22 @@ namespace Solarertrag.ViewModel
 
         private void LoadContent(CommandButtons targetPage, int rowPosition = -1)
         {
+            this.CurrentControl = null;
+
             try
             {
-                this.CurrentControl = null;
-                GC.Collect();
-                GC.WaitForPendingFinalizers();
-
                 this.CurrentControl = DialogNavigation.GetControl(targetPage);
                 if (this.CurrentControl != null)
                 {
                     if (targetPage == CommandButtons.MainOverview)
                     {
-                        this.ClearViewState();
-
                         MainOverviewVM controlVM = new MainOverviewVM(rowPosition);
-                        this.CurrentControl.Focusable = true;
-                        this.CurrentControl.Focus();
                         this.CurrentControl.DataContext = controlVM;
                         ((MainOverview)this.CurrentControl).RowPosition = rowPosition;
                     }
                     else if (targetPage == CommandButtons.Settings)
                     {
                         SettingsVM controlVM = new SettingsVM();
-                        this.CurrentControl.Focusable = true;
-                        this.CurrentControl.Focus();
                         this.CurrentControl.DataContext = controlVM;
                     }
                     else if (targetPage == CommandButtons.ExcelExport)
@@ -213,8 +205,6 @@ namespace Solarertrag.ViewModel
                         }
 
                         ExcelExportVM controlVM = new ExcelExportVM(this.CurrentData);
-                        this.CurrentControl.Focusable = true;
-                        this.CurrentControl.Focus();
                         this.CurrentControl.DataContext = controlVM;
                     }
                 }
@@ -227,20 +217,16 @@ namespace Solarertrag.ViewModel
 
         private void LoadContent(CommandButtons targetPage, Guid entityId, int rowPosition = -1)
         {
+            this.CurrentControl = null;
+
             try
             {
-                this.CurrentControl = null;
-                GC.Collect();
-                GC.WaitForPendingFinalizers();
-
                 this.CurrentControl = DialogNavigation.GetControl(targetPage);
                 if (this.CurrentControl != null)
                 {
                     if (targetPage == CommandButtons.MainDetail)
                     {
                         MainDetailVM controlVM = new MainDetailVM(entityId, rowPosition);
-                        this.CurrentControl.Focusable = true;
-                        this.CurrentControl.Focus();
                         this.CurrentControl.DataContext = controlVM;
                     }
                 }

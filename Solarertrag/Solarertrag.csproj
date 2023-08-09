@@ -8,8 +8,8 @@
     <Title>Solarertrag</Title>
     <Description>Programm zur Erfassung des Ertrags einer Solaranlage</Description>
     <Copyright>Gerhard Ahrens, Lifeprojects.de</Copyright>
-    <AssemblyVersion>1.0.2023.2</AssemblyVersion>
-    <FileVersion>1.0.2023.2</FileVersion>
+    <AssemblyVersion>1.0.2023.3</AssemblyVersion>
+    <FileVersion>1.0.2023.3</FileVersion>
     <ApplicationIcon>Resources\Picture\ApplicationIcon.ico</ApplicationIcon>
     <AssemblyName>Solarertrag.prod</AssemblyName>
     <Authors></Authors>

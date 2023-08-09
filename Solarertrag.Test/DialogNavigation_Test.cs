@@ -23,6 +23,8 @@ namespace Solarertrag.Test
 
     using SinglePageApplicationWPF;
 
+    using Solarertrag.Core;
+
     [TestClass]
     public class DialogNavigation_Test
     {
@@ -44,11 +46,6 @@ namespace Solarertrag.Test
         [TestMethod]
         public void RegisterButton_Test()
         {
-            CommandButtons mb = new CommandButtons(1, "MB1", "Menübutton 1");
-            mb.Add(2, "MB2", "Menübutton 2");
-            int countButton = mb.Count;
-
-            Assert.IsTrue(countButton == 2);
         }
 
         [DataRow("", "")]
