@@ -27,13 +27,12 @@ namespace Solarertrag.ViewModel
     using EasyPrototypingNET.Core;
     using EasyPrototypingNET.ExceptionHandling;
     using EasyPrototypingNET.Interface;
-    using EasyPrototypingNET.Logger;
     using EasyPrototypingNET.Pattern;
     using EasyPrototypingNET.WPF;
 
     using Solarertrag.Core;
     using Solarertrag.DataRepository;
-    using Solarertrag.Factory;
+    using Solarertrag.DialogNavigation;
     using Solarertrag.Model;
     using Solarertrag.View.Controls;
 
@@ -64,7 +63,7 @@ namespace Solarertrag.ViewModel
             this.StatuslineDescription = $"Datenbank: {Path.GetFileName(App.DatabasePath)}";
 
             Mouse.OverrideCursor = null;
-            this.LoadContent(MenuButtons.MainOverview);
+            this.LoadContent(CommandButtons.MainOverview);
         }
 
         #region Get/Set Properties
@@ -98,7 +97,7 @@ namespace Solarertrag.ViewModel
 
         protected sealed override void InitCommands()
         {
-            this.CmdAgg.AddOrSetCommand(MenuCommands.Home, new RelayCommand(p1 => this.LoadContent(MenuButtons.Home), p2 => true));
+            this.CmdAgg.AddOrSetCommand(MenuCommands.Home, new RelayCommand(p1 => this.LoadContent(CommandButtons.Home), p2 => true));
             this.CmdAgg.AddOrSetCommand(MenuCommands.WindowClose, new RelayCommand(p1 => this.WindowCloseHandler(), p2 => true));
             this.CmdAgg.AddOrSetCommand(MenuCommands.NewDetail, new RelayCommand(p1 => this.NewDetailHandler(), p2 => true));
             this.CmdAgg.AddOrSetCommand(MenuCommands.EditDetail, new RelayCommand(p1 => this.EditDetailHandler(), p2 => true));
@@ -132,14 +131,14 @@ namespace Solarertrag.ViewModel
 
         private void NewDetailHandler()
         {
-            this.LoadContent(MenuButtons.MainDetail, Guid.Empty);
+            this.LoadContent(CommandButtons.MainDetail, Guid.Empty);
         }
 
         private void EditDetailHandler()
         {
             if (this.CurrentId != Guid.Empty)
             {
-                this.LoadContent(MenuButtons.MainDetail, this.CurrentId);
+                this.LoadContent(CommandButtons.MainDetail, this.CurrentId);
             }
         }
 
@@ -157,12 +156,12 @@ namespace Solarertrag.ViewModel
 
         private void ExcelExportHandler()
         {
-            this.LoadContent(MenuButtons.ExcelExport);
+            this.LoadContent(CommandButtons.ExcelExport);
         }
 
         private void SettingsHandler()
         {
-            this.LoadContent(MenuButtons.Settings);
+            this.LoadContent(CommandButtons.Settings);
         }
 
         private void LoadDatabaseHandler()
@@ -177,7 +176,7 @@ namespace Solarertrag.ViewModel
             }
         }
 
-        private void LoadContent(MenuButtons targetPage, int rowPosition = -1)
+        private void LoadContent(CommandButtons targetPage, int rowPosition = -1)
         {
             try
             {
@@ -185,10 +184,10 @@ namespace Solarertrag.ViewModel
                 GC.Collect();
                 GC.WaitForPendingFinalizers();
 
-                this.CurrentControl = ViewObjectFactory.GetControl(targetPage);
+                this.CurrentControl = DialogNavigation.GetControl(targetPage);
                 if (this.CurrentControl != null)
                 {
-                    if (targetPage == MenuButtons.MainOverview)
+                    if (targetPage == CommandButtons.MainOverview)
                     {
                         this.ClearViewState();
 
@@ -198,19 +197,19 @@ namespace Solarertrag.ViewModel
                         this.CurrentControl.DataContext = controlVM;
                         ((MainOverview)this.CurrentControl).RowPosition = rowPosition;
                     }
-                    else if (targetPage == MenuButtons.Settings)
+                    else if (targetPage == CommandButtons.Settings)
                     {
                         SettingsVM controlVM = new SettingsVM();
                         this.CurrentControl.Focusable = true;
                         this.CurrentControl.Focus();
                         this.CurrentControl.DataContext = controlVM;
                     }
-                    else if (targetPage == MenuButtons.ExcelExport)
+                    else if (targetPage == CommandButtons.ExcelExport)
                     {
                         if (this.CurrentData == null || this.CurrentData.Count == 0)
                         {
                             AppMsgDialog.NoDataFound();
-                            this.LoadContent(MenuButtons.MainOverview);
+                            this.LoadContent(CommandButtons.MainOverview);
                             return;
                         }
 
@@ -227,7 +226,7 @@ namespace Solarertrag.ViewModel
             }
         }
 
-        private void LoadContent(MenuButtons targetPage, Guid entityId, int rowPosition = -1)
+        private void LoadContent(CommandButtons targetPage, Guid entityId, int rowPosition = -1)
         {
             try
             {
@@ -235,10 +234,10 @@ namespace Solarertrag.ViewModel
                 GC.Collect();
                 GC.WaitForPendingFinalizers();
 
-                this.CurrentControl = ViewObjectFactory.GetControl(targetPage);
+                this.CurrentControl = DialogNavigation.GetControl(targetPage);
                 if (this.CurrentControl != null)
                 {
-                    if (targetPage == MenuButtons.MainDetail)
+                    if (targetPage == CommandButtons.MainDetail)
                     {
                         MainDetailVM controlVM = new MainDetailVM(entityId, rowPosition);
                         this.CurrentControl.Focusable = true;

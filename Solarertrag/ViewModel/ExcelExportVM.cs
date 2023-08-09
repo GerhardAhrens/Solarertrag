@@ -35,6 +35,7 @@ namespace Solarertrag.ViewModel
     using EasyPrototypingNET.WPF;
 
     using Solarertrag.Core;
+    using Solarertrag.DialogNavigation;
     using Solarertrag.Model;
 
     [SupportedOSPlatform("windows")]
@@ -108,8 +109,8 @@ namespace Solarertrag.ViewModel
                         EntityId = Guid.Empty,
                         RowPosition = -1,
                         DataType = this as IViewModel,
-                        FromPage = MenuButtons.Settings,
-                        TargetPage = MenuButtons.MainOverview
+                        FromPage = CommandButtons.Settings,
+                        TargetPage = CommandButtons.MainOverview
                     });
             }
             catch (Exception ex)

@@ -44,7 +44,7 @@ namespace Solarertrag.Test
         [TestMethod]
         public void RegisterButton_Test()
         {
-            MenuButtons mb = new MenuButtons(1, "MB1", "Menübutton 1");
+            CommandButtons mb = new CommandButtons(1, "MB1", "Menübutton 1");
             mb.Add(2, "MB2", "Menübutton 2");
             int countButton = mb.Count;
 

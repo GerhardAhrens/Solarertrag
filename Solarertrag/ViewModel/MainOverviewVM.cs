@@ -36,6 +36,7 @@ namespace Solarertrag.ViewModel
     using PertNET.DataRepository;
 
     using Solarertrag.Core;
+    using Solarertrag.DialogNavigation;
     using Solarertrag.Model;
 
     [SupportedOSPlatform("windows")]
@@ -254,8 +255,8 @@ namespace Solarertrag.ViewModel
                         DataType = this as IViewModel,
                         EntityId = currentId,
                         RowPosition = selectedItemPos,
-                        FromPage = MenuButtons.MainOverview,
-                        TargetPage = MenuButtons.MainDetail
+                        FromPage = CommandButtons.MainOverview,
+                        TargetPage = CommandButtons.MainDetail
                     });
             }
             catch (Exception ex)
@@ -285,8 +286,8 @@ namespace Solarertrag.ViewModel
                         DataType = this as IViewModel,
                         EntityId = Guid.Empty,
                         RowPosition = -2,
-                        FromPage = MenuButtons.MainOverview,
-                        TargetPage = MenuButtons.MainDetail
+                        FromPage = CommandButtons.MainOverview,
+                        TargetPage = CommandButtons.MainDetail
                     });
             }
             catch (Exception ex)

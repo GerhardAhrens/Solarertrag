@@ -11,7 +11,7 @@
 // <summary>Class of EnumBase Base Implemation</summary>
 //-----------------------------------------------------------------------
 
-namespace EasyPrototypingNET.Core
+namespace SinglePageApplicationWPF.Base
 {
     using System;
     using System.Collections.Generic;
@@ -19,9 +19,9 @@ namespace EasyPrototypingNET.Core
     using System.Reflection;
 
 
-    public abstract class EnumExtended : IComparable, IEnumExtended
+    public abstract class EnumBase : IComparable, IEnumExtended
     {
-        protected EnumExtended(int key, string name, string description = null)
+        protected EnumBase(int key, string name, string description = null)
         {
             this.Key = key;
             this.Name = name;
@@ -38,7 +38,7 @@ namespace EasyPrototypingNET.Core
 
         public override bool Equals(object obj)
         {
-            if (!(obj is EnumExtended otherValue))
+            if (!(obj is EnumBase otherValue))
             {
                 return false;
             }
@@ -51,20 +51,20 @@ namespace EasyPrototypingNET.Core
 
         public override int GetHashCode() => Key.GetHashCode();
 
-        public static IEnumerable<T> GetAll<T>() where T : EnumExtended
+        public static IEnumerable<T> GetAll<T>() where T : EnumBase
         {
             var fields = typeof(T).GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly);
 
             return fields.Select(f => f.GetValue(null)).Cast<T>();
         }
 
-        public static int GetDifference(EnumExtended firstValue, EnumExtended secondValue)
+        public static int GetDifference(EnumBase firstValue, EnumBase secondValue)
         {
             var absoluteDifference = Math.Abs(firstValue.Key - secondValue.Key);
             return absoluteDifference;
         }
 
-        public static bool TryGetFromValueOrName<T>(string valueOrName, out T enumeration) where T : EnumExtended
+        public static bool TryGetFromValueOrName<T>(string valueOrName, out T enumeration) where T : EnumBase
         {
             bool result = TryParse(item => item.Name == valueOrName, out enumeration) 
                 || int.TryParse(valueOrName, out var value) 
@@ -73,26 +73,26 @@ namespace EasyPrototypingNET.Core
             return result;
         }
 
-        public static T FromValue<T>(int value) where T : EnumExtended
+        public static T FromValue<T>(int value) where T : EnumBase
         {
             var matchingItem = Parse<T, int>(value, "nameOrValue", item => item.Key == value);
             return matchingItem;
         }
 
-        public static T FromName<T>(string name) where T : EnumExtended
+        public static T FromName<T>(string name) where T : EnumBase
         {
             var matchingItem = Parse<T, string>(name, "name", item => item.Name == name);
             return matchingItem;
         }
 
-        private static bool TryParse<TEnumeration>(Func<TEnumeration, bool> predicate, out TEnumeration enumeration) where TEnumeration : EnumExtended
+        private static bool TryParse<TEnumeration>(Func<TEnumeration, bool> predicate, out TEnumeration enumeration) where TEnumeration : EnumBase
         {
             enumeration = GetAll<TEnumeration>().FirstOrDefault(predicate);
 
             return enumeration != null;
         }
 
-        private static TEnumeration Parse<TEnumeration, TIntOrString>(TIntOrString nameOrValue, string description, Func<TEnumeration, bool> predicate) where TEnumeration : EnumExtended
+        private static TEnumeration Parse<TEnumeration, TIntOrString>(TIntOrString nameOrValue, string description, Func<TEnumeration, bool> predicate) where TEnumeration : EnumBase
         {
             var matchingItem = GetAll<TEnumeration>().FirstOrDefault(predicate);
 
@@ -104,7 +104,7 @@ namespace EasyPrototypingNET.Core
             return matchingItem;
         }
 
-        public int CompareTo(object other) => Key.CompareTo(((EnumExtended)other).Key);
+        public int CompareTo(object other) => Key.CompareTo(((EnumBase)other).Key);
     }
 
     public interface IEnumExtended

@@ -18,10 +18,10 @@ namespace Solarertrag.Test
     using System;
     using System.Globalization;
     using System.Threading;
-    using EasyPrototypingNET.Core;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+    using SinglePageApplicationWPF.Base;
 
     [TestClass]
     public class CoreFunction_Test
@@ -125,7 +125,7 @@ namespace Solarertrag.Test
         }
     }
 
-    public abstract class CommandButton : EnumExtended
+    public abstract class CommandButton : EnumBase
     {
         public static readonly CommandButton None = new NoneButton();
         public static readonly CommandButton Overview = new OverviewButton();

@@ -16,6 +16,7 @@
 namespace Solarertrag.Core
 {
     using System;
+    using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
@@ -23,9 +24,11 @@ namespace Solarertrag.Core
 
     using EasyPrototypingNET.WPF;
 
+    using SinglePageApplicationWPF;
+
     using Solarertrag.View.Controls;
 
-    public class DialogNavigation
+    public static class DialogNavigation
     {
         private const int HOME = 0;
         private const int MAINOVERVIEW = 1;
@@ -33,60 +36,46 @@ namespace Solarertrag.Core
         private const int SETTINGS = 3;
         private const int EXCELEXPORT = 4;
 
-        private static SinglePageApplicationWPF.MenuButtons menuButtonsSource;
-        private static SinglePageApplicationWPF.ViewObjects viewObjectsSource;
+        private static ConcurrentDictionary<int, Tuple<string, string, Type>> Views;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DialogNavigation"/> class.
         /// </summary>
-        public DialogNavigation()
+        static DialogNavigation()
         {
-            menuButtonsSource = new SinglePageApplicationWPF.MenuButtons();
-            viewObjectsSource = new SinglePageApplicationWPF.ViewObjects();
+            RegisterControls();
         }
 
-        public void RegisterMenuButtons()
+        private static void RegisterControls()
         {
-            if (menuButtonsSource != null)
-            {
-                menuButtonsSource.Add(HOME, "Home", "Home - Leere Seite");
-                menuButtonsSource.Add(MAINOVERVIEW, "MainOverview", "Hauptdialog");
-                menuButtonsSource.Add(MAINDETAIL, "MainDetail", "Bearbeitungsdialog");
-                menuButtonsSource.Add(SETTINGS, "Settings", "Einstellungen");
-                menuButtonsSource.Add(EXCELEXPORT, "ExcelExport", "Datenexport nach Excel");
-            }
+            ViewObjects viewObjectsSource = new ViewObjects();
+            CommandButtons result = CommandButtons.FromValue<CommandButtons>(HOME);
+            viewObjectsSource.Add(result.Key, result.Name, result.Description, typeof(EmptyPage));
+
+            result = CommandButtons.FromValue<CommandButtons>(MAINOVERVIEW);
+            viewObjectsSource.Add(result.Key, result.Name, result.Description, typeof(MainOverview));
+
+            result = CommandButtons.FromValue<CommandButtons>(MAINDETAIL);
+            viewObjectsSource.Add(result.Key, result.Name, result.Description, typeof(MainDetail));
+
+            result = CommandButtons.FromValue<CommandButtons>(SETTINGS);
+            viewObjectsSource.Add(result.Key, result.Name, result.Description, typeof(Settings));
+
+            result = CommandButtons.FromValue<CommandButtons>(EXCELEXPORT);
+            viewObjectsSource.Add(result.Key, result.Name, result.Description, typeof(ExcelExport));
+
+            Views = viewObjectsSource.Views;
         }
 
-        public void RegisterControls()
-        {
-            if (viewObjectsSource != null)
-            {
-                string[] button = menuButtonsSource.Get(HOME);
-                viewObjectsSource.Add(HOME, button[0], button[1], typeof(EmptyPage));
-
-                button = menuButtonsSource.Get(MAINOVERVIEW);
-                viewObjectsSource.Add(MAINOVERVIEW, button[0], button[1], typeof(MainOverview));
-
-                button = menuButtonsSource.Get(MAINDETAIL);
-                viewObjectsSource.Add(MAINDETAIL, button[0], button[1], typeof(MainDetail));
-
-                button = menuButtonsSource.Get(SETTINGS);
-                viewObjectsSource.Add(SETTINGS, button[0], button[1], typeof(Settings));
-
-                button = menuButtonsSource.Get(EXCELEXPORT);
-                viewObjectsSource.Add(EXCELEXPORT, button[0], button[1], typeof(ExcelExport));
-            }
-        }
-
-        public static UserControl GetControl(int key)
+        public static UserControl GetControl(CommandButtons commandButton)
         {
             UserControl ctrlView = null;
 
             using (WaitCursor wc = new WaitCursor())
             {
-                if (viewObjectsSource.ContainsKey(key) == true)
+                if (Views.ContainsKey(commandButton.Key) == true)
                 {
-                    ctrlView = CreateInstance(key);
+                    ctrlView = CreateInstance(commandButton.Key);
                 }
                 else
                 {
@@ -99,7 +88,7 @@ namespace Solarertrag.Core
 
         private static UserControl CreateInstance(int key)
         {
-            Tuple<string, string, Type> viewObject = viewObjectsSource.Get(key);
+            Tuple<string, string, Type> viewObject = Views[key];
 
             if (viewObject.Item3 != null)
             {

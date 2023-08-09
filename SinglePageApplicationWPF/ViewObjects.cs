@@ -27,7 +27,7 @@ namespace SinglePageApplicationWPF
 
         public ViewObjects()
         {
-            if (viewObjectControls == null)
+            if (this.viewObjectControls == null)
             {
                 this.viewObjectControls = new ConcurrentDictionary<int, Tuple<string, string, Type>>();
             }
@@ -35,7 +35,7 @@ namespace SinglePageApplicationWPF
 
         public ViewObjects(int key, string value, string description, Type type)
         {
-            if (viewObjectControls == null)
+            if (this.viewObjectControls == null)
             {
                 this.viewObjectControls = new ConcurrentDictionary<int, Tuple<string, string, Type>>();
             }
@@ -51,6 +51,8 @@ namespace SinglePageApplicationWPF
         }
 
         new public int Count { get { return this.viewObjectControls.Count; } }
+
+        public ConcurrentDictionary<int, Tuple<string, string, Type>> Views { get { return this.viewObjectControls; } }
 
         public Dictionary<int, Tuple<string, string, Type>> Content { get {return this.viewObjectControls.ToDictionary(entry => entry.Key, entry => entry.Value);}}
 
