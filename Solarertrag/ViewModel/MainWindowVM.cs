@@ -32,7 +32,6 @@ namespace Solarertrag.ViewModel
 
     using Solarertrag.Core;
     using Solarertrag.DataRepository;
-    using Solarertrag.DialogNavigation;
     using Solarertrag.Model;
     using Solarertrag.View.Controls;
 
