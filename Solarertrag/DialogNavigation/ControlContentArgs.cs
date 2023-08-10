@@ -24,6 +24,10 @@
 
 namespace Solarertrag.DialogNavigation
 {
+    using System;
+
+    using Solarertrag.Core;
+
     public class ControlContentArgs
     {
         /// <summary>
@@ -32,5 +36,11 @@ namespace Solarertrag.DialogNavigation
         public ControlContentArgs()
         {
         }
+
+        public CommandButtons TargetPage { get; set; }
+
+        public int RowPosition { get; set; }
+
+        public Guid EntityId { get; set; }
     }
 }
