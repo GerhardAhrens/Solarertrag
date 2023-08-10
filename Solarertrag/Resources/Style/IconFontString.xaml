@@ -482,6 +482,24 @@
     <Canvas
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Key="IconHome"
+        Width="Auto"
+        Height="Auto">
+        <Path Data="M9,13H15V19H18V10L12,5.5L6,10V19H9V13M4,21V9L12,3L20,9V21H4Z" Fill="#000000" />
+    </Canvas>
+
+    <Canvas
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Key="IconOverview"
+        Width="Auto"
+        Height="Auto">
+        <Path Data="M5 5V19H7V21H3V3H7V5H5M20 7H7V9H20V7M20 11H7V13H20V11M20 15H7V17H20V15Z" Fill="#000000" />
+    </Canvas>
+
+    <Canvas
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         x:Key="IconAddItem"
         Width="Auto"
         Height="Auto">
