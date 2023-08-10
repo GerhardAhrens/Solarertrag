@@ -31,6 +31,7 @@ namespace Solarertrag.Core
         DeleteDetail = 6,
         ExcelExport = 7,
         Settings = 8,
-        OpenFolder = 9
+        OpenFolder = 9,
+        MainOverview = 10
     }
 }
