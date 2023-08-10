@@ -30,11 +30,11 @@ namespace Solarertrag.Core
 
     public static class DialogNavigation
     {
-        private const int HOME = 0;
-        private const int MAINOVERVIEW = 1;
-        private const int MAINDETAIL = 2;
-        private const int SETTINGS = 3;
-        private const int EXCELEXPORT = 4;
+        private const int HOME = 1;
+        private const int MAINOVERVIEW = 2;
+        private const int MAINDETAIL = 4;
+        private const int SETTINGS = 4;
+        private const int EXCELEXPORT = 5;
 
         private static ConcurrentDictionary<int, Tuple<string, string, Type>> Views;
 

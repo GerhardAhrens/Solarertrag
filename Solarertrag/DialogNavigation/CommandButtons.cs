@@ -62,7 +62,7 @@ namespace Solarertrag.Core
 
         private class MainOverviewButton : CommandButtons
         {
-            public MainOverviewButton() : base(1, "MainOverview", "Übersicht")
+            public MainOverviewButton() : base(2, "MainOverview", "Übersicht")
             {
             }
 
@@ -71,7 +71,7 @@ namespace Solarertrag.Core
 
         private class MainDetailButton : CommandButtons
         {
-            public MainDetailButton() : base(2, "MainDetail", "Bearbeitungsdialog")
+            public MainDetailButton() : base(3, "MainDetail", "Bearbeitungsdialog")
             {
             }
 
@@ -80,7 +80,7 @@ namespace Solarertrag.Core
 
         private class SettingsButton : CommandButtons
         {
-            public SettingsButton() : base(3, "Settings", "Einstellungen")
+            public SettingsButton() : base(4, "Settings", "Einstellungen")
             {
             }
 
@@ -89,7 +89,7 @@ namespace Solarertrag.Core
 
         private class ExcelExportButton : CommandButtons
         {
-            public ExcelExportButton() : base(4, "ExcelExport", "Datenexport nach Excel")
+            public ExcelExportButton() : base(5, "ExcelExport", "Datenexport nach Excel")
             {
             }
 
