@@ -23,8 +23,11 @@ namespace Solarertrag.Test
 
     using SinglePageApplicationWPF;
 
+    using Solarertrag.Core;
+    using Solarertrag.DialogNavigation;
+
     [TestClass]
-    public class DialogNavigation_Test
+    public class ControlContentArgs_Test
     {
         [TestInitialize]
         public void Initialize()
@@ -35,45 +38,42 @@ namespace Solarertrag.Test
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DialogNavigation_Test"/> class.
+        /// Initializes a new instance of the <see cref="ControlContentArgs_Test"/> class.
         /// </summary>
-        public DialogNavigation_Test()
+        public ControlContentArgs_Test()
         {
         }
 
         [TestMethod]
-        public void RegisterXYZ_Test()
+        public void Create_ControlContentArgsToGoFirst()
         {
+            ControlContentArgs args = new ControlContentArgs();
+            args.TargetPage = CommandButtons.MainOverview;
+            args.RowPosition = RowItemPosition.GoFirst;
+            args.EntityId = new Guid("{583274EC-B6D6-497D-991B-708654EEEA94}");
         }
 
         [TestMethod]
-        public void SetGoFirstPosition()
+        public void Create_ControlContentArgsToAnyPosition()
         {
-            RowItemPosition first = RowItemPosition.GoFirst;
-            Assert.AreEqual(first, RowItemPosition.GoFirst);
-            Assert.AreEqual(first.Key, 1);
+            ControlContentArgs args = new ControlContentArgs();
+            args.TargetPage = CommandButtons.MainOverview;
+            args.RowPosition = RowItemPosition.GoMove;
+            args.RowPosition.GoTo = 99;
+            args.EntityId = new Guid("{583274EC-B6D6-497D-991B-708654EEEA94}");
 
-            int pos = first.GoTo;
-            Assert.AreEqual(pos, 0);
+            ControlContentArgs testArgs(ControlContentArgs args)
+            {
+                return args;
+            }
+
+            ControlContentArgs result = testArgs(args);
+            Assert.IsNotNull(result);
+            Assert.AreEqual(result.TargetPage, CommandButtons.MainOverview);
+            Assert.AreEqual(result.RowPosition.GoTo, 99);
+            Assert.AreEqual(result.EntityId, new Guid("{583274EC-B6D6-497D-991B-708654EEEA94}"));
         }
 
-        [TestMethod]
-        public void SetGoAnyPosition()
-        {
-            RowItemPosition moveToPos = RowItemPosition.GoMove;
-            Assert.AreEqual(moveToPos, RowItemPosition.GoMove);
-            Assert.AreEqual(moveToPos.Key, 3);
-
-            int pos = moveToPos.GoTo;
-            Assert.AreEqual(pos, 0);
-
-            moveToPos.GoTo = 99;
-            int posNew = moveToPos.GoTo;
-            Assert.AreEqual(posNew,99);
-
-            RowItemPosition first = RowItemPosition.GoFirst;
-            Assert.AreEqual(first.GoTo, 0);
-        }
 
         [DataRow("", "")]
         [TestMethod]

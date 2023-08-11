@@ -26,6 +26,8 @@ namespace Solarertrag.DialogNavigation
 {
     using System;
 
+    using SinglePageApplicationWPF;
+
     using Solarertrag.Core;
 
     public class ControlContentArgs
@@ -39,7 +41,7 @@ namespace Solarertrag.DialogNavigation
 
         public CommandButtons TargetPage { get; set; }
 
-        public int RowPosition { get; set; }
+        public RowItemPosition RowPosition { get; set; }
 
         public Guid EntityId { get; set; }
     }

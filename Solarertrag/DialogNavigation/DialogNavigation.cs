@@ -30,12 +30,6 @@ namespace Solarertrag.Core
 
     public static class DialogNavigation
     {
-        private const int HOME = 1;
-        private const int MAINOVERVIEW = 2;
-        private const int MAINDETAIL = 4;
-        private const int SETTINGS = 4;
-        private const int EXCELEXPORT = 5;
-
         private static ConcurrentDictionary<int, Tuple<string, string, Type>> Views;
 
         /// <summary>
@@ -49,19 +43,19 @@ namespace Solarertrag.Core
         private static void RegisterControls()
         {
             ViewObjects viewObjectsSource = new ViewObjects();
-            CommandButtons result = CommandButtons.FromValue<CommandButtons>(HOME);
+            CommandButtons result = CommandButtons.Home;
             viewObjectsSource.Add(result.Key, result.Name, result.Description, typeof(EmptyPage));
 
-            result = CommandButtons.FromValue<CommandButtons>(MAINOVERVIEW);
+            result = CommandButtons.MainOverview;
             viewObjectsSource.Add(result.Key, result.Name, result.Description, typeof(MainOverview));
 
-            result = CommandButtons.FromValue<CommandButtons>(MAINDETAIL);
+            result = CommandButtons.MainDetail;
             viewObjectsSource.Add(result.Key, result.Name, result.Description, typeof(MainDetail));
 
-            result = CommandButtons.FromValue<CommandButtons>(SETTINGS);
+            result = CommandButtons.Settings;
             viewObjectsSource.Add(result.Key, result.Name, result.Description, typeof(Settings));
 
-            result = CommandButtons.FromValue<CommandButtons>(EXCELEXPORT);
+            result = CommandButtons.ExcelExport;
             viewObjectsSource.Add(result.Key, result.Name, result.Description, typeof(ExcelExport));
 
             Views = viewObjectsSource.Views;

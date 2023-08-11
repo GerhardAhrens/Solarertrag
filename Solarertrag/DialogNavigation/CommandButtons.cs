@@ -15,16 +15,9 @@
 
 namespace Solarertrag.Core
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-
     using SinglePageApplicationWPF.Base;
 
-    public abstract class CommandButtons : EnumBase
+    public class CommandButtons : EnumBase
     {
         public static readonly CommandButtons None = new NoneButton();
         public static readonly CommandButtons Home = new HomeButton();
@@ -40,7 +33,7 @@ namespace Solarertrag.Core
         {
         }
 
-        public abstract string Code { get; }
+        public virtual string Tooltip { get; }
 
         private class NoneButton : CommandButtons
         {
@@ -48,7 +41,7 @@ namespace Solarertrag.Core
             {
             }
 
-            public override string Code => "NO";
+            public override string Tooltip => "Ohne Funktion";
         }
 
         private class HomeButton : CommandButtons
@@ -57,7 +50,7 @@ namespace Solarertrag.Core
             {
             }
 
-            public override string Code => "OV";
+            public override string Tooltip => "Startseite ohne Datenansicht";
         }
 
         private class MainOverviewButton : CommandButtons
@@ -66,7 +59,7 @@ namespace Solarertrag.Core
             {
             }
 
-            public override string Code => "OV";
+            public override string Tooltip => "Üvbersicht anzeigen";
         }
 
         private class MainDetailButton : CommandButtons
@@ -75,7 +68,7 @@ namespace Solarertrag.Core
             {
             }
 
-            public override string Code => "DE";
+            public override string Tooltip => "Bearbeitungsdialog anzeigen";
         }
 
         private class SettingsButton : CommandButtons
@@ -84,7 +77,7 @@ namespace Solarertrag.Core
             {
             }
 
-            public override string Code => "SE";
+            public override string Tooltip => "Programmeinstellungen bearbeiten";
         }
 
         private class ExcelExportButton : CommandButtons
@@ -93,7 +86,7 @@ namespace Solarertrag.Core
             {
             }
 
-            public override string Code => "EX";
+            public override string Tooltip => "Ausgewählte Datensätze nach Excel exportieren";
         }
     }
 }
