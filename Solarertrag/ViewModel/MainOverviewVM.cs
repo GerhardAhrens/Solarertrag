@@ -271,7 +271,8 @@ namespace Solarertrag.ViewModel
                         EntityId = currentId,
                         RowPosition = selectedItemPos,
                         FromPage = CommandButtons.MainOverview,
-                        TargetPage = CommandButtons.MainDetail
+                        TargetPage = CommandButtons.MainDetail,
+                        InNew = false
                     });
             }
             catch (Exception ex)
@@ -302,7 +303,8 @@ namespace Solarertrag.ViewModel
                         EntityId = Guid.Empty,
                         RowPosition = -2,
                         FromPage = CommandButtons.MainOverview,
-                        TargetPage = CommandButtons.MainDetail
+                        TargetPage = CommandButtons.MainDetail,
+                        InNew = true
                     });
             }
             catch (Exception ex)

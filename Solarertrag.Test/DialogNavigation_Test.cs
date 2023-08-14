@@ -22,6 +22,7 @@ namespace Solarertrag.Test
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     using SinglePageApplicationWPF.Core;
+    using Solarertrag.Core;
 
     [TestClass]
     public class DialogNavigation_Test
@@ -73,6 +74,38 @@ namespace Solarertrag.Test
 
             RowItemPosition first = RowItemPosition.GoFirst;
             Assert.AreEqual(first.GoTo, 0);
+        }
+
+        [TestMethod]
+        public void NewPosition()
+        {
+            RowItemPosition newPos = RowItemPosition.GoNew;
+            newPos.EntityId = new Guid("{583274EC-B6D6-497D-991B-708654EEEA94}");
+
+            Assert.AreEqual(newPos, RowItemPosition.GoNew);
+            Assert.AreEqual(newPos.EntityId, new Guid("{583274EC-B6D6-497D-991B-708654EEEA94}"));
+            Assert.AreEqual(newPos.RowStatus, RowStatus.New);
+        }
+
+        [TestMethod]
+        public void NewPositionForArgs()
+        {
+            ControlContentArgs args = new ControlContentArgs();
+            args.TargetPage = CommandButtons.MainDetail;
+            args.RowPosition = RowItemPosition.GoNew;
+            args.RowPosition.EntityId = new Guid("{583274EC-B6D6-497D-991B-708654EEEA94}");
+
+            ControlContentArgs testArgs(ControlContentArgs args)
+            {
+                return args;
+            }
+
+            ControlContentArgs result = testArgs(args);
+
+            Assert.AreEqual(result.TargetPage, CommandButtons.MainDetail);
+            Assert.AreEqual(result.RowPosition, RowItemPosition.GoNew);
+            Assert.AreEqual(result.RowPosition.EntityId, new Guid("{583274EC-B6D6-497D-991B-708654EEEA94}"));
+            Assert.AreEqual(result.RowPosition.RowStatus, RowStatus.New);
         }
 
         [DataRow("", "")]

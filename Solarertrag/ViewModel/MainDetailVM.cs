@@ -126,6 +126,8 @@ namespace Solarertrag.ViewModel
 
         private bool IsDirty { get; set; }
 
+        public bool IsNew { get; set; } = false;
+
         #endregion Get/Set Properties
 
         protected sealed override void InitCommands()
@@ -191,7 +193,8 @@ namespace Solarertrag.ViewModel
                         RowPosition = this.RowPosition,
                         DataType = this as IViewModel,
                         FromPage = CommandButtons.MainDetail,
-                        TargetPage = CommandButtons.MainOverview
+                        TargetPage = CommandButtons.MainOverview,
+                        InNew = this.IsNew
                     });
             }
             catch (Exception ex)
@@ -227,6 +230,7 @@ namespace Solarertrag.ViewModel
                             if (this.ContentKeyChanged(newContent, this.CurrentSelectedItem) == false)
                             {
                                 repository.Update(newContent);
+                                this.IsNew = false;
                             }
                             else
                             {
@@ -238,6 +242,7 @@ namespace Solarertrag.ViewModel
                                 {
                                     newContent.Id = Guid.NewGuid();
                                     repository.Add(newContent);
+                                    this.IsNew = true;
                                 }
                             }
                         }
@@ -255,6 +260,7 @@ namespace Solarertrag.ViewModel
                         if (repository.Exist(y => y.Year == newContent.Year && y.Month == newContent.Month) == false)
                         {
                             repository.Add(newContent);
+                            this.IsNew = true;
                         }
                         else
                         {

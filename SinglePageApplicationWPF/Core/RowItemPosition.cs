@@ -29,6 +29,7 @@ namespace SinglePageApplicationWPF.Core
 
         private int movePos = 0;
         private Guid entityId = Guid.Empty;
+        private RowStatus rowStatus = RowStatus.None;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RowItemPosition"/> class.
@@ -48,6 +49,12 @@ namespace SinglePageApplicationWPF.Core
         {
             get { return this.entityId; }
             set { this.entityId = value; }
+        }
+
+        public virtual RowStatus RowStatus
+        {
+            get { return this.rowStatus; }
+            set { this.rowStatus = value; }
         }
 
 
@@ -83,6 +90,7 @@ namespace SinglePageApplicationWPF.Core
         {
             public GoNewPosition() : base(4, "GoNew")
             {
+                this.RowStatus = RowStatus.New;
             }
         }
 
