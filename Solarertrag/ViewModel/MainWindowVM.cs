@@ -30,7 +30,7 @@ namespace Solarertrag.ViewModel
     using EasyPrototypingNET.Pattern;
     using EasyPrototypingNET.WPF;
 
-    using SinglePageApplicationWPF;
+    using SinglePageApplicationWPF.Core;
 
     using Solarertrag.Core;
     using Solarertrag.DataRepository;

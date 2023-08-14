@@ -13,7 +13,7 @@
 // </summary>
 //-----------------------------------------------------------------------
 
-namespace SinglePageApplicationWPF
+namespace SinglePageApplicationWPF.Core
 {
     using SinglePageApplicationWPF.Base;
 
@@ -23,8 +23,12 @@ namespace SinglePageApplicationWPF
         public static readonly RowItemPosition GoFirst = new GoFirstPosition();
         public static readonly RowItemPosition GoLast = new GoLastPosition();
         public static readonly RowItemPosition GoMove = new GoMovePosition();
+        public static readonly RowItemPosition GoNew = new GoNewPosition();
+        public static readonly RowItemPosition GoBeforeDelete = new GoBeforeDeletePosition();
+        public static readonly RowItemPosition GoAfterDelete = new GoAfterDeletePosition();
 
         private int movePos = 0;
+        private Guid entityId = Guid.Empty;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RowItemPosition"/> class.
@@ -36,10 +40,15 @@ namespace SinglePageApplicationWPF
 
         public int GoTo
         {
-            get { return movePos; }
-            set { movePos = value; }
+            get { return this.movePos; }
+            set { this.movePos = value; }
         }
 
+        public Guid EntityId
+        {
+            get { return this.entityId; }
+            set { this.entityId = value; }
+        }
 
 
         private class NonePosition : RowItemPosition
@@ -66,6 +75,27 @@ namespace SinglePageApplicationWPF
         private class GoMovePosition : RowItemPosition
         {
             public GoMovePosition() : base(3, "GoMove")
+            {
+            }
+        }
+
+        private class GoNewPosition : RowItemPosition
+        {
+            public GoNewPosition() : base(4, "GoNew")
+            {
+            }
+        }
+
+        private class GoBeforeDeletePosition : RowItemPosition
+        {
+            public GoBeforeDeletePosition() : base(5, "GoBeforeDelete")
+            {
+            }
+        }
+
+        private class GoAfterDeletePosition : RowItemPosition
+        {
+            public GoAfterDeletePosition() : base(6, "GoAfterDelete")
             {
             }
         }
