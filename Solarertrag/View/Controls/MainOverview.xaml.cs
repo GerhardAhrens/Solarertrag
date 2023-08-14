@@ -25,6 +25,8 @@
 
         public int RowPosition
         {
+            get { return this.rowPosition; }
+
             set 
             { 
                 this.rowPosition = value; 

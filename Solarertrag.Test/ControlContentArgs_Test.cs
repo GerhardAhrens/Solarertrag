@@ -24,7 +24,6 @@ namespace Solarertrag.Test
     using SinglePageApplicationWPF;
 
     using Solarertrag.Core;
-    using Solarertrag.DialogNavigation;
 
     [TestClass]
     public class ControlContentArgs_Test

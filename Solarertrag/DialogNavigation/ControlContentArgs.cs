@@ -22,13 +22,11 @@
  * If not, see <http://www.gnu.org/licenses/>.
 */
 
-namespace Solarertrag.DialogNavigation
+namespace Solarertrag.Core
 {
     using System;
 
     using SinglePageApplicationWPF;
-
-    using Solarertrag.Core;
 
     public class ControlContentArgs
     {

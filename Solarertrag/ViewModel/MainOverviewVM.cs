@@ -34,8 +34,11 @@ namespace Solarertrag.ViewModel
 
     using PertNET.DataRepository;
 
+    using SinglePageApplicationWPF;
+
     using Solarertrag.Core;
     using Solarertrag.Model;
+    using Solarertrag.View.Controls;
 
     [SupportedOSPlatform("windows")]
     [ViewModel]
@@ -46,9 +49,17 @@ namespace Solarertrag.ViewModel
         /// <summary>
         /// Initializes a new instance of the <see cref="MainOverviewVM"/> class.
         /// </summary>
-        public MainOverviewVM(int rowPosition = -1)
+        public MainOverviewVM(ControlContentArgs args)
         {
-            this.RowPosition = rowPosition;
+            if (args.RowPosition != RowItemPosition.GoMove)
+            {
+                this.RowPosition = -1;
+            }
+            else
+            {
+                this.RowPosition = args.RowPosition.GoTo;
+            }
+
             this.mainWindow = Application.Current.Windows.LastActiveWindow();
             this.IsContextMenuEnabled = true;
             this.InitCommands();
@@ -105,7 +116,7 @@ namespace Solarertrag.ViewModel
             set { this.Set(value); }
         }
 
-        private int RowPosition { get; set; }
+        public int RowPosition { get; set; }
         #endregion Get/Set Properties
 
         protected sealed override void InitCommands()
@@ -136,6 +147,12 @@ namespace Solarertrag.ViewModel
                             if (this.RowPosition == -1)
                             {
                                 this.DialogDataView.MoveCurrentToFirst();
+                                var currentItem = this.DialogDataView.Cast<SolarertragMonat>().Where(w => w.Year == DateTime.Now.Year).LastOrDefault();
+                                if (currentItem != null)
+                                {
+                                    this.DialogDataView.MoveCurrentTo(currentItem);
+                                    this.RowPosition = this.DialogDataView.CurrentPosition;
+                                }
                             }
                             else
                             {
