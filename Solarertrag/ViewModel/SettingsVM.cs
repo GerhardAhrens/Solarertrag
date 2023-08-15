@@ -71,6 +71,13 @@ namespace Solarertrag.ViewModel
         }
 
         [PropertyBinding]
+        public string DatabasePath
+        {
+            get { return this.Get<string>(); }
+            set { this.Set(value); }
+        }
+
+        [PropertyBinding]
         public string ExcelExportPath
         {
             get { return this.Get<string>(); }
@@ -92,6 +99,7 @@ namespace Solarertrag.ViewModel
             {
                 this.IsExitQuestion = sm.ExitQuestion;
                 this.ExcelExportPath = sm.LastExportFile;
+                this.DatabasePath = sm.Database;
             }
 
             this.AssemblyPath = ApplicationProperties.AssemplyPath;

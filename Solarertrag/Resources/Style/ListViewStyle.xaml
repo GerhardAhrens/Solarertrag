@@ -25,18 +25,43 @@
     </Style>
 
     <Style x:Key="lvwHeaderLeft" TargetType="{x:Type GridViewColumnHeader}">
-        <Setter Property="FontWeight" Value="Medium" />
+        <Setter Property="FontWeight" Value="Normal" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+    </Style>
+
+    <Style x:Key="lvwHeaderLeftBold" TargetType="{x:Type GridViewColumnHeader}">
+        <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
     </Style>
 
     <Style x:Key="lvwHeaderRight" TargetType="{x:Type GridViewColumnHeader}">
-        <Setter Property="FontWeight" Value="Medium" />
+        <Setter Property="FontWeight" Value="Normal" />
         <Setter Property="HorizontalContentAlignment" Value="Right" />
     </Style>
 
-    <Style x:Key="lvwColumnMax" TargetType="{x:Type GridViewColumnHeader}">
+    <Style x:Key="lvwHeaderRightBold" TargetType="{x:Type GridViewColumnHeader}">
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="HorizontalContentAlignment" Value="Right" />
+    </Style>
+
+    <Style x:Key="lvwColumnStretch" TargetType="{x:Type GridViewColumnHeader}">
         <Setter Property="FontWeight" Value="Normal" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+    </Style>
+
+    <Style x:Key="lvwColumnStretchBold" TargetType="{x:Type GridViewColumnHeader}">
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+    </Style>
+
+    <Style x:Key="lvwColumnCenter" TargetType="{x:Type GridViewColumnHeader}">
+        <Setter Property="FontWeight" Value="Normal" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="lvwColumnCenterBold" TargetType="{x:Type GridViewColumnHeader}">
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
     </Style>
 
     <Style x:Key="lvwItemContainerStyle" TargetType="{x:Type ListViewItem}">

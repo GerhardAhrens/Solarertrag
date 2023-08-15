@@ -272,7 +272,7 @@ namespace Solarertrag.ViewModel
                         RowPosition = selectedItemPos,
                         FromPage = CommandButtons.MainOverview,
                         TargetPage = CommandButtons.MainDetail,
-                        InNew = false
+                        IsNew = false
                     });
             }
             catch (Exception ex)
@@ -301,10 +301,9 @@ namespace Solarertrag.ViewModel
                         Sender = this,
                         DataType = this as IViewModel,
                         EntityId = Guid.Empty,
-                        RowPosition = -2,
                         FromPage = CommandButtons.MainOverview,
                         TargetPage = CommandButtons.MainDetail,
-                        InNew = true
+                        IsNew = true
                     });
             }
             catch (Exception ex)
@@ -373,6 +372,13 @@ namespace Solarertrag.ViewModel
                     }
 
                     this.ErtragFull = $"Total {ertragFull.ToString("0.0")} KW/h ";
+
+                    App.EventAgg.Publish<SelectedDataEventArgs>(
+                        new SelectedDataEventArgs
+                        {
+                            Sender = this,
+                            Data = ((Collection<object>)commandParameter).OfType<SolarertragMonat>().ToList(),
+                        });
                 }
             }
         }

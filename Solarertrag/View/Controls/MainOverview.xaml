@@ -15,6 +15,7 @@
     mc:Ignorable="d">
 
     <UserControl.Resources>
+        <localConverter:RowNumberConverter x:Key="rowNumberConverter" />
         <localConverter:YearToGroupExpanderConverter x:Key="YearToGroupExpanderConverter" />
         <localConverter:YearToVisibilityConverter x:Key="YearToVisibilityConverter" />
     </UserControl.Resources>
@@ -187,30 +188,53 @@
 
             <ListView.View>
                 <GridView>
+                    <GridViewColumn Width="50" Header="*">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Border BorderBrush="Transparent" BorderThickness="0">
+                                    <Grid Margin="2">
+                                        <TextBlock
+                                            VerticalAlignment="Center"
+                                            FontWeight="Bold"
+                                            Foreground="Gray"
+                                            TextAlignment="Right">
+                                            <TextBlock.Text>
+                                                <MultiBinding Converter="{StaticResource rowNumberConverter}">
+                                                    <Binding />
+                                                    <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type ListView}}" />
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
                     <GridViewColumn
                         Width="60"
                         libWPF:ListViewSort.PropertyName="Year"
                         DisplayMemberBinding="{Binding Path=Year}"
                         Header="Jahr"
-                        HeaderContainerStyle="{StaticResource lvwHeaderLeft}" />
+                        HeaderContainerStyle="{StaticResource ResourceKey=lvwColumnCenterBold}" />
 
                     <GridViewColumn
                         Width="60"
                         DisplayMemberBinding="{Binding Path=Month}"
                         Header="Monat"
-                        HeaderContainerStyle="{StaticResource lvwHeaderLeft}" />
+                        HeaderContainerStyle="{StaticResource ResourceKey=lvwColumnCenter}" />
 
                     <GridViewColumn
                         Width="60"
                         DisplayMemberBinding="{Binding Path=Ertrag}"
                         Header="Ertrag"
-                        HeaderContainerStyle="{StaticResource lvwHeaderLeft}" />
+                        HeaderContainerStyle="{StaticResource ResourceKey=lvwHeaderRight}" />
 
                     <GridViewColumn
                         Width="400"
                         DisplayMemberBinding="{Binding Path=Description}"
                         Header="Beschreibung/Hinweis"
-                        HeaderContainerStyle="{StaticResource lvwHeaderLeft}" />
+                        HeaderContainerStyle="{StaticResource ResourceKey=lvwHeaderLeft}" />
                 </GridView>
             </ListView.View>
         </ListView>

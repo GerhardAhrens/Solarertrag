@@ -131,11 +131,6 @@ namespace Solarertrag.ViewModel
             }
         }
 
-        private void NewDetailHandler()
-        {
-            this.LoadContent(LoadContentArgs.MainDetail(Guid.Empty,0));
-        }
-
         private void NewDatabaseHandler()
         {
             Result<bool> createResult = null;
@@ -148,16 +143,6 @@ namespace Solarertrag.ViewModel
             }
         }
 
-        private void ExcelExportHandler()
-        {
-            this.LoadContent(LoadContentArgs.MainExcel());
-        }
-
-        private void SettingsHandler()
-        {
-            this.LoadContent(LoadContentArgs.MainSettings());
-        }
-
         private void LoadDatabaseHandler()
         {
             Result<bool> openResult = null;
@@ -168,6 +153,21 @@ namespace Solarertrag.ViewModel
                     openResult = dm.OpenDatabase();
                 }
             }
+        }
+
+        private void NewDetailHandler()
+        {
+            this.LoadContent(LoadContentArgs.MainDetail(Guid.Empty, 0));
+        }
+
+        private void ExcelExportHandler()
+        {
+            this.LoadContent(LoadContentArgs.MainExcel());
+        }
+
+        private void SettingsHandler()
+        {
+            this.LoadContent(LoadContentArgs.MainSettings());
         }
 
         private void LoadContent(ControlContentArgs args)
@@ -239,18 +239,13 @@ namespace Solarertrag.ViewModel
         {
             try
             {
-                if (obj.EntityId != Guid.Empty)
-                {
-
-                    this.LoadContent(LoadContentArgs.MainDetail(obj.EntityId, obj.RowPosition));
-                }
-                else if (obj.EntityId == Guid.Empty && obj.RowPosition == -2)
-                {
-                    this.LoadContent(LoadContentArgs.MainDetail(Guid.Empty, -1));
-                }
-                else
+                if (obj.TargetPage == CommandButtons.MainOverview)
                 {
                     this.LoadContent(LoadContentArgs.MainOverview(obj.RowPosition));
+                }
+                else if (obj.TargetPage == CommandButtons.MainDetail)
+                {
+                    this.LoadContent(LoadContentArgs.MainDetail(this.CurrentId));
                 }
             }
             catch (Exception ex)
@@ -262,72 +257,6 @@ namespace Solarertrag.ViewModel
         private void SelectedDataRequest(SelectedDataEventArgs args)
         {
             this.CurrentData = args.Data;
-        }
-
-        private class LoadContentArgs
-        {
-            public static ControlContentArgs MainOverview(int rowPos = 0)
-            {
-                ControlContentArgs overviewArgs = new ControlContentArgs();
-                overviewArgs.TargetPage = CommandButtons.MainOverview;
-                if (rowPos > 0)
-                {
-                    overviewArgs.RowPosition = RowItemPosition.GoMove;
-                    overviewArgs.RowPosition.GoTo = rowPos;
-                }
-                else
-                {
-                    overviewArgs.RowPosition = RowItemPosition.GoFirst;
-                }
-
-                overviewArgs.EntityId = Guid.Empty;
-                return overviewArgs;
-            }
-
-            public static ControlContentArgs MainDetail(Guid id, int rowPos = 0)
-            {
-                ControlContentArgs overviewArgs = new ControlContentArgs();
-                overviewArgs.TargetPage = CommandButtons.MainDetail;
-                if (rowPos > 0)
-                {
-                    overviewArgs.RowPosition = RowItemPosition.GoMove;
-                    overviewArgs.RowPosition.GoTo = rowPos;
-                }
-                else
-                {
-                    overviewArgs.RowPosition = RowItemPosition.GoFirst;
-                }
-
-                overviewArgs.EntityId = id;
-                return overviewArgs;
-            }
-
-            public static ControlContentArgs MainHome()
-            {
-                ControlContentArgs overviewArgs = new ControlContentArgs();
-                overviewArgs.TargetPage = CommandButtons.Home;
-                overviewArgs.RowPosition = RowItemPosition.None;
-                overviewArgs.EntityId = Guid.Empty;
-                return overviewArgs;
-            }
-
-            public static ControlContentArgs MainSettings()
-            {
-                ControlContentArgs overviewArgs = new ControlContentArgs();
-                overviewArgs.TargetPage = CommandButtons.Settings;
-                overviewArgs.RowPosition = RowItemPosition.None;
-                overviewArgs.EntityId = Guid.Empty;
-                return overviewArgs;
-            }
-
-            public static ControlContentArgs MainExcel()
-            {
-                ControlContentArgs overviewArgs = new ControlContentArgs();
-                overviewArgs.TargetPage = CommandButtons.Settings;
-                overviewArgs.RowPosition = RowItemPosition.None;
-                overviewArgs.EntityId = Guid.Empty;
-                return overviewArgs;
-            }
         }
     }
 }

@@ -194,7 +194,7 @@ namespace Solarertrag.ViewModel
                         DataType = this as IViewModel,
                         FromPage = CommandButtons.MainDetail,
                         TargetPage = CommandButtons.MainOverview,
-                        InNew = this.IsNew
+                        IsNew = this.IsNew
                     });
             }
             catch (Exception ex)

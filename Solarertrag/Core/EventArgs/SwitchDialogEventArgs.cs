@@ -40,7 +40,7 @@ namespace Solarertrag.Core
         /// </summary>
         public Guid EntityId { get; set; }
 
-        public bool InNew { get; set; } = false;
+        public bool IsNew { get; set; } = false;
 
         public int RowPosition { get; set; }
 
