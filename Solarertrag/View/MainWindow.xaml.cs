@@ -35,6 +35,11 @@
                 this.InfoDeviceType = SystemMetricsInfo.DetectingDeviceType();
                 this.statusbarUserDomainName.Content = UserInfo.TS().CurrentDomainUser;
 
+                using (UserPreferences userPrefs = new UserPreferences(this, ApplicationProperties.AssemplyPath))
+                {
+                    userPrefs.Load();
+                }
+
                 if (this.rootVM == null)
                 {
                     this.rootVM = new MainWindowVM();
@@ -58,6 +63,10 @@
 
         private void OnClosing(object sender, CancelEventArgs e)
         {
+            using (UserPreferences userPrefs = new UserPreferences(this, ApplicationProperties.AssemplyPath))
+            {
+                userPrefs.Save();
+            }
         }
 
         private void OnSizeChanged(object sender, RoutedEventArgs e)
