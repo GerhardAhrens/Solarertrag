@@ -116,6 +116,13 @@ namespace Solarertrag.ViewModel
             set { this.Set(value); }
         }
 
+        [PropertyBinding]
+        public Dictionary<string,string> ErtragYearSum
+        {
+            get { return this.Get<Dictionary<string, string>>(); }
+            set { this.Set(value); }
+        }
+
         public int RowPosition { get; set; }
         #endregion Get/Set Properties
 
@@ -157,6 +164,21 @@ namespace Solarertrag.ViewModel
                             else
                             {
                                 this.DialogDataView.MoveCurrentToPosition(this.RowPosition);
+                            }
+
+                            this.ErtragYearSum = new Dictionary<string, string>();
+                            foreach (var item in this.DialogDataView.Groups)
+                            {
+                                string key = ((CollectionViewGroup)item).Name.ToString();
+                                var itemsYear = ((CollectionViewGroup)item).Items;
+
+                                double sumErtrag = 0.0;
+                                foreach (SolarertragMonat solarertrag in itemsYear)
+                                {
+                                    sumErtrag += solarertrag.Ertrag;
+                                }
+
+                                this.ErtragYearSum.Add(key, sumErtrag.ToString("####.#"));
                             }
 
                             this.MaxRowCount = this.DialogDataView.Count<SolarertragMonat>();
