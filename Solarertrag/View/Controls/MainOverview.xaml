@@ -18,6 +18,7 @@
         <localConverter:RowNumberConverter x:Key="rowNumberConverter" />
         <localConverter:YearToGroupExpanderConverter x:Key="YearToGroupExpanderConverter" />
         <localConverter:YearToVisibilityConverter x:Key="YearToVisibilityConverter" />
+        <localConverter:SumConverter x:Key="sumConverter" />
     </UserControl.Resources>
 
     <UserControl.InputBindings>
@@ -80,6 +81,7 @@
         <ListView
             Name="lvwMain"
             Grid.Row="1"
+            Tag="{Binding Path=ErtragYearSum}"
             Grid.ColumnSpan="2"
             libWPF:ListViewSort.AutoSort="True"
             Background="WhiteSmoke"
@@ -147,18 +149,14 @@
                                                         FontSize="20"
                                                         FontStyle="Normal"
                                                         FontWeight="Medium"
-                                                        Foreground="Blue"
-                                                        Text="{Binding Path=DataContext.ErtragCurrentYear, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}}"
-                                                        Visibility="{Binding Path=Name, Converter={StaticResource ResourceKey=YearToVisibilityConverter}}" />
-
-                                                    <TextBlock
-                                                        VerticalAlignment="Bottom"
-                                                        FontSize="20"
-                                                        FontStyle="Normal"
-                                                        FontWeight="Medium"
-                                                        Foreground="Blue"
-                                                        Text=" KW/h"
-                                                        Visibility="{Binding Path=Name, Converter={StaticResource ResourceKey=YearToVisibilityConverter}}" />
+                                                        Foreground="Blue">
+                                                        <TextBlock.Text>
+                                                            <localConverter:ConverterBindableParameter
+                                                                Binding="{Binding ElementName=lvwMain, Path=Tag}"
+                                                                Converter="{StaticResource sumConverter}"
+                                                                ConverterParameter="{Binding Path=Name}" />
+                                                        </TextBlock.Text>
+                                                    </TextBlock>
                                                 </StackPanel>
                                             </Expander.Header>
                                             <ItemsPresenter />

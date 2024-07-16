@@ -38,7 +38,6 @@ namespace Solarertrag.ViewModel
 
     using Solarertrag.Core;
     using Solarertrag.Model;
-    using Solarertrag.View.Controls;
 
     [SupportedOSPlatform("windows")]
     [ViewModel]
