@@ -21,7 +21,6 @@ namespace Solarertrag.ViewModel
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using System.Runtime.Versioning;
     using System.Windows;
 
     using Console.ApplicationSettings;
@@ -37,7 +36,6 @@ namespace Solarertrag.ViewModel
     using Solarertrag.Core;
     using Solarertrag.Model;
 
-    [SupportedOSPlatform("windows")]
     [ViewModel]
     public class ExcelExportVM : ViewModelBase<ExcelExportVM>, IViewModel
     {
