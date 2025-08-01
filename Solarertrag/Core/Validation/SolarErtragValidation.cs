@@ -80,7 +80,7 @@ namespace Solarertrag.Core
             return Result<string>.SuccessResult(result, resultValidError);
         }
 
-        public Result<string> InRangeMonth(Expression<Func<TViewModel, object>> expression, int min, int max)
+        public Result<string> InRangeMonth(Expression<Func<TViewModel, object>> expression, int min, int max, string description = "Ertragsmonat")
         {
             string result = string.Empty;
             bool resultValidError = false;
@@ -96,20 +96,20 @@ namespace Solarertrag.Core
             {
                 if (propertyValue.ToInt().InRange(min, max) == false)
                 {
-                    result = $"Der Ertragsmonat muß zwischen {min} und {max} liegen";
+                    result = $"Der {description} muß zwischen {min} und {max} liegen";
                     resultValidError = true;
                 }
             }
             else
             {
-                result = $"Das Feld 'Ertragsmonat' darf nicht leer sein.";
+                result = $"Das Feld '{description}' darf nicht leer sein.";
                 resultValidError = true;
             }
 
             return Result<string>.SuccessResult(result, resultValidError);
         }
 
-        public Result<string> GreaterThanZero(Expression<Func<TViewModel, object>> expression)
+        public Result<string> GreaterThanZero(Expression<Func<TViewModel, object>> expression, string description = "Ertrag")
         {
             string result = string.Empty;
             bool resultValidError = false;
@@ -128,19 +128,19 @@ namespace Solarertrag.Core
                 {
                     if (testDouble <= 0)
                     {
-                        result = $"Der Ertrag in KW/h muß gößer 0 sein";
+                        result = $"Der {description} in KW/h muß gößer 0 sein";
                         resultValidError = true;
                     }
                 }
                 else
                 {
-                    result = $"Das Feld 'Ertrag in KW/h' darf nicht leer sein.";
+                    result = $"Das Feld '{description} in KW/h' darf nicht leer sein.";
                     resultValidError = true;
                 }
             }
             else
             {
-                result = $"Das Feld 'Ertrag in KW/h' darf nicht leer sein.";
+                result = $"Das Feld '{description} in KW/h' darf nicht leer sein.";
                 resultValidError = true;
             }
 

@@ -299,12 +299,12 @@ namespace Solarertrag.ViewModel
 
             this.validationDelegates.Add(nameof(this.Month), () =>
             {
-                return SolarErtragValidation<ZaehlerStandDetailVM>.This(this).InRangeMonth(x => x.Month, 1, 12);
+                return SolarErtragValidation<ZaehlerStandDetailVM>.This(this).InRangeMonth(x => x.Month, 1, 12,"Verbrauchmonat");
             });
 
             this.validationDelegates.Add(nameof(this.Verbrauch), () =>
             {
-                return SolarErtragValidation<ZaehlerStandDetailVM>.This(this).GreaterThanZero(x => x.Verbrauch);
+                return SolarErtragValidation<ZaehlerStandDetailVM>.This(this).GreaterThanZero(x => x.Verbrauch, "Verbrauch");
             });
         }
         #endregion Validierung

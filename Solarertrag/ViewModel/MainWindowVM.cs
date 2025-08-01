@@ -204,6 +204,11 @@ namespace Solarertrag.ViewModel
                         MainDetailVM controlVM = new MainDetailVM(args.EntityId, args.RowPosition.GoTo);
                         this.CurrentControl.DataContext = controlVM;
                     }
+                    else if (args.TargetPage == CommandButtons.ZaehlerstandEdit)
+                    {
+                        ZaehlerStandDetailVM controlVM = new ZaehlerStandDetailVM(args.EntityId, args.RowPosition.GoTo);
+                        this.CurrentControl.DataContext = controlVM;
+                    }
                     else if (args.TargetPage == CommandButtons.Settings)
                     {
                         SettingsVM controlVM = new SettingsVM();

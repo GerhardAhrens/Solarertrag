@@ -158,7 +158,7 @@
                     KeyboardNavigation.IsTabStop="True"
                     KeyboardNavigation.TabIndex="12"
                     MaxLength="6"
-                    Text="{Binding Path=Ertrag, UpdateSourceTrigger=PropertyChanged}">
+                    Text="{Binding Path=Verbrauch, UpdateSourceTrigger=PropertyChanged}">
                     <i:Interaction.Behaviors>
                         <wpfBehavior:TextBoxInputBehavior DecimalPlace="2" InputMode="DecimalInput" />
                     </i:Interaction.Behaviors>
