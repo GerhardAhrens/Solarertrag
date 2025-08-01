@@ -121,7 +121,7 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Text="Ertragsjahr" />
+                <TextBlock Text="Verbrauchsjahr" />
                 <libWPF:TextBoxEx
                     x:Name="txtJahr"
                     Width="100"
@@ -135,7 +135,7 @@
                     </i:Interaction.Behaviors>
                 </libWPF:TextBoxEx>
 
-                <TextBlock Text="Ertragsmonat" />
+                <TextBlock Text="Verbrauchsmonat" />
                 <libWPF:TextBoxEx
                     x:Name="txtMonat"
                     Width="100"
@@ -149,6 +149,19 @@
                     </i:Interaction.Behaviors>
                 </libWPF:TextBoxEx>
 
+                <TextBlock Text="Verbrauchstag" />
+                <libWPF:TextBoxEx
+                    x:Name="txtDay"
+                    Width="100"
+                    HorizontalAlignment="Left"
+                    KeyboardNavigation.IsTabStop="True"
+                    KeyboardNavigation.TabIndex="11"
+                    MaxLength="2"
+                    Text="{Binding Path=Day, UpdateSourceTrigger=PropertyChanged}">
+                    <i:Interaction.Behaviors>
+                        <wpfBehavior:TextBoxInputBehavior InputMode="DigitInput" />
+                    </i:Interaction.Behaviors>
+                </libWPF:TextBoxEx>
 
                 <TextBlock Text="Verbrauch KW/h" />
                 <libWPF:TextBoxEx

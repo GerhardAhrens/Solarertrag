@@ -42,6 +42,13 @@
             {
                 Application.Current.Dispatcher.BeginInvoke(new Action(() =>
                 {
+                    this.txtDay.Focus();
+                }), DispatcherPriority.Render);
+            }
+            else if (currentControl == "txtDay" && (e.Key == Key.Tab || e.Key == Key.Enter))
+            {
+                Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+                {
                     this.txtVerbrauch.Focus();
                 }), DispatcherPriority.Render);
             }

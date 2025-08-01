@@ -52,6 +52,9 @@ namespace Solarertrag.Model
         [SearchFilter]
         public int Month { get; set; }
 
+        [SearchFilter]
+        public int Day { get; set; }
+
         public double Verbrauch { get; set; }
 
         [SearchFilter]

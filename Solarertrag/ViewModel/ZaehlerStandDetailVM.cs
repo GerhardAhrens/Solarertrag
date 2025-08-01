@@ -100,6 +100,13 @@ namespace Solarertrag.ViewModel
         }
 
         [PropertyBinding]
+        public string Day
+        {
+            get { return this.Get<string>(); }
+            set { this.Set(value, this.CheckContent); }
+        }
+
+        [PropertyBinding]
         public string Verbrauch
         {
             get { return this.Get<string>(); }
@@ -167,6 +174,7 @@ namespace Solarertrag.ViewModel
             {
                 this.Year = this.CurrentSelectedItem.Year.ToString();
                 this.Month = this.CurrentSelectedItem.Month.ToString();
+                this.Day = this.CurrentSelectedItem.Day.ToString();
                 this.Verbrauch = this.CurrentSelectedItem.Verbrauch.ToString();
                 this.Description = this.CurrentSelectedItem.Description;
             }
@@ -174,6 +182,7 @@ namespace Solarertrag.ViewModel
             {
                 this.Year = DateTime.Now.Year.ToString();
                 this.Month = DateTime.Now.Month.ToString();
+                this.Day = DateTime.Now.Day.ToString();
                 this.Verbrauch = "0";
                 this.Description = string.Empty;
             }
@@ -223,6 +232,7 @@ namespace Solarertrag.ViewModel
                         {
                             newContent.Year = this.Year.ToInt();
                             newContent.Month = this.Month.ToInt();
+                            newContent.Day = this.Month.ToInt();
                             newContent.Verbrauch = this.Verbrauch.ToDouble();
                             newContent.Description = this.Description;
                             newContent.ModifiedBy = UserInfo.TS().CurrentUser;
@@ -234,7 +244,7 @@ namespace Solarertrag.ViewModel
                             }
                             else
                             {
-                                if (repository.Exist(y => y.Year == newContent.Year && y.Month == newContent.Month && y.Verbrauch == newContent.Verbrauch) == true)
+                                if (repository.Exist(y => y.Year == newContent.Year && y.Month == newContent.Month && y.Day == newContent.Day) == true)
                                 {
                                     AppMsgDialog.ExistContent(newContent.FullName);
                                 }
@@ -252,12 +262,13 @@ namespace Solarertrag.ViewModel
                         ZaehlerstandMonat newContent = new ZaehlerstandMonat();
                         newContent.Year = this.Year.ToInt();
                         newContent.Month = this.Month.ToInt();
+                        newContent.Day = this.Day.ToInt();
                         newContent.Verbrauch = this.Verbrauch.ToDouble();
                         newContent.Description = this.Description;
                         newContent.CreatedBy = UserInfo.TS().CurrentUser;
                         newContent.CreatedOn = UserInfo.TS().CurrentTime;
 
-                        if (repository.Exist(y => y.Year == newContent.Year && y.Month == newContent.Month && y.Verbrauch == newContent.Verbrauch) == false)
+                        if (repository.Exist(y => y.Year == newContent.Year && y.Month == newContent.Month && y.Day == newContent.Day) == false)
                         {
                             repository.Add(newContent);
                             this.IsNew = true;
