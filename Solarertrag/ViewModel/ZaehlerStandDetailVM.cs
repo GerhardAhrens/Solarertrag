@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------
-// <copyright file="MainDetailVM.cs" company="Lifeprojects.de">
-//     Class: MainDetailVM
-//     Copyright © Lifeprojects.de 2023
+// <copyright file="ZaehlerStandDetailVM.cs" company="Lifeprojects.de">
+//     Class: ZaehlerStandDetailVM
+//     Copyright © Lifeprojects.de 2025
 // </copyright>
 //
 // <Framework>8.0</Framework>
@@ -39,7 +39,7 @@ namespace Solarertrag.ViewModel
 
     [SupportedOSPlatform("windows")]
     [ViewModel]
-    public class MainDetailVM : ViewModelBase<MainDetailVM>, IViewModel
+    public class ZaehlerStandDetailVM : ViewModelBase<ZaehlerStandDetailVM>, IViewModel
     {
         private readonly Window mainWindow = null;
         private readonly Dictionary<string, Func<Result<string>>> validationDelegates = new Dictionary<string, Func<Result<string>>>();
@@ -48,7 +48,7 @@ namespace Solarertrag.ViewModel
         /// <summary>
         /// Initializes a new instance of the <see cref="MainDetailVM"/> class.
         /// </summary>
-        public MainDetailVM(Guid entityId, int rowPosition)
+        public ZaehlerStandDetailVM(Guid entityId, int rowPosition)
         {
             this.CurrentId = entityId;
             this.RowPosition = rowPosition;
@@ -79,9 +79,9 @@ namespace Solarertrag.ViewModel
         }
 
         [PropertyBinding]
-        public SolarertragMonat CurrentSelectedItem
+        public ZaehlerstandMonat CurrentSelectedItem
         {
-            get { return this.Get<SolarertragMonat>(); }
+            get { return this.Get<ZaehlerstandMonat>(); }
             set { this.Set(value); }
         }
 
@@ -100,7 +100,7 @@ namespace Solarertrag.ViewModel
         }
 
         [PropertyBinding]
-        public string Ertrag
+        public string Verbrauch
         {
             get { return this.Get<string>(); }
             set { this.Set(value, this.CheckContent); }
@@ -142,7 +142,7 @@ namespace Solarertrag.ViewModel
             {
                 if (this.CurrentId != Guid.Empty)
                 {
-                    using (SolarertragMonatRepository repository = new SolarertragMonatRepository(App.DatabasePath))
+                    using (ZaehlerstandMonatRepository repository = new ZaehlerstandMonatRepository(App.DatabasePath))
                     {
                         this.CurrentSelectedItem = repository.ListById(this.CurrentId);
                         this.ShowData();
@@ -150,7 +150,7 @@ namespace Solarertrag.ViewModel
                 }
                 else
                 {
-                    this.CurrentSelectedItem = new SolarertragMonat();
+                    this.CurrentSelectedItem = new ZaehlerstandMonat();
                     this.ShowData();
                 }
             }
@@ -167,14 +167,14 @@ namespace Solarertrag.ViewModel
             {
                 this.Year = this.CurrentSelectedItem.Year.ToString();
                 this.Month = this.CurrentSelectedItem.Month.ToString();
-                this.Ertrag = this.CurrentSelectedItem.Ertrag.ToString();
+                this.Verbrauch = this.CurrentSelectedItem.Verbrauch.ToString();
                 this.Description = this.CurrentSelectedItem.Description;
             }
             else
             {
                 this.Year = DateTime.Now.Year.ToString();
                 this.Month = DateTime.Now.Month.ToString();
-                this.Ertrag = "0";
+                this.Verbrauch = "0";
                 this.Description = string.Empty;
             }
         }
@@ -214,16 +214,16 @@ namespace Solarertrag.ViewModel
         {
             try
             {
-                using (SolarertragMonatRepository repository = new SolarertragMonatRepository(App.DatabasePath))
+                using (ZaehlerstandMonatRepository repository = new ZaehlerstandMonatRepository(App.DatabasePath))
                 {
                     if (this.CurrentId != Guid.Empty)
                     {
-                        SolarertragMonat newContent = SolarertragMonat.ToClone(this.CurrentSelectedItem);
+                        ZaehlerstandMonat newContent = ZaehlerstandMonat.ToClone(this.CurrentSelectedItem);
                         if (newContent != null)
                         {
                             newContent.Year = this.Year.ToInt();
                             newContent.Month = this.Month.ToInt();
-                            newContent.Ertrag = this.Ertrag.ToDouble();
+                            newContent.Verbrauch = this.Verbrauch.ToDouble();
                             newContent.Description = this.Description;
                             newContent.ModifiedBy = UserInfo.TS().CurrentUser;
                             newContent.ModifiedOn = UserInfo.TS().CurrentTime;
@@ -249,10 +249,10 @@ namespace Solarertrag.ViewModel
                     }
                     else
                     {
-                        SolarertragMonat newContent = new SolarertragMonat();
+                        ZaehlerstandMonat newContent = new ZaehlerstandMonat();
                         newContent.Year = this.Year.ToInt();
                         newContent.Month = this.Month.ToInt();
-                        newContent.Ertrag = this.Ertrag.ToDouble();
+                        newContent.Verbrauch = this.Verbrauch.ToDouble();
                         newContent.Description = this.Description;
                         newContent.CreatedBy = UserInfo.TS().CurrentUser;
                         newContent.CreatedOn = UserInfo.TS().CurrentTime;
@@ -280,7 +280,7 @@ namespace Solarertrag.ViewModel
         #endregion Command Handler
 
         #region Validierung
-        private bool ContentKeyChanged(SolarertragMonat originalEntity, SolarertragMonat editEntity)
+        private bool ContentKeyChanged(ZaehlerstandMonat originalEntity, ZaehlerstandMonat editEntity)
         {
             if (originalEntity.Year == editEntity.Year && originalEntity.Month == editEntity.Month)
             {
@@ -294,17 +294,17 @@ namespace Solarertrag.ViewModel
         {
             this.validationDelegates.Add(nameof(this.Year), () =>
             {
-                return SolarErtragValidation<MainDetailVM>.This(this).InRangeYear(x => x.Year, 2020, 2100);
+                return SolarErtragValidation<ZaehlerStandDetailVM>.This(this).InRangeYear(x => x.Year, 2020, 2100);
             });
 
             this.validationDelegates.Add(nameof(this.Month), () =>
             {
-                return SolarErtragValidation<MainDetailVM>.This(this).InRangeMonth(x => x.Month, 1, 12);
+                return SolarErtragValidation<ZaehlerStandDetailVM>.This(this).InRangeMonth(x => x.Month, 1, 12);
             });
 
-            this.validationDelegates.Add(nameof(this.Ertrag), () =>
+            this.validationDelegates.Add(nameof(this.Verbrauch), () =>
             {
-                return SolarErtragValidation<MainDetailVM>.This(this).GreaterThanZero(x => x.Ertrag);
+                return SolarErtragValidation<ZaehlerStandDetailVM>.This(this).GreaterThanZero(x => x.Verbrauch);
             });
         }
         #endregion Validierung

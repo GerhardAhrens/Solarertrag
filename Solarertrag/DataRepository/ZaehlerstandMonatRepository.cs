@@ -1,6 +1,6 @@
 //-----------------------------------------------------------------------
-// <copyright file="SolarertragMonatRepository.cs" company="Lifeprojects.de">
-//     Class: SolarertragMonatRepository
+// <copyright file="ZaehlerstandMonatRepository.cs" company="Lifeprojects.de">
+//     Class: ZaehlerstandMonatRepository
 //     Copyright © Lifeprojects.de 2022
 // </copyright>
 //
@@ -24,12 +24,12 @@ namespace PertNET.DataRepository
     using Solarertrag.BaseClass;
     using Solarertrag.Model;
 
-    public class SolarertragMonatRepository : RepositoryBase<SolarertragMonat>
+    public class ZaehlerstandMonatRepository : RepositoryBase<ZaehlerstandMonat>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SolarertragMonatRepository"/> class.
+        /// Initializes a new instance of the <see cref="ZaehlerstandMonatRepository"/> class.
         /// </summary>
-        public SolarertragMonatRepository(string databaseFile) : base(databaseFile)
+        public ZaehlerstandMonatRepository(string databaseFile) : base(databaseFile)
         {
             if (string.IsNullOrEmpty(databaseFile) == false)
             {
@@ -40,16 +40,16 @@ namespace PertNET.DataRepository
 
         public LiteDatabase Database { get; private set; }
 
-        public ILiteCollection<SolarertragMonat> Collection { get; private set; }
+        public ILiteCollection<ZaehlerstandMonat> Collection { get; private set; }
 
         public override int Count()
         {
             return base.Count();
         }
 
-        public override SolarertragMonat ListById(Guid id)
+        public override ZaehlerstandMonat ListById(Guid id)
         {
-            SolarertragMonat result = null;
+            ZaehlerstandMonat result = null;
 
             if (id != Guid.Empty)
             {
@@ -59,11 +59,11 @@ namespace PertNET.DataRepository
             return result;
         }
 
-        public override void Add(SolarertragMonat entity)
+        public override void Add(ZaehlerstandMonat entity)
         {
             try
             {
-                ILiteCollection<SolarertragMonat> entityCollection = this.DatabaseIntern.GetCollection<SolarertragMonat>(nameof(SolarertragMonat));
+                ILiteCollection<ZaehlerstandMonat> entityCollection = this.DatabaseIntern.GetCollection<ZaehlerstandMonat>(nameof(ZaehlerstandMonat));
 
                 if (entityCollection != null)
                 {
@@ -77,11 +77,11 @@ namespace PertNET.DataRepository
             }
         }
 
-        public override bool Update(SolarertragMonat entity)
+        public override bool Update(ZaehlerstandMonat entity)
         {
             try
             {
-                ILiteCollection<SolarertragMonat> entityCollection = this.DatabaseIntern.GetCollection<SolarertragMonat>(nameof(SolarertragMonat));
+                ILiteCollection<ZaehlerstandMonat> entityCollection = this.DatabaseIntern.GetCollection<ZaehlerstandMonat>(nameof(ZaehlerstandMonat));
 
                 if (entityCollection != null)
                 {
@@ -102,7 +102,7 @@ namespace PertNET.DataRepository
         {
             try
             {
-                ILiteCollection<SolarertragMonat> entityCollection = this.DatabaseIntern.GetCollection<SolarertragMonat>(nameof(SolarertragMonat));
+                ILiteCollection<ZaehlerstandMonat> entityCollection = this.DatabaseIntern.GetCollection<ZaehlerstandMonat>(nameof(ZaehlerstandMonat));
                 if (id != Guid.Empty)
                 {
                     bool result = entityCollection.Delete(id);

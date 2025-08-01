@@ -32,6 +32,7 @@ namespace Solarertrag.Core
         ExcelExport = 7,
         Settings = 8,
         OpenFolder = 9,
-        MainOverview = 10
+        MainOverview = 10,
+        ZaehlerstandEditDetail = 11,
     }
 }

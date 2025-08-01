@@ -3,22 +3,21 @@
     using System;
     using System.ComponentModel;
     using System.Windows;
-    using System.Windows.Controls.Primitives;
     using System.Windows.Controls;
+    using System.Windows.Controls.Primitives;
     using System.Windows.Threading;
 
     using EasyPrototypingNET.Core;
     using EasyPrototypingNET.Core.SystemMetrics;
 
     using Solarertrag.ViewModel;
-    using Solarertrag.Core;
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-        private const string DateFormat = "dd.MM.yy HH:mm";
+        private const string DATEFORMAT = "dd.MM.yy HH:mm";
         private DispatcherTimer statusBarDate = null;
         private readonly MainWindowVM rootVM = null;
 
@@ -84,7 +83,7 @@
             this.statusBarDate.Start();
             this.statusBarDate.Tick += new EventHandler(
                 delegate (object s, EventArgs a) {
-                    this.dtStatusBarDate.Content = DateTime.Now.ToString(DateFormat);
+                    this.dtStatusBarDate.Content = DateTime.Now.ToString(DATEFORMAT);
                 });
         }
 

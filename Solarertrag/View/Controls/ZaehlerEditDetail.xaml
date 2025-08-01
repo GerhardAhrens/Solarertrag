@@ -1,0 +1,180 @@
+﻿<UserControl
+    x:Class="Solarertrag.View.Controls.ZaehlerEditDetail"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:libConverter="clr-namespace:EasyPrototypingNET.WPF.Converter;assembly=EasyPrototypingNET"
+    xmlns:libCore="clr-namespace:EasyPrototypingNET.Core;assembly=EasyPrototypingNET"
+    xmlns:libWPF="clr-namespace:EasyPrototypingNET.WPF;assembly=EasyPrototypingNET"
+    xmlns:local="clr-namespace:Solarertrag.View.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:wpfBehavior="clr-namespace:EasyPrototypingNET.WPF.Behavior;assembly=EasyPrototypingNET"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <libConverter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </UserControl.Resources>
+
+    <UserControl.InputBindings>
+        <KeyBinding
+            Key="F4"
+            Command="{Binding Path=CmdAgg[CloseDetailCommand]}"
+            Modifiers="Ctrl" />
+
+        <KeyBinding Key="Esc" Command="{Binding Path=CmdAgg[CloseDetailCommand]}" />
+
+        <KeyBinding
+            Key="S"
+            Command="{Binding Path=CmdAgg[SaveDetailCommand]}"
+            Modifiers="Ctrl" />
+    </UserControl.InputBindings>
+
+    <libWPF:SimpleGrid Columns="*" Rows="Auto,Auto,Auto,Auto">
+        <!--#region Toolbar-->
+        <ToolBar Grid.Row="0">
+            <ToolBar.Resources>
+                <Style TargetType="{x:Type ToolBarPanel}">
+                    <Setter Property="Orientation" Value="Horizontal" />
+                </Style>
+            </ToolBar.Resources>
+
+            <libWPF:GeometryButton
+                Width="100"
+                Height="30"
+                Command="{Binding Path=CmdAgg[CloseDetailCommand]}"
+                Foreground="Black"
+                PathData="{StaticResource ResourceKey=DialogClose}"
+                Text="Schließen"
+                WindowChrome.IsHitTestVisibleInChrome="True" />
+
+            <libWPF:GeometryButton
+                Width="100"
+                Height="30"
+                Command="{Binding Path=CmdAgg[SaveDetailCommand]}"
+                Foreground="Black"
+                PathData="{StaticResource ResourceKey=SaveDialog}"
+                Text="Speichern"
+                WindowChrome.IsHitTestVisibleInChrome="True" />
+        </ToolBar>
+        <!--#endregion Toolbar-->
+
+        <!--#region Dialogtitel and Icon-->
+        <DockPanel
+            Grid.Row="1"
+            Height="Auto"
+            Background="LightYellow"
+            LastChildFill="False">
+            <TextBlock
+                x:Name="tbDialogDescription"
+                Grid.Row="0"
+                Margin="5,0"
+                VerticalAlignment="Center"
+                DockPanel.Dock="Left"
+                FontSize="22"
+                FontWeight="Medium"
+                Text="{Binding Path=DialogDescription, UpdateSourceTrigger=PropertyChanged}" />
+
+            <Image
+                Width="32"
+                Height="32"
+                Margin="5,0,0,0"
+                DockPanel.Dock="Right"
+                Source="/ApplicationIcon.ico" />
+        </DockPanel>
+        <!--#endregion Dialogtitel and Icon-->
+
+        <!--#region Notification Panel-->
+        <ScrollViewer
+            Grid.Row="2"
+            Grid.Column="0"
+            MaxHeight="60"
+            Background="Red"
+            VerticalScrollBarVisibility="Auto"
+            Visibility="{Binding Path=ValidationErrors.Count, Converter={StaticResource BooleanToVisibleConverter}}">
+            <ListBox
+                Height="Auto"
+                Background="Transparent"
+                FontWeight="Bold"
+                Foreground="White"
+                IsSynchronizedWithCurrentItem="True"
+                ItemsSource="{Binding Path=ValidationErrors, UpdateSourceTrigger=PropertyChanged}"
+                SelectedIndex="0" />
+        </ScrollViewer>
+        <!--#endregion Notification Panel-->
+
+        <ScrollViewer
+            Grid.Row="3"
+            Grid.Column="0"
+            VerticalScrollBarVisibility="Auto">
+            <libWPF:AutoGrid
+                VerticalAlignment="Top"
+                ChildHorizontalAlignment="Stretch"
+                ChildMargin="5"
+                ChildVerticalAlignment="Center"
+                IsAutoIndexing="True"
+                KeyboardNavigation.TabNavigation="Continue">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="Ertragsjahr" />
+                <libWPF:TextBoxEx
+                    x:Name="txtJahr"
+                    Width="100"
+                    HorizontalAlignment="Left"
+                    KeyboardNavigation.IsTabStop="True"
+                    KeyboardNavigation.TabIndex="10"
+                    MaxLength="4"
+                    Text="{Binding Path=Year, UpdateSourceTrigger=PropertyChanged}">
+                    <i:Interaction.Behaviors>
+                        <wpfBehavior:TextBoxInputBehavior InputMode="DigitInput" />
+                    </i:Interaction.Behaviors>
+                </libWPF:TextBoxEx>
+
+                <TextBlock Text="Ertragsmonat" />
+                <libWPF:TextBoxEx
+                    x:Name="txtMonat"
+                    Width="100"
+                    HorizontalAlignment="Left"
+                    KeyboardNavigation.IsTabStop="True"
+                    KeyboardNavigation.TabIndex="11"
+                    MaxLength="2"
+                    Text="{Binding Path=Month, UpdateSourceTrigger=PropertyChanged}">
+                    <i:Interaction.Behaviors>
+                        <wpfBehavior:TextBoxInputBehavior InputMode="DigitInput" />
+                    </i:Interaction.Behaviors>
+                </libWPF:TextBoxEx>
+
+
+                <TextBlock Text="Verbrauch KW/h" />
+                <libWPF:TextBoxEx
+                    x:Name="txtVerbrauch"
+                    Width="100"
+                    HorizontalAlignment="Left"
+                    KeyboardNavigation.IsTabStop="True"
+                    KeyboardNavigation.TabIndex="12"
+                    MaxLength="6"
+                    Text="{Binding Path=Ertrag, UpdateSourceTrigger=PropertyChanged}">
+                    <i:Interaction.Behaviors>
+                        <wpfBehavior:TextBoxInputBehavior DecimalPlace="2" InputMode="DecimalInput" />
+                    </i:Interaction.Behaviors>
+                </libWPF:TextBoxEx>
+
+                <TextBlock Text="Beschreibung" />
+                <libWPF:TextBoxEx
+                    x:Name="txtDescription"
+                    Width="500"
+                    HorizontalAlignment="Left"
+                    KeyboardNavigation.IsTabStop="True"
+                    KeyboardNavigation.TabIndex="13"
+                    MaxLength="200"
+                    Text="{Binding Path=Description, UpdateSourceTrigger=PropertyChanged}" />
+            </libWPF:AutoGrid>
+        </ScrollViewer>
+
+    </libWPF:SimpleGrid>
+</UserControl>

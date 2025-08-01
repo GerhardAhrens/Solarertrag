@@ -15,7 +15,6 @@
 
 namespace Solarertrag.Model
 {
-    using EasyPrototypingNET.BaseClass;
     using EasyPrototypingNET.Core.Application;
     using EasyPrototypingNET.Interface;
 

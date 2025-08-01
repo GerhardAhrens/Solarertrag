@@ -43,6 +43,13 @@
         <Separator />
 
         <MenuItem
+            Command="{Binding Path=CmdAgg[ZaehlerstandEditDetailCommand]}"
+            Header="{StaticResource ResourceKey=WindowZaehlerEditTT}"
+            Icon="{StaticResource ResourceKey=IconZaehlerstandEditItem}" />
+
+        <Separator />
+        
+        <MenuItem
             Command="{Binding Path=CmdAgg[SettingsCommand]}"
             Header="{StaticResource ResourceKey=WindowMainMenuSettingsTT}"
             Icon="{StaticResource ResourceKey=IconSettingsItem}" />

@@ -4,7 +4,7 @@
 //     Copyright © Lifeprojects.de 2023
 // </copyright>
 //
-// <Framework>7.0</Framework>
+// <Framework>8.0</Framework>
 //
 // <author>Gerhard Ahrens - Lifeprojects.de</author>
 // <email>developer@lifeprojects.de</email>

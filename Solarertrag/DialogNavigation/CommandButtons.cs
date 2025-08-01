@@ -23,6 +23,7 @@ namespace Solarertrag.Core
         public static readonly CommandButtons MainDetail = new MainDetailButton();
         public static readonly CommandButtons Settings = new SettingsButton();
         public static readonly CommandButtons ExcelExport = new ExcelExportButton();
+        public static readonly CommandButtons ZaehlerstandEdit = new ZaehlerstandEditButton();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CommandButtons"/> class.
@@ -81,6 +82,15 @@ namespace Solarertrag.Core
         private class ExcelExportButton : CommandButtons
         {
             public ExcelExportButton() : base(5, "ExcelExport", "Datenexport nach Excel")
+            {
+            }
+
+            public override string Tooltip => "Ausgewählte Datensätze nach Excel exportieren";
+        }
+
+        private class ZaehlerstandEditButton : CommandButtons
+        {
+            public ZaehlerstandEditButton() : base(6, "Zählerstand", "Zählerstand bearbeiten")
             {
             }
 

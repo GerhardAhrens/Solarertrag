@@ -103,6 +103,7 @@ namespace Solarertrag.ViewModel
             this.CmdAgg.AddOrSetCommand(MenuCommands.NewDetail, new RelayCommand(p1 => this.NewDetailHandler(), p2 => true));
             this.CmdAgg.AddOrSetCommand(MenuCommands.ExcelExport, new RelayCommand(p1 => this.ExcelExportHandler(), p2 => true));
             this.CmdAgg.AddOrSetCommand(MenuCommands.Settings, new RelayCommand(p1 => this.SettingsHandler(), p2 => true));
+            this.CmdAgg.AddOrSetCommand(MenuCommands.ZaehlerstandEditDetail, new RelayCommand(p1 => this.ZaehlerstandHandler(), p2 => true));
         }
 
         private void WindowCloseHandler()
@@ -166,6 +167,11 @@ namespace Solarertrag.ViewModel
         private void SettingsHandler()
         {
             this.LoadContent(LoadContentArgs.MainSettings());
+        }
+
+        private void ZaehlerstandHandler()
+        {
+            this.LoadContent(LoadContentArgs.ZaehlerstandEdit(Guid.Empty, 0));
         }
 
         private void LoadContent(ControlContentArgs args)

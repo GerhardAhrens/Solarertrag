@@ -70,6 +70,9 @@
     <Compile Update="Core\Base\ViewObjects.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="ViewModel\ZaehlerStandDetailVM.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="ViewModel\MainDetailVM.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -77,6 +80,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\Controls\ExcelExport.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\Controls\ZaehlerEditDetail.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

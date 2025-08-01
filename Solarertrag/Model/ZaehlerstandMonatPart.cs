@@ -1,14 +1,14 @@
 //-----------------------------------------------------------------------
-// <copyright file="SolarertragMonat.cs" company="Lifeprojects.de">
-//     Class: SolarertragMonat
-//     Copyright © Lifeprojects.de 2023
+// <copyright file="ZaehlerstandMonat.cs" company="Lifeprojects.de">
+//     Class: ZaehlerstandMonat
+//     Copyright © Lifeprojects.de 2025
 // </copyright>
 //
 // <Framework>8.0</Framework>
 //
 // <author>Gerhard Ahrens - Lifeprojects.de</author>
 // <email>developer@lifeprojects.de</email>
-// <date>26.06.2023 17:48:14</date>
+// <date>01.08.2025</date>
 //
 // <summary>
 // Klasse für 
@@ -25,14 +25,14 @@ namespace Solarertrag.Model
 
     using Solarertrag.Core;
 
-    [DebuggerDisplay("Year={this.Year}:Month={this.Month}; Ertrag={this.Ertrag}")]
-    public partial class SolarertragMonat : ModelBase<SolarertragMonat>, IModel, INotifyPropertyChanged
+    [DebuggerDisplay("Year={this.Year}:Month={this.Month}; Verbrauch={this.Verbrauch}")]
+    public partial class ZaehlerstandMonat : ModelBase<ZaehlerstandMonat>, IModel, INotifyPropertyChanged
     {
         public string FullName
         {
             get
             {
-                return $"{this.Year}.{this.Month}-{this.Ertrag}";
+                return $"{this.Year}.{this.Month}-{this.Verbrauch}";
             }
         }
 
