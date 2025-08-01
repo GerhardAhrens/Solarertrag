@@ -11,7 +11,7 @@
     xmlns:localConverter="clr-namespace:Solarertrag.Converter"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="450"
-    d:DesignWidth="800"
+    d:DesignWidth="830"
     mc:Ignorable="d">
 
     <UserControl.Resources>
@@ -44,7 +44,7 @@
         <libWPF:SimpleGrid
             Grid.Row="0"
             Grid.Column="0"
-            Columns="Auto,*,Auto,Auto"
+            Columns="Auto,*,Auto,*"
             Rows="30">
             <TextBlock
                 Grid.Row="0"
@@ -69,11 +69,16 @@
             <TextBlock
                 Grid.Row="0"
                 Grid.Column="3"
-                Width="220"
                 Margin="10,0"
                 VerticalAlignment="Center"
-                Text="Ertrag:  ">
-                <Run Foreground="Blue" Text="{Binding Path=ErtragFull}" />
+                FontSize="14">
+                <Run Foreground="Black" Text="Ertrag:" />
+                <Run Foreground="Blue" Text="{Binding Path=ErtragAFull}" />
+                <Run Foreground="Black" Text=" in " />
+                <Run
+                    FontWeight="Bold"
+                    Foreground="Blue"
+                    Text="{Binding Path=ErtragBFull}" />
             </TextBlock>
         </libWPF:SimpleGrid>
 
@@ -81,7 +86,6 @@
         <ListView
             Name="lvwMain"
             Grid.Row="1"
-            Tag="{Binding Path=ErtragYearSum}"
             Grid.ColumnSpan="2"
             libWPF:ListViewSort.AutoSort="True"
             Background="WhiteSmoke"
@@ -91,6 +95,7 @@
             SelectedItem="{Binding Path=CurrentSelectedItem, UpdateSourceTrigger=PropertyChanged}"
             SelectionMode="Extended"
             Style="{StaticResource ResourceKey=lvwMainStyle}"
+            Tag="{Binding Path=ErtragYearSum}"
             VirtualizingPanel.IsVirtualizing="True"
             VirtualizingPanel.IsVirtualizingWhenGrouping="True">
 
@@ -229,7 +234,26 @@
                         HeaderContainerStyle="{StaticResource ResourceKey=lvwHeaderRight}" />
 
                     <GridViewColumn
-                        Width="400"
+                        Width="120"
+                        Header="Zählerstand"
+                        HeaderContainerStyle="{StaticResource ResourceKey=lvwHeaderRight}">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <ComboBox
+                                    x:Name="cbZaehlerstand"
+                                    Width="100"
+                                    BorderBrush="Green"
+                                    DisplayMemberPath="Value"
+                                    IsHitTestVisible="False"
+                                    ItemsSource="{Binding Path=DataContext.ZaehlerstandSource, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}}"
+                                    SelectedValue="{Binding Path=VerbrauchKey}"
+                                    SelectedValuePath="Key" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn
+                        Width="420"
                         DisplayMemberBinding="{Binding Path=Description}"
                         Header="Beschreibung/Hinweis"
                         HeaderContainerStyle="{StaticResource ResourceKey=lvwHeaderLeft}" />

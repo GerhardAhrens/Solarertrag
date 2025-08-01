@@ -100,7 +100,14 @@ namespace Solarertrag.ViewModel
         }
 
         [PropertyBinding]
-        public string ErtragFull
+        public string ErtragAFull
+        {
+            get { return this.Get<string>(); }
+            set { this.Set(value); }
+        }
+
+        [PropertyBinding]
+        public string ErtragBFull
         {
             get { return this.Get<string>(); }
             set { this.Set(value); }
@@ -120,6 +127,13 @@ namespace Solarertrag.ViewModel
             set { this.Set(value); }
         }
 
+        [PropertyBinding]
+        public Dictionary<string, double> ZaehlerstandSource
+        {
+            get => base.Get<Dictionary<string,double>>();
+            set => base.Set(value);
+        }
+
         public int RowPosition { get; set; }
         #endregion Get/Set Properties
 
@@ -137,7 +151,9 @@ namespace Solarertrag.ViewModel
             {
                 using (SolarertragMonatRepository repository = new SolarertragMonatRepository(App.DatabasePath))
                 {
+                    this.ZaehlerstandSource = repository.ListZaehlerstand();
                     IEnumerable<SolarertragMonat> overviewSource = repository.List();
+
                     if (overviewSource != null)
                     {
                         this.DialogDataView = CollectionViewSource.GetDefaultView(overviewSource);
@@ -253,7 +269,8 @@ namespace Solarertrag.ViewModel
                             ertragFull += item.Ertrag;
                         }
 
-                        this.ErtragFull = ertragFull.ToString("0.0");
+                        this.ErtragAFull = ertragFull.ToString("0.0");
+                        this.ErtragBFull = string.Empty;
                     }
                     else
                     {
@@ -370,7 +387,8 @@ namespace Solarertrag.ViewModel
                         ertragTotal += item.Ertrag;
                     }
 
-                    this.ErtragFull = $"{ertragTotal.ToString("0.0")} KW/h, in {DateTime.Now.Year} {ertragCurretYear.ToString("0.0")} KW/h";
+                    this.ErtragAFull = $"{ertragTotal.ToString("0.0")} KW/h";
+                    this.ErtragBFull = $"{DateTime.Now.Year} {ertragCurretYear.ToString("0.0")} KW/h";
 
                     App.EventAgg.Publish<CurrentIdEventArgs<IViewModel>>(
                         new CurrentIdEventArgs<IViewModel>
@@ -390,7 +408,7 @@ namespace Solarertrag.ViewModel
                         ertragFull += item.Ertrag;
                     }
 
-                    this.ErtragFull = $"Total {ertragFull.ToString("0.0")} KW/h ";
+                    this.ErtragBFull = $"Total {ertragFull.ToString("0.0")} KW/h ";
 
                     App.EventAgg.Publish<SelectedDataEventArgs>(
                         new SelectedDataEventArgs

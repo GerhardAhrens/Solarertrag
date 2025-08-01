@@ -31,6 +31,7 @@ namespace Solarertrag.Model
     public partial class SolarertragMonat : ModelBase<SolarertragMonat>, IModel, INotifyPropertyChanged
     {
         private bool isSelected = false;
+        private string _VerbrauchKey = string.Empty;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -64,6 +65,13 @@ namespace Solarertrag.Model
         public string ModifiedBy { get; set; }
 
         public DateTime ModifiedOn { get; set; }
+
+        public string VerbrauchKey
+        {
+            get { return $"{this.Year}.{this.Month}"; }
+            set { _VerbrauchKey = value; }
+        }
+
 
         public bool IsSelected
         {

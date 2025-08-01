@@ -16,8 +16,11 @@
 namespace PertNET.DataRepository
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
+
+    using EasyPrototypingNET.Concept;
 
     using LiteDB;
 
@@ -45,6 +48,32 @@ namespace PertNET.DataRepository
         public override int Count()
         {
             return base.Count();
+        }
+
+        public virtual Dictionary<string, double> ListZaehlerstand()
+        {
+            Dictionary<string,double> result = null;
+
+            try
+            {
+                if (this.CollectionIntern != null)
+                {
+                    string collectionName = typeof(ZaehlerstandMonat).Name;
+                    IEnumerable<ZaehlerstandMonat> tempList =  this.DatabaseIntern.GetCollection<ZaehlerstandMonat>(collectionName).FindAll();
+                    result = new Dictionary<string, double>();
+                    foreach (ZaehlerstandMonat item in tempList.GroupBy(p => new { p.Year, p.Month }).Select(g => g.First()))
+                    {
+                        result.Add($"{item.Year}.{item.Month}", item.Verbrauch);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                string errorText = ex.Message;
+                throw;
+            }
+
+            return result;
         }
 
         public override SolarertragMonat ListById(Guid id)

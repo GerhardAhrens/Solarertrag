@@ -234,7 +234,7 @@ namespace Solarertrag.ViewModel
                             }
                             else
                             {
-                                if (repository.Exist(y => y.Year == newContent.Year && y.Month == newContent.Month) == true)
+                                if (repository.Exist(y => y.Year == newContent.Year && y.Month == newContent.Month && y.Verbrauch == newContent.Verbrauch) == true)
                                 {
                                     AppMsgDialog.ExistContent(newContent.FullName);
                                 }
@@ -257,7 +257,7 @@ namespace Solarertrag.ViewModel
                         newContent.CreatedBy = UserInfo.TS().CurrentUser;
                         newContent.CreatedOn = UserInfo.TS().CurrentTime;
 
-                        if (repository.Exist(y => y.Year == newContent.Year && y.Month == newContent.Month) == false)
+                        if (repository.Exist(y => y.Year == newContent.Year && y.Month == newContent.Month && y.Verbrauch == newContent.Verbrauch) == false)
                         {
                             repository.Add(newContent);
                             this.IsNew = true;
