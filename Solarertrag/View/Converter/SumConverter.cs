@@ -11,7 +11,7 @@
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             Dictionary<string, string> ertrag = (Dictionary<string,string>)value;
-            return ertrag.FirstOrDefault(f => f.Key == parameter.ToString()).Value;
+            return $"{ertrag.FirstOrDefault(f => f.Key == parameter.ToString()).Value} KW/h";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
