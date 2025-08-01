@@ -21,7 +21,7 @@ namespace Solarertrag.Test
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-    using SinglePageApplicationWPF.Base;
+    using Solarertrag.Core;
 
     [TestClass]
     public class CoreFunction_Test

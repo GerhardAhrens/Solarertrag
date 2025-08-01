@@ -34,8 +34,6 @@ namespace Solarertrag.ViewModel
 
     using PertNET.DataRepository;
 
-    using SinglePageApplicationWPF.Core;
-
     using Solarertrag.Core;
     using Solarertrag.Model;
 

@@ -26,8 +26,6 @@ namespace Solarertrag.Core
 {
     using System;
 
-    using SinglePageApplicationWPF.Core;
-
     public class ControlContentArgs
     {
         /// <summary>

@@ -15,8 +15,6 @@
 
 namespace Solarertrag.Core
 {
-    using SinglePageApplicationWPF.Base;
-
     public class CommandButtons : EnumBase
     {
         public static readonly CommandButtons None = new NoneButton();

@@ -24,8 +24,6 @@ namespace Solarertrag.Core
 
     using EasyPrototypingNET.WPF;
 
-    using SinglePageApplicationWPF;
-
     using Solarertrag.View.Controls;
 
     public static class DialogNavigation

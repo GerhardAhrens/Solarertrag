@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net7.0-windows7.0</TargetFramework>
+    <TargetFramework>net8.0-windows7.0</TargetFramework>
     <Nullable>disable</Nullable>
     <UseWPF>true</UseWPF>
     <Title>Solarertrag</Title>
@@ -52,13 +52,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Core\Base\" />
     <Folder Include="Core\Validation\" />
     <Folder Include="Core\Settings\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\SinglePageApplicationWPF\SinglePageApplicationWPF.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -66,6 +61,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Core\Base\RowItemPosition.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Core\Base\RowStatus.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Core\Base\ViewObjects.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="ViewModel\MainDetailVM.cs">
       <SubType>Code</SubType>
     </Compile>
