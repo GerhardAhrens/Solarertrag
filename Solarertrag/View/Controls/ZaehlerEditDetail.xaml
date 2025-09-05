@@ -163,7 +163,11 @@
                     </i:Interaction.Behaviors>
                 </libWPF:TextBoxEx>
 
-                <TextBlock Text="Verbrauch KW/h" />
+                <TextBlock>
+                    <Run Text="Zählerstand" />
+                    <LineBreak />
+                    <Run Text="Verbrauch KW/h" />
+                </TextBlock>
                 <libWPF:TextBoxEx
                     x:Name="txtVerbrauch"
                     Width="100"

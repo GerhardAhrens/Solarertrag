@@ -108,5 +108,23 @@ namespace Solarertrag.Core
             overviewArgs.EntityId = id;
             return overviewArgs;
         }
+
+        public static ControlContentArgs ZaehlerstandOverview(Guid id, int rowPos = 0)
+        {
+            ControlContentArgs overviewArgs = new ControlContentArgs();
+            overviewArgs.TargetPage = CommandButtons.ZaehlerstandOverview;
+            if (rowPos > 0)
+            {
+                overviewArgs.RowPosition = RowItemPosition.GoMove;
+                overviewArgs.RowPosition.GoTo = rowPos;
+            }
+            else
+            {
+                overviewArgs.RowPosition = RowItemPosition.GoFirst;
+            }
+
+            overviewArgs.EntityId = id;
+            return overviewArgs;
+        }
     }
 }

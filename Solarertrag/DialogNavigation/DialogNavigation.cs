@@ -59,6 +59,9 @@ namespace Solarertrag.Core
             result = CommandButtons.ZaehlerstandEdit;
             viewObjectsSource.Add(result.Key, result.Name, result.Description, typeof(ZaehlerEditDetail));
 
+            result = CommandButtons.ZaehlerstandOverview;
+            viewObjectsSource.Add(result.Key, result.Name, result.Description, typeof(ZaehlerOverview));
+
             Views = viewObjectsSource.Views;
         }
 

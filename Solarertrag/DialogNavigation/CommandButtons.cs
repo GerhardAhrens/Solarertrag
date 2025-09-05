@@ -23,6 +23,7 @@ namespace Solarertrag.Core
         public static readonly CommandButtons MainDetail = new MainDetailButton();
         public static readonly CommandButtons Settings = new SettingsButton();
         public static readonly CommandButtons ExcelExport = new ExcelExportButton();
+        public static readonly CommandButtons ZaehlerstandOverview = new ZaehlerstandOverviewButton();
         public static readonly CommandButtons ZaehlerstandEdit = new ZaehlerstandEditButton();
 
         /// <summary>
@@ -94,7 +95,16 @@ namespace Solarertrag.Core
             {
             }
 
-            public override string Tooltip => "Ausgewählte Datensätze nach Excel exportieren";
+            public override string Tooltip => "Ausgewählter Eintrag bearbeiten";
+        }
+
+        private class ZaehlerstandOverviewButton : CommandButtons
+        {
+            public ZaehlerstandOverviewButton() : base(7, "Zählerstand Übersicht", "Zählerstand Übersicht")
+            {
+            }
+
+            public override string Tooltip => "Übersicht aller Zählerstände";
         }
     }
 }

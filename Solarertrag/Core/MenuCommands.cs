@@ -34,5 +34,6 @@ namespace Solarertrag.Core
         OpenFolder = 9,
         MainOverview = 10,
         ZaehlerstandEditDetail = 11,
+        ZaehlerstandOverview = 12,
     }
 }

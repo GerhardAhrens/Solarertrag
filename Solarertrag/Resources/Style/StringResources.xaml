@@ -21,6 +21,7 @@
     <sys:String x:Key="WindowMainMenuNewTT">Neuer Eintrag (Ctrl-N)</sys:String>
     <sys:String x:Key="WindowMainMenuDeleteTT">Aktueller Eintrag löschen (Ctrl-D)</sys:String>
     <sys:String x:Key="WindowMainMenuEditTT">Aktueller Eintrag ändern (Ctrl-E)</sys:String>
+    <sys:String x:Key="WindowZaehlerOverviewTT">ÜbersichtZählerstand</sys:String>
     <sys:String x:Key="WindowZaehlerEditTT">Neuer Zählerstand</sys:String>
     <sys:String x:Key="WindowMainMenuSettingsTT">Einstellungen (Ctrl-I)</sys:String>
     <sys:String x:Key="WindowMainMenuExportTT">Export (Ctrl-P)</sys:String>

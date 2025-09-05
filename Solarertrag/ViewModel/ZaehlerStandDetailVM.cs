@@ -201,8 +201,8 @@ namespace Solarertrag.ViewModel
                         EntityId = Guid.Empty,
                         RowPosition = this.RowPosition,
                         DataType = this as IViewModel,
-                        FromPage = CommandButtons.MainDetail,
-                        TargetPage = CommandButtons.MainOverview,
+                        FromPage = CommandButtons.ZaehlerstandEdit,
+                        TargetPage = CommandButtons.ZaehlerstandOverview,
                         IsNew = this.IsNew
                     });
             }

@@ -103,7 +103,8 @@ namespace Solarertrag.ViewModel
             this.CmdAgg.AddOrSetCommand(MenuCommands.NewDetail, new RelayCommand(p1 => this.NewDetailHandler(), p2 => true));
             this.CmdAgg.AddOrSetCommand(MenuCommands.ExcelExport, new RelayCommand(p1 => this.ExcelExportHandler(), p2 => true));
             this.CmdAgg.AddOrSetCommand(MenuCommands.Settings, new RelayCommand(p1 => this.SettingsHandler(), p2 => true));
-            this.CmdAgg.AddOrSetCommand(MenuCommands.ZaehlerstandEditDetail, new RelayCommand(p1 => this.ZaehlerstandHandler(), p2 => true));
+            this.CmdAgg.AddOrSetCommand(MenuCommands.ZaehlerstandEditDetail, new RelayCommand(p1 => this.ZaehlerstandEditHandler(), p2 => true));
+            this.CmdAgg.AddOrSetCommand(MenuCommands.ZaehlerstandOverview, new RelayCommand(p1 => this.ZaehlerstandOverviewHandler(), p2 => true));
         }
 
         private void WindowCloseHandler()
@@ -169,9 +170,14 @@ namespace Solarertrag.ViewModel
             this.LoadContent(LoadContentArgs.MainSettings());
         }
 
-        private void ZaehlerstandHandler()
+        private void ZaehlerstandEditHandler()
         {
             this.LoadContent(LoadContentArgs.ZaehlerstandEdit(Guid.Empty, 0));
+        }
+
+        private void ZaehlerstandOverviewHandler()
+        {
+            this.LoadContent(LoadContentArgs.ZaehlerstandOverview(Guid.Empty, 0));
         }
 
         private void LoadContent(ControlContentArgs args)
@@ -207,6 +213,11 @@ namespace Solarertrag.ViewModel
                     else if (args.TargetPage == CommandButtons.ZaehlerstandEdit)
                     {
                         ZaehlerStandDetailVM controlVM = new ZaehlerStandDetailVM(args.EntityId, args.RowPosition.GoTo);
+                        this.CurrentControl.DataContext = controlVM;
+                    }
+                    else if (args.TargetPage == CommandButtons.ZaehlerstandOverview)
+                    {
+                        ZaehlerStandOverviewVM controlVM = new ZaehlerStandOverviewVM(args);
                         this.CurrentControl.DataContext = controlVM;
                     }
                     else if (args.TargetPage == CommandButtons.Settings)
@@ -255,6 +266,14 @@ namespace Solarertrag.ViewModel
                 else if (obj.TargetPage == CommandButtons.MainDetail)
                 {
                     this.LoadContent(LoadContentArgs.MainDetail(this.CurrentId));
+                }
+                else if (obj.TargetPage == CommandButtons.ZaehlerstandOverview)
+                {
+                    this.LoadContent(LoadContentArgs.ZaehlerstandOverview(Guid.Empty,obj.RowPosition));
+                }
+                else if (obj.TargetPage == CommandButtons.ZaehlerstandEdit)
+                {
+                    this.LoadContent(LoadContentArgs.ZaehlerstandEdit(obj.EntityId));
                 }
             }
             catch (Exception ex)
