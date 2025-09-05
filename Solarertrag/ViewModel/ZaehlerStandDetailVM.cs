@@ -232,7 +232,7 @@ namespace Solarertrag.ViewModel
                         {
                             newContent.Year = this.Year.ToInt();
                             newContent.Month = this.Month.ToInt();
-                            newContent.Day = this.Month.ToInt();
+                            newContent.Day = this.Day.ToInt();
                             newContent.Verbrauch = this.Verbrauch.ToDouble();
                             newContent.Description = this.Description;
                             newContent.ModifiedBy = UserInfo.TS().CurrentUser;

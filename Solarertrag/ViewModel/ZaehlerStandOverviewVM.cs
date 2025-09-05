@@ -129,6 +129,7 @@ namespace Solarertrag.ViewModel
                             this.DialogDataView.SortDescriptions.Clear();
                             this.DialogDataView.SortDescriptions.Add(new SortDescription("Year", ListSortDirection.Ascending));
                             this.DialogDataView.SortDescriptions.Add(new SortDescription("Month", ListSortDirection.Ascending));
+                            this.DialogDataView.SortDescriptions.Add(new SortDescription("Day", ListSortDirection.Ascending));
                             this.DialogDataView.GroupDescriptions.Add(new PropertyGroupDescription("Year"));
                             if (this.RowPosition == -1)
                             {
