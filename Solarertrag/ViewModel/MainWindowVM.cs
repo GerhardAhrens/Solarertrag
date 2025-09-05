@@ -91,7 +91,8 @@ namespace Solarertrag.ViewModel
         private Guid CurrentId { get; set; }
 
 
-        private List<SolarertragMonat> CurrentData { get; set; }
+        private List<SolarertragMonat> CurrentSolarData { get; set; }
+        private List<ZaehlerstandMonat> CurrentZaehlerData { get; set; }
 
         #endregion Get/Set Properties
 
@@ -227,7 +228,7 @@ namespace Solarertrag.ViewModel
                     }
                     else if (args.TargetPage == CommandButtons.ExcelExport)
                     {
-                        if (this.CurrentData == null || this.CurrentData.Count == 0)
+                        if (this.CurrentSolarData == null || this.CurrentSolarData.Count == 0)
                         {
                             AppMsgDialog.NoDataFound();
                             ControlContentArgs overviewArgs = new ControlContentArgs();
@@ -238,7 +239,7 @@ namespace Solarertrag.ViewModel
                             return;
                         }
 
-                        ExcelExportVM controlVM = new ExcelExportVM(this.CurrentData);
+                        ExcelExportVM controlVM = new ExcelExportVM(this.CurrentSolarData);
                         this.CurrentControl.DataContext = controlVM;
                     }
                 }
@@ -284,7 +285,8 @@ namespace Solarertrag.ViewModel
 
         private void SelectedDataRequest(SelectedDataEventArgs args)
         {
-            this.CurrentData = args.Data;
+            this.CurrentSolarData = args.SolarData;
+            this.CurrentZaehlerData = args.ZaehlerStandData;
         }
     }
 }

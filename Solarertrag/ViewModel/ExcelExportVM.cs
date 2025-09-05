@@ -170,13 +170,12 @@ namespace Solarertrag.ViewModel
             workbook.CurrentWorksheet.SetColumnWidth(2, 15f);
             workbook.CurrentWorksheet.SetColumnWidth(3, 70f);
 
-            workbook.WorkbookMetadata.Title = "Solarertrag";
+            workbook.WorkbookMetadata.Title = "Solarertrag / Zählerstand";
             workbook.WorkbookMetadata.Subject = "Solarertrag für";
             workbook.WorkbookMetadata.Creator = UserInfo.TS().CurrentUser;
-            workbook.WorkbookMetadata.Keywords = "Solarertrag;KW/h";
+            workbook.WorkbookMetadata.Keywords = "Solarertrag;KW/h;Zählerstand";
 
             workbook.CurrentWorksheet.SetAutoFilter(0, 2);
-
             workbook.CurrentWorksheet.GoToNextRow();
             int rowExcel = 2;
 
@@ -195,6 +194,24 @@ namespace Solarertrag.ViewModel
             workbook.CurrentWorksheet.AddCell("Summe", $"B{rowExcel}", boldStyle);
             string summe = $"{this.CurrentDataExport.Sum(s => s.Ertrag)} KW/h";
             workbook.CurrentWorksheet.AddCell(summe, $"C{rowExcel}", boldStyle);
+
+            workbook.AddWorksheet("Zählerstand");
+            List<object> valuesZ = new List<object>() { "Jahr", "Monat","Tag", "Zählerstand", "Bemerkung" };
+            workbook.CurrentWorksheet.AddCellRange(valuesZ, new Cell.Address(0, 0), new Cell.Address(4, 0));
+            workbook.CurrentWorksheet.Cells["A1"].SetStyle(headerStyle);
+            workbook.CurrentWorksheet.Cells["B1"].SetStyle(headerStyle);
+            workbook.CurrentWorksheet.Cells["C1"].SetStyle(headerStyle);
+            workbook.CurrentWorksheet.Cells["D1"].SetStyle(headerStyle);
+            workbook.CurrentWorksheet.Cells["E1"].SetStyle(headerStyle);
+
+            workbook.CurrentWorksheet.SetColumnWidth(0, 10f);
+            workbook.CurrentWorksheet.SetColumnWidth(1, 10f);
+            workbook.CurrentWorksheet.SetColumnWidth(2, 10f);
+            workbook.CurrentWorksheet.SetColumnWidth(3, 15f);
+            workbook.CurrentWorksheet.SetColumnWidth(4, 70f);
+
+            workbook.CurrentWorksheet.SetAutoFilter(0, 3);
+            workbook.CurrentWorksheet.GoToNextRow();
 
             workbook.Save();
 

@@ -36,7 +36,8 @@ namespace Solarertrag.Core
         /// <summary>
         /// UserControl-Dialog Typ
         /// </summary>
-        public List<SolarertragMonat> Data { get; set; }
+        public List<SolarertragMonat> SolarData { get; set; }
+        public List<ZaehlerstandMonat> ZaehlerStandData { get; set; }
 
     }
 }

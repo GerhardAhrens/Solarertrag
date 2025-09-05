@@ -202,7 +202,8 @@ namespace Solarertrag.ViewModel
                                 new SelectedDataEventArgs
                                 {
                                     Sender = this,
-                                    Data = this.DialogDataView.Cast<SolarertragMonat>().ToList(),
+                                    SolarData = this.DialogDataView.Cast<SolarertragMonat>().ToList(),
+                                    ZaehlerStandData = null,
                                 });
                         }
                     }
@@ -281,7 +282,7 @@ namespace Solarertrag.ViewModel
                         new SelectedDataEventArgs
                         {
                             Sender = this,
-                            Data = this.DialogDataView.Cast<SolarertragMonat>().ToList(),
+                            SolarData = this.DialogDataView.Cast<SolarertragMonat>().ToList(),
                         });
                 }
                 catch (Exception ex)
@@ -414,7 +415,8 @@ namespace Solarertrag.ViewModel
                         new SelectedDataEventArgs
                         {
                             Sender = this,
-                            Data = ((Collection<object>)commandParameter).OfType<SolarertragMonat>().ToList(),
+                            SolarData = ((Collection<object>)commandParameter).OfType<SolarertragMonat>().ToList(),
+                            ZaehlerStandData = null,
                         });
                 }
             }
