@@ -20,6 +20,7 @@ Das kleine Programm ist in einer Monolithische Architekr als "Singel-Page-Applic
 
 ![Version](https://img.shields.io/badge/Version-1.2.2025.10-yellow.svg)</br>
 - Übersichtsdialog zum Zählerstand mit Such- und Gruppierungsfunktion
+- Erweiterung Excel-Export für Zählerstand
 - Weitere Fehlerbehebung
 
 ![Version](https://img.shields.io/badge/Version-1.1.2025.6-yellow.svg)</br>
