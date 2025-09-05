@@ -61,7 +61,7 @@ namespace PertNET.DataRepository
                     string collectionName = typeof(ZaehlerstandMonat).Name;
                     IEnumerable<ZaehlerstandMonat> tempList =  this.DatabaseIntern.GetCollection<ZaehlerstandMonat>(collectionName).FindAll();
                     result = new Dictionary<string, double>();
-                    foreach (ZaehlerstandMonat item in tempList.GroupBy(p => new { p.Year, p.Month }).Select(g => g.First()))
+                    foreach (ZaehlerstandMonat item in tempList.GroupBy(p => new { p.Year, p.Month }).Select(g => g.Last()))
                     {
                         result.Add($"{item.Year}.{item.Month}", item.Verbrauch);
                     }
