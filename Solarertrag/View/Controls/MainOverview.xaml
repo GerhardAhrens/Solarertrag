@@ -44,23 +44,27 @@
         <libWPF:SimpleGrid
             Grid.Row="0"
             Grid.Column="0"
-            Columns="Auto,*,Auto,*"
+            Columns="Auto,Auto,Auto,*"
             Rows="30">
             <TextBlock
                 Grid.Row="0"
                 Grid.Column="0"
-                Width="70"
-                Margin="10,0"
+                Width="40"
+                Margin="10,0,0,0"
                 VerticalAlignment="Center"
                 Text="Filter" />
 
-            <libWPF:TextBoxEx Grid.Column="1" Text="{Binding Path=FilterText, UpdateSourceTrigger=PropertyChanged}" />
+            <libWPF:TextBoxEx
+                Grid.Column="1"
+                Width="200"
+                HorizontalAlignment="Left"
+                Text="{Binding Path=FilterText, UpdateSourceTrigger=PropertyChanged}" />
 
             <TextBlock
                 Grid.Row="0"
                 Grid.Column="2"
-                Width="70"
-                Margin="10,0"
+                Width="50"
+                Margin="10,0,0,0"
                 VerticalAlignment="Center"
                 Text="Anzahl:  ">
                 <Run Foreground="Blue" Text="{Binding Path=MaxRowCount, UpdateSourceTrigger=PropertyChanged}" />
@@ -69,7 +73,7 @@
             <TextBlock
                 Grid.Row="0"
                 Grid.Column="3"
-                Margin="10,0"
+                Margin="5,0,0,0"
                 VerticalAlignment="Center"
                 FontSize="14">
                 <Run Foreground="Black" Text="Ertrag:" />
@@ -79,6 +83,11 @@
                     FontWeight="Bold"
                     Foreground="Blue"
                     Text="{Binding Path=ErtragBFull}" />
+                <Run Foreground="Black" Text=" Verbrauch " />
+                <Run
+                    FontWeight="Bold"
+                    Foreground="Orange"
+                    Text="{Binding Path=VerbrauchJahr}" />
             </TextBlock>
         </libWPF:SimpleGrid>
 

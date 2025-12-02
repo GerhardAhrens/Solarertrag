@@ -114,6 +114,13 @@ namespace Solarertrag.ViewModel
         }
 
         [PropertyBinding]
+        public string VerbrauchJahr
+        {
+            get { return this.Get<string>(); }
+            set { this.Set(value); }
+        }
+
+        [PropertyBinding]
         public string ErtragCurrentYear
         {
             get { return this.Get<string>(); }
@@ -131,6 +138,13 @@ namespace Solarertrag.ViewModel
         public Dictionary<string, double> ZaehlerstandSource
         {
             get => base.Get<Dictionary<string,double>>();
+            set => base.Set(value);
+        }
+
+        [PropertyBinding]
+        public IEnumerable<ZaehlerstandMonat> ZaehlerstandAllSource
+        {
+            get => base.Get<IEnumerable<ZaehlerstandMonat>>();
             set => base.Set(value);
         }
 
@@ -152,6 +166,7 @@ namespace Solarertrag.ViewModel
                 using (SolarertragMonatRepository repository = new SolarertragMonatRepository(App.DatabasePath))
                 {
                     this.ZaehlerstandSource = repository.ListZaehlerstand();
+                    this.ZaehlerstandAllSource = repository.ListZaehlerstandAll();
                     IEnumerable<SolarertragMonat> overviewSource = repository.List();
 
                     if (overviewSource != null)
@@ -197,7 +212,10 @@ namespace Solarertrag.ViewModel
                             this.MaxRowCount = this.DialogDataView.Count<SolarertragMonat>();
                             double currentYear = this.DialogDataView.Cast<SolarertragMonat>().Where(w => w.Year == DateTime.Now.Year).Sum(x => x.Ertrag);
                             this.ErtragCurrentYear = currentYear.ToString("0.0");
-
+                            var aa = this.ZaehlerstandAllSource.Where(w => w.Year == DateTime.Now.Year).OrderBy(o => o.Month).ThenBy(t => t.Year).ToList();
+                            var a = aa.FirstOrDefault().Verbrauch;
+                            var z = aa.LastOrDefault().Verbrauch;
+                            this.VerbrauchJahr = $"{(z - a).ToString("N0")} KW/h";
                             App.EventAgg.Publish<SelectedDataEventArgs>(
                                 new SelectedDataEventArgs
                                 {

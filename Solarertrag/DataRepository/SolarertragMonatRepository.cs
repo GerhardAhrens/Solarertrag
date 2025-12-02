@@ -76,6 +76,27 @@ namespace PertNET.DataRepository
             return result;
         }
 
+        public IEnumerable<ZaehlerstandMonat> ListZaehlerstandAll()
+        {
+            IEnumerable<ZaehlerstandMonat> result = null;
+
+            try
+            {
+                if (this.CollectionIntern != null)
+                {
+                    string collectionName = typeof(ZaehlerstandMonat).Name;
+                    result = this.DatabaseIntern.GetCollection<ZaehlerstandMonat>(collectionName).FindAll();
+                }
+            }
+            catch (Exception ex)
+            {
+                string errorText = ex.Message;
+                throw;
+            }
+
+            return result;
+        }
+
         public override SolarertragMonat ListById(Guid id)
         {
             SolarertragMonat result = null;
