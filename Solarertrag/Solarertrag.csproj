@@ -2,22 +2,22 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net9.0-windows7.0</TargetFramework>
+    <TargetFramework>net8.0-windows7.0</TargetFramework>
     <Nullable>disable</Nullable>
     <UseWPF>true</UseWPF>
     <Title>Solarertrag</Title>
     <Description>Programm zur Erfassung des Ertrags einer Solaranlage</Description>
     <Copyright>Gerhard Ahrens, Lifeprojects.de</Copyright>
-    <AssemblyVersion>1.3.2025.11</AssemblyVersion>
-    <FileVersion>1.3.2025.11</FileVersion>
+    <AssemblyVersion>1.3.2025.13</AssemblyVersion>
+    <FileVersion>1.3.2025.13</FileVersion>
     <ApplicationIcon>Resources\Picture\ApplicationIcon.ico</ApplicationIcon>
     <AssemblyName>Solarertrag.prod</AssemblyName>
     <Authors></Authors>
     <Product>Solarertrag</Product>
 
-	<RuntimeIdentifier>win-x64</RuntimeIdentifier>
-	<IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
-	<PackageLicenseExpression>MIT</PackageLicenseExpression>
+  <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+  <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+  <PackageLicenseExpression>MIT</PackageLicenseExpression>
 </PropertyGroup>
 
   <ItemGroup>
