@@ -94,6 +94,13 @@
                 Text="Filter" />
 
             <libWPF:TextBoxEx Grid.Column="1" Text="{Binding Path=FilterText, UpdateSourceTrigger=PropertyChanged}" />
+
+            <TextBlock
+                Grid.Column="2"
+                Margin="20,0,0,0"
+                VerticalAlignment="Center">
+                <Run Text="Selektierter Verbrauch in KW/h: " />
+            </TextBlock>
         </libWPF:SimpleGrid>
 
         <!--#region ListView Definition-->
@@ -107,7 +114,7 @@
             ItemContainerStyle="{StaticResource ResourceKey=lvwItemContainerStyle}"
             ItemsSource="{Binding Path=DialogDataView, UpdateSourceTrigger=PropertyChanged}"
             SelectedItem="{Binding Path=CurrentSelectedItem, UpdateSourceTrigger=PropertyChanged}"
-            SelectionMode="Single"
+            SelectionMode="Extended"
             Style="{StaticResource ResourceKey=lvwMainStyle}"
             Tag="{Binding Path=ZaehlerStandSource}"
             VirtualizingPanel.IsVirtualizing="True"
@@ -115,6 +122,10 @@
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseDoubleClick">
                     <i:InvokeCommandAction Command="{Binding Path=DataContext.CmdAgg[EditDetailCommand], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}}" CommandParameter="{Binding ElementName=lvwMain, Path=SelectedItem}" />
+                </i:EventTrigger>
+
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding Path=DataContext.CmdAgg[SelectionChangedCommand], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}}" CommandParameter="{Binding ElementName=lvwMain, Path=SelectedItems}" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
 

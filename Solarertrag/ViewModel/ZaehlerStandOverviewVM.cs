@@ -18,6 +18,7 @@ namespace Solarertrag.ViewModel
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.Linq;
     using System.Text;
@@ -69,6 +70,13 @@ namespace Solarertrag.ViewModel
         }
 
         [PropertyBinding]
+        public bool IsSelektiertVerbrauch
+        {
+            get { return this.Get<bool>(); }
+            set { this.Set(value); }
+        }
+
+        [PropertyBinding]
         public ICollectionView DialogDataView
         {
             get { return this.Get<ICollectionView>(); }
@@ -111,6 +119,7 @@ namespace Solarertrag.ViewModel
             this.CmdAgg.AddOrSetCommand(MenuCommands.EditDetail, new RelayCommand(p1 => this.EditDetailHandler(), p2 => true));
             this.CmdAgg.AddOrSetCommand(MenuCommands.NewDetail, new RelayCommand(p1 => this.NewDetailHandler(), p2 => true));
             this.CmdAgg.AddOrSetCommand(MenuCommands.DeleteDetail, new RelayCommand(p1 => this.DeleteDetailHandler(), p2 => true));
+            this.CmdAgg.AddOrSetCommand("SelectionChangedCommand", new RelayCommand(p1 => this.SelectionChangedHandler(p1), p2 => true));
         }
 
         private void LoadDataHandler()
@@ -295,6 +304,18 @@ namespace Solarertrag.ViewModel
                 }
 
                 this.LoadDataHandler();
+            }
+        }
+
+        private void SelectionChangedHandler(object commandParameter)
+        {
+            if (commandParameter != null)
+            {
+                IEnumerable<ZaehlerstandMonat> itemsCollection = ((Collection<object>)commandParameter).OfType<ZaehlerstandMonat>();
+                if (itemsCollection.Count() > 1)
+                {
+
+                }
             }
         }
     }
