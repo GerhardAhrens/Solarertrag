@@ -154,7 +154,7 @@
                                                         <Run Text=")" />
                                                     </TextBlock>
 
-                                                    <TextBlock
+                                                    <TextBlock Margin="5,0,0,0"
                                                         VerticalAlignment="Bottom"
                                                         FontSize="18"
                                                         FontStyle="Normal"

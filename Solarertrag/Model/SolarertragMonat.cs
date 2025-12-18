@@ -69,7 +69,7 @@ namespace Solarertrag.Model
         public string VerbrauchKey
         {
             get { return $"{this.Year}.{this.Month}"; }
-            set { _VerbrauchKey = value; }
+            set { this._VerbrauchKey = value; }
         }
 
 
