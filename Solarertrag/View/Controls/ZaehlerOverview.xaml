@@ -18,6 +18,7 @@
         <localConverter:RowNumberConverter x:Key="rowNumberConverter" />
         <localConverter:YearToGroupExpanderConverter x:Key="YearToGroupExpanderConverter" />
         <localConverter:ZaehlerStandConverter x:Key="ZaehlerStandConverter" />
+        <localConverter:IntToVisibleConverter x:Key="IntToVisibleConverter" />
 
         <Style x:Key="BlueBorder" TargetType="Border">
             <Setter Property="BorderBrush" Value="#FF6B93CC" />
@@ -98,8 +99,10 @@
             <TextBlock
                 Grid.Column="2"
                 Margin="20,0,0,0"
-                VerticalAlignment="Center">
+                VerticalAlignment="Center"
+                Visibility="{Binding Path=SelektiertVerbrauch, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                 <Run Text="Selektierter Verbrauch in KW/h: " />
+                <Run Text="{Binding Path=SelektiertVerbrauchText, UpdateSourceTrigger=PropertyChanged}" />
             </TextBlock>
         </libWPF:SimpleGrid>
 

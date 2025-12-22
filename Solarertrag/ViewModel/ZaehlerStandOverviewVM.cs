@@ -16,13 +16,10 @@
 namespace Solarertrag.ViewModel
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Data;
 
@@ -37,7 +34,7 @@ namespace Solarertrag.ViewModel
     using Solarertrag.Core;
     using Solarertrag.Model;
 
-    public class ZaehlerStandOverviewVM : ViewModelBase<MainOverviewVM>, IViewModel
+    public class ZaehlerStandOverviewVM : ViewModelBase<ZaehlerStandOverviewVM>, IViewModel
     {
         private readonly Window mainWindow = null;
 
@@ -70,9 +67,16 @@ namespace Solarertrag.ViewModel
         }
 
         [PropertyBinding]
-        public bool IsSelektiertVerbrauch
+        public Visibility SelektiertVerbrauch
         {
-            get { return this.Get<bool>(); }
+            get { return this.Get<Visibility>(); }
+            set { this.Set(value); }
+        }
+
+        [PropertyBinding]
+        public string SelektiertVerbrauchText
+        {
+            get { return this.Get<string>(); }
             set { this.Set(value); }
         }
 
@@ -165,6 +169,9 @@ namespace Solarertrag.ViewModel
                                 string lastZaehlerStand = $"Letzter Zählerstand {itemsYear.Cast<ZaehlerstandMonat>().LastOrDefault().Verbrauch.ToString()}";
                                 this.ZaehlerStandSource.Add(key, lastZaehlerStand);
                             }
+
+                            this.SelektiertVerbrauch = Visibility.Visible;
+                            this.SelektiertVerbrauchText = "Test";
                         }
                     }
                 }
@@ -312,9 +319,15 @@ namespace Solarertrag.ViewModel
             if (commandParameter != null)
             {
                 IEnumerable<ZaehlerstandMonat> itemsCollection = ((Collection<object>)commandParameter).OfType<ZaehlerstandMonat>();
-                if (itemsCollection.Count() > 1)
+                if (itemsCollection.Count() == 1)
                 {
-
+                    this.SelektiertVerbrauch = Visibility.Collapsed;
+                    this.SelektiertVerbrauchText = string.Empty;
+                }
+                else if (itemsCollection.Count() > 1)
+                {
+                    this.SelektiertVerbrauch = Visibility.Visible;
+                    this.SelektiertVerbrauchText = "Hallo";
                 }
             }
         }
