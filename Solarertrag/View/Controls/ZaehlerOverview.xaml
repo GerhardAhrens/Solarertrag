@@ -122,6 +122,13 @@
             Tag="{Binding Path=ZaehlerStandSource}"
             VirtualizingPanel.IsVirtualizing="True"
             VirtualizingPanel.IsVirtualizingWhenGrouping="True">
+
+            <ListView.Resources>
+                <Style TargetType="ScrollBar">
+                    <EventSetter Event="PreviewMouseDoubleClick" Handler="ScrollBar_PreviewMouseDoubleClick" />
+                </Style>
+            </ListView.Resources>
+
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseDoubleClick">
                     <i:InvokeCommandAction Command="{Binding Path=DataContext.CmdAgg[EditDetailCommand], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}}" CommandParameter="{Binding ElementName=lvwMain, Path=SelectedItem}" />

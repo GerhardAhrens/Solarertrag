@@ -3,6 +3,7 @@
     using System;
     using System.Windows;
     using System.Windows.Controls;
+    using System.Windows.Input;
     using System.Windows.Threading;
 
     using EasyPrototypingNET.Interface;
@@ -65,6 +66,11 @@
             };
 
             Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, action);
+        }
+
+        private void ScrollBar_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            e.Handled = true;
         }
     }
 }
