@@ -101,8 +101,7 @@
                 Margin="20,0,0,0"
                 VerticalAlignment="Center"
                 Visibility="{Binding Path=SelektiertVerbrauch, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
-                <Run Text="Selektierter Verbrauch in KW/h: " />
-                <Run Text="{Binding Path=SelektiertVerbrauchText, UpdateSourceTrigger=PropertyChanged}" />
+                <Run FontWeight="Medium" Text="{Binding Path=SelektiertVerbrauchText, UpdateSourceTrigger=PropertyChanged, FallbackValue=N/A}" />
             </TextBlock>
         </libWPF:SimpleGrid>
 

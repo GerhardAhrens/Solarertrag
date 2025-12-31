@@ -19,6 +19,7 @@ namespace Solarertrag.ViewModel
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
+    using System.Globalization;
     using System.Linq;
     using System.Windows;
     using System.Windows.Data;
@@ -321,13 +322,22 @@ namespace Solarertrag.ViewModel
                 IEnumerable<ZaehlerstandMonat> itemsCollection = ((Collection<object>)commandParameter).OfType<ZaehlerstandMonat>();
                 if (itemsCollection.Count() == 1)
                 {
-                    this.SelektiertVerbrauch = Visibility.Collapsed;
-                    this.SelektiertVerbrauchText = string.Empty;
+                    double current = itemsCollection.Min(m => m.Verbrauch);
+                    this.SelektiertVerbrauch = Visibility.Visible;
+                    this.SelektiertVerbrauchText = $"Zählerstand: {current.ToString("G", CultureInfo.CurrentCulture)}";
                 }
                 else if (itemsCollection.Count() > 1)
                 {
+                    double min = itemsCollection.Min(m => m.Verbrauch);
+                    double max = itemsCollection.Max(m => m.Verbrauch);
+                    double diffZaehlerStand = max - min;
                     this.SelektiertVerbrauch = Visibility.Visible;
-                    this.SelektiertVerbrauchText = "Hallo";
+                    this.SelektiertVerbrauchText = $"Selektierter Verbrauch in KW/h: {diffZaehlerStand.ToString("G", CultureInfo.CurrentCulture)}";
+                }
+                else
+                {
+                    this.SelektiertVerbrauch = Visibility.Collapsed;
+                    this.SelektiertVerbrauchText = string.Empty;
                 }
             }
         }

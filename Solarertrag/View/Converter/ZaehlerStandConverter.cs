@@ -10,8 +10,8 @@
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            Dictionary<string, string> ertrag = (Dictionary<string,string>)value;
-            return $"{ertrag.FirstOrDefault(f => f.Key == parameter.ToString()).Value}";
+            Dictionary<string, string> letzterZaehlerStand = (Dictionary<string,string>)value;
+            return $"{letzterZaehlerStand.FirstOrDefault(f => f.Key == parameter.ToString()).Value}";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
