@@ -213,9 +213,13 @@ namespace Solarertrag.ViewModel
                             double currentYear = this.DialogDataView.Cast<SolarertragMonat>().Where(w => w.Year == DateTime.Now.Year).Sum(x => x.Ertrag);
                             this.ErtragCurrentYear = currentYear.ToString("0.0");
                             IEnumerable<ZaehlerstandMonat> verbrauchGroupMonat = this.ZaehlerstandAllSource.Where(w => w.Year == DateTime.Now.Year).ToList().OrderBy(o => o.Month).ThenBy(t => t.Year).ThenBy(d => d.Day).ThenBy(v => v.Verbrauch);
-                            double ersterWertJahr = verbrauchGroupMonat.FirstOrDefault().Verbrauch;
-                            double letzterWertJahr = verbrauchGroupMonat.LastOrDefault().Verbrauch;
-                            this.VerbrauchJahr = $"{(letzterWertJahr - ersterWertJahr).ToString("N0")} KW/h";
+                            if (verbrauchGroupMonat != null && verbrauchGroupMonat.Any() == true)
+                            {
+                                double ersterWertJahr = verbrauchGroupMonat.FirstOrDefault().Verbrauch;
+                                double letzterWertJahr = verbrauchGroupMonat.LastOrDefault().Verbrauch;
+                                this.VerbrauchJahr = $"{(letzterWertJahr - ersterWertJahr).ToString("N0")} KW/h";
+                            }
+
                             App.EventAgg.Publish<SelectedDataEventArgs>(
                                 new SelectedDataEventArgs
                                 {

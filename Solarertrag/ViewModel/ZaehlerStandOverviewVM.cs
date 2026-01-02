@@ -331,8 +331,10 @@ namespace Solarertrag.ViewModel
                     double min = itemsCollection.Min(m => m.Verbrauch);
                     double max = itemsCollection.Max(m => m.Verbrauch);
                     double diffZaehlerStand = max - min;
+                    int tageMonat = DateTime.DaysInMonth(itemsCollection.First().Year, itemsCollection.First().Month);
+                    double durchschnittVerbrauch = diffZaehlerStand / tageMonat;
                     this.SelektiertVerbrauch = Visibility.Visible;
-                    this.SelektiertVerbrauchText = $"Selektierter Verbrauch in KW/h: {diffZaehlerStand.ToString("G", CultureInfo.CurrentCulture)}";
+                    this.SelektiertVerbrauchText = $"Verbrauch in KW/h: {diffZaehlerStand.ToString("G", CultureInfo.CurrentCulture)}, für selektierte Tage: {itemsCollection.Count()}; im Durchschnitt: {durchschnittVerbrauch.ToString("N2", CultureInfo.CurrentCulture)} KW/h pro Tag";
                 }
                 else
                 {
