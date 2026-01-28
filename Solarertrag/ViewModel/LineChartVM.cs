@@ -19,9 +19,8 @@ namespace Solarertrag.ViewModel
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Windows;
-
-    using Console.ApplicationSettings;
 
     using EasyPrototypingNET.BaseClass;
     using EasyPrototypingNET.Core;
@@ -30,6 +29,7 @@ namespace Solarertrag.ViewModel
     using EasyPrototypingNET.WPF;
 
     using Solarertrag.Core;
+    using Solarertrag.DataRepository;
     using Solarertrag.Model;
 
     [ViewModel]
@@ -70,7 +70,19 @@ namespace Solarertrag.ViewModel
             set { this.Set(value); }
         }
 
-        private List<SolarertragMonat> CurrentDataExport { get; set; }
+        [PropertyBinding]
+        public IEnumerable<ZaehlerstandMonat> ZaehlerstandAllSource
+        {
+            get => base.Get<IEnumerable<ZaehlerstandMonat>>();
+            set => base.Set(value);
+        }
+
+        [PropertyBinding]
+        public IEnumerable<SolarertragMonat> SolarertragAllSource
+        {
+            get => base.Get<IEnumerable<SolarertragMonat>>();
+            set => base.Set(value);
+        }
         #endregion Get/Set Properties
 
         protected sealed override void InitCommands()
@@ -81,6 +93,19 @@ namespace Solarertrag.ViewModel
 
         private void LoadDataHandler()
         {
+            try
+            {
+                using (SolarertragMonatRepository repository = new SolarertragMonatRepository(App.DatabasePath))
+                {
+                    this.ZaehlerstandAllSource = repository.ListZaehlerstandAll();
+                    this.SolarertragAllSource = repository.List().ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionViewer.Show(ex, this.GetType().Name);
+                throw;
+            }
         }
 
         #region Command Handler

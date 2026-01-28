@@ -32,9 +32,8 @@ namespace Solarertrag.ViewModel
     using EasyPrototypingNET.Interface;
     using EasyPrototypingNET.WPF;
 
-    using PertNET.DataRepository;
-
     using Solarertrag.Core;
+    using Solarertrag.DataRepository;
     using Solarertrag.Model;
 
     [SupportedOSPlatform("windows")]
