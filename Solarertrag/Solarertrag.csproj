@@ -55,6 +55,7 @@
   <ItemGroup>
     <Folder Include="Core\Validation\" />
     <Folder Include="Core\Settings\" />
+    <Folder Include="Chart\" />
   </ItemGroup>
 
   <ItemGroup>
