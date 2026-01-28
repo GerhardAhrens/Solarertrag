@@ -25,6 +25,7 @@ namespace Solarertrag.Core
         public static readonly CommandButtons ExcelExport = new ExcelExportButton();
         public static readonly CommandButtons ZaehlerstandOverview = new ZaehlerstandOverviewButton();
         public static readonly CommandButtons ZaehlerstandEdit = new ZaehlerstandEditButton();
+        public static readonly CommandButtons LineChart = new LineChartButton();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CommandButtons"/> class.
@@ -105,6 +106,15 @@ namespace Solarertrag.Core
             }
 
             public override string Tooltip => "Übersicht aller Zählerstände";
+        }
+
+        private class LineChartButton : CommandButtons
+        {
+            public LineChartButton() : base(8, "Auswertung", "Liniendiagramm")
+            {
+            }
+
+            public override string Tooltip => "Auswertung anzeigen";
         }
     }
 }

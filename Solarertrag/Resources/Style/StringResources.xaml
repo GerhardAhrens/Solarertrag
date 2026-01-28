@@ -21,6 +21,7 @@
     <sys:String x:Key="WindowMainMenuNewTT">Neuer Eintrag (Ctrl-N)</sys:String>
     <sys:String x:Key="WindowMainMenuDeleteTT">Aktueller Eintrag löschen (Ctrl-D)</sys:String>
     <sys:String x:Key="WindowMainMenuEditTT">Aktueller Eintrag ändern (Ctrl-E)</sys:String>
+    <sys:String x:Key="WindowMainLineChartTT">Auswertung Chart</sys:String>
     <sys:String x:Key="WindowZaehlerOverviewTT">ÜbersichtZählerstand</sys:String>
     <sys:String x:Key="WindowZaehlerEditTT">Neuer Zählerstand</sys:String>
     <sys:String x:Key="WindowMainMenuSettingsTT">Einstellungen (Ctrl-I)</sys:String>
@@ -38,5 +39,8 @@
 
     <!--  Texte in SettingsVM.cs  -->
     <sys:String x:Key="DialogDescriptionSettings">Programmeinstellungen bearbeiten</sys:String>
+
+    <!--  Texte in LineChartVM.cs  -->
+    <sys:String x:Key="DialogDescriptionLineChart">Daten als Diagramm anzeigen</sys:String>
 
 </ResourceDictionary>

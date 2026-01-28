@@ -91,6 +91,15 @@ namespace Solarertrag.Core
             return overviewArgs;
         }
 
+        public static ControlContentArgs LineChart()
+        {
+            ControlContentArgs overviewArgs = new ControlContentArgs();
+            overviewArgs.TargetPage = CommandButtons.LineChart;
+            overviewArgs.RowPosition = RowItemPosition.None;
+            overviewArgs.EntityId = Guid.Empty;
+            return overviewArgs;
+        }
+
         public static ControlContentArgs ZaehlerstandEdit(Guid id, int rowPos = 0)
         {
             ControlContentArgs overviewArgs = new ControlContentArgs();

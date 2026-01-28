@@ -35,5 +35,6 @@ namespace Solarertrag.Core
         MainOverview = 10,
         ZaehlerstandEditDetail = 11,
         ZaehlerstandOverview = 12,
+        LineChart = 13,
     }
 }

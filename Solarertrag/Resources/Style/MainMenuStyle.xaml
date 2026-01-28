@@ -10,15 +10,6 @@
             </MenuItem.Icon>
         </MenuItem>
 
-        <MenuItem
-            Height="28"
-            Command="{Binding Path=CmdAgg[MainOverviewCommand]}"
-            Header="{StaticResource ResourceKey=WindowMainMenuOverviewTT}">
-            <MenuItem.Icon>
-                <StaticResource ResourceKey="IconOverview" />
-            </MenuItem.Icon>
-        </MenuItem>
-
         <Separator />
 
         <MenuItem
@@ -27,6 +18,15 @@
             Header="{StaticResource ResourceKey=WindowMainMenuNewTT}">
             <MenuItem.Icon>
                 <StaticResource ResourceKey="IconAddItem" />
+            </MenuItem.Icon>
+        </MenuItem>
+
+        <MenuItem
+            Height="28"
+            Command="{Binding Path=CmdAgg[MainOverviewCommand]}"
+            Header="{StaticResource ResourceKey=WindowMainMenuOverviewTT}">
+            <MenuItem.Icon>
+                <StaticResource ResourceKey="IconOverview" />
             </MenuItem.Icon>
         </MenuItem>
 
@@ -40,20 +40,25 @@
             Header="{StaticResource ResourceKey=WindowMainMenuEditTT}"
             Icon="{StaticResource ResourceKey=IconEditItem}" />
 
-        <Separator />
-
         <MenuItem
-            Command="{Binding Path=CmdAgg[ZaehlerstandOverviewCommand]}"
-            Header="{StaticResource ResourceKey=WindowZaehlerOverviewTT}"
-            Icon="{StaticResource ResourceKey=IconZaehlerstandOverview}" />
+            Command="{Binding Path=CmdAgg[LineChartCommand]}"
+            Header="{StaticResource ResourceKey=WindowMainLineChartTT}"
+            Icon="{StaticResource ResourceKey=IconLineChart}" />
+
+        <Separator />
 
         <MenuItem
             Command="{Binding Path=CmdAgg[ZaehlerstandEditDetailCommand]}"
             Header="{StaticResource ResourceKey=WindowZaehlerEditTT}"
             Icon="{StaticResource ResourceKey=IconZaehlerstandEditItem}" />
 
+        <MenuItem
+            Command="{Binding Path=CmdAgg[ZaehlerstandOverviewCommand]}"
+            Header="{StaticResource ResourceKey=WindowZaehlerOverviewTT}"
+            Icon="{StaticResource ResourceKey=IconZaehlerstandOverview}" />
+
         <Separator />
-        
+
         <MenuItem
             Command="{Binding Path=CmdAgg[SettingsCommand]}"
             Header="{StaticResource ResourceKey=WindowMainMenuSettingsTT}"

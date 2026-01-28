@@ -6,11 +6,6 @@
     using System.Windows.Input;
     using System.Windows.Threading;
 
-    using EasyPrototypingNET.Interface;
-
-    using Solarertrag.Core;
-    using Solarertrag.ViewModel;
-
     /// <summary>
     /// Interaktionslogik für MainOverview.xaml
     /// </summary>

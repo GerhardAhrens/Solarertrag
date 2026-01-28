@@ -106,6 +106,7 @@ namespace Solarertrag.ViewModel
             this.CmdAgg.AddOrSetCommand(MenuCommands.Settings, new RelayCommand(p1 => this.SettingsHandler(), p2 => true));
             this.CmdAgg.AddOrSetCommand(MenuCommands.ZaehlerstandEditDetail, new RelayCommand(p1 => this.ZaehlerstandEditHandler(), p2 => true));
             this.CmdAgg.AddOrSetCommand(MenuCommands.ZaehlerstandOverview, new RelayCommand(p1 => this.ZaehlerstandOverviewHandler(), p2 => true));
+            this.CmdAgg.AddOrSetCommand(MenuCommands.LineChart, new RelayCommand(p1 => this.LineChartHandler(), p2 => true));
         }
 
         private void WindowCloseHandler()
@@ -181,6 +182,11 @@ namespace Solarertrag.ViewModel
             this.LoadContent(LoadContentArgs.ZaehlerstandOverview(Guid.Empty, 0));
         }
 
+        private void LineChartHandler()
+        {
+            this.LoadContent(LoadContentArgs.LineChart());
+        }
+
         private void LoadContent(ControlContentArgs args)
         {
             if (args == null)
@@ -219,6 +225,11 @@ namespace Solarertrag.ViewModel
                     else if (args.TargetPage == CommandButtons.ZaehlerstandOverview)
                     {
                         ZaehlerStandOverviewVM controlVM = new ZaehlerStandOverviewVM(args);
+                        this.CurrentControl.DataContext = controlVM;
+                    }
+                    else if (args.TargetPage == CommandButtons.LineChart)
+                    {
+                        LineChartVM controlVM = new LineChartVM(args);
                         this.CurrentControl.DataContext = controlVM;
                     }
                     else if (args.TargetPage == CommandButtons.Settings)

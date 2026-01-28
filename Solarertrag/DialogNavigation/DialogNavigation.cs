@@ -62,6 +62,9 @@ namespace Solarertrag.Core
             result = CommandButtons.ZaehlerstandOverview;
             viewObjectsSource.Add(result.Key, result.Name, result.Description, typeof(ZaehlerOverview));
 
+            result = CommandButtons.LineChart;
+            viewObjectsSource.Add(result.Key, result.Name, result.Description, typeof(LineChart));
+
             Views = viewObjectsSource.Views;
         }
 

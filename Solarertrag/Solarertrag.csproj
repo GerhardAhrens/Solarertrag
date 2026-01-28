@@ -71,6 +71,9 @@
     <Compile Update="Core\Base\ViewObjects.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="ViewModel\LineChartVM.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="ViewModel\ZaehlerStandDetailVM.cs">
       <SubType>Code</SubType>
     </Compile>
