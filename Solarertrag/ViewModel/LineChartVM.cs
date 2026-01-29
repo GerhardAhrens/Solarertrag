@@ -19,6 +19,7 @@ namespace Solarertrag.ViewModel
 {
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Linq;
     using System.Windows;
 
@@ -28,6 +29,7 @@ namespace Solarertrag.ViewModel
     using EasyPrototypingNET.Interface;
     using EasyPrototypingNET.WPF;
 
+    using Solarertrag.Chart;
     using Solarertrag.Core;
     using Solarertrag.DataRepository;
     using Solarertrag.Model;
@@ -71,18 +73,12 @@ namespace Solarertrag.ViewModel
         }
 
         [PropertyBinding]
-        public IEnumerable<ZaehlerstandMonat> ZaehlerstandAllSource
+        public ObservableCollection<ChartLine> ChartLinesSource
         {
-            get => base.Get<IEnumerable<ZaehlerstandMonat>>();
+            get => base.Get<ObservableCollection<ChartLine>>();
             set => base.Set(value);
         }
 
-        [PropertyBinding]
-        public IEnumerable<SolarertragMonat> SolarertragAllSource
-        {
-            get => base.Get<IEnumerable<SolarertragMonat>>();
-            set => base.Set(value);
-        }
         #endregion Get/Set Properties
 
         protected sealed override void InitCommands()
@@ -97,8 +93,34 @@ namespace Solarertrag.ViewModel
             {
                 using (SolarertragMonatRepository repository = new SolarertragMonatRepository(App.DatabasePath))
                 {
-                    this.ZaehlerstandAllSource = repository.ListZaehlerstandAll();
-                    this.SolarertragAllSource = repository.List().ToList();
+                    IEnumerable <ZaehlerstandMonat> verbrauchGesamt = repository.ListZaehlerstandAll();
+                    var summeVerbrauchProJahr = verbrauchGesamt.GroupBy(g => g.Year).Select(g => new { Year = g.Key, Verbrauch = g.Sum(s => s.Verbrauch)}).ToList().OrderBy(o => o.Year);
+
+                    IEnumerable < SolarertragMonat > ertragGesamt = repository.List().ToList();
+                    var summeErtragProJahr = ertragGesamt.GroupBy(g => g.Year).Select(g => new { Year = g.Key, Ertrag = g.Sum(s => s.Ertrag) }).ToList().OrderBy(o => o.Year);
+
+                    this.ChartLinesSource = new ObservableCollection<ChartLine>();
+                    ChartLine chartLineV = new ChartLine();
+                    chartLineV.Title = "Verbrauch";
+                    chartLineV.Stroke = System.Windows.Media.Brushes.Red;
+
+                    foreach (var item in summeVerbrauchProJahr)
+                    {
+                        chartLineV.Values.Add(new ChartPoint { Category = item.Year.ToString(), Value = item.Verbrauch });
+                    }
+
+                    this.ChartLinesSource.Add(chartLineV);
+
+                    ChartLine chartLineE = new ChartLine();
+                    chartLineE.Title = "Solar Ertrag";
+                    chartLineE.Stroke = System.Windows.Media.Brushes.Green;
+                    foreach (var item in summeErtragProJahr)
+                    {
+                        chartLineE.Values.Add(new ChartPoint { Category = item.Year.ToString(), Value = item.Ertrag });
+                    }
+
+                    this.ChartLinesSource.Add(chartLineE);
+
                 }
             }
             catch (Exception ex)
