@@ -58,7 +58,7 @@ namespace Solarertrag.DataRepository
                     string collectionName = typeof(ZaehlerstandMonat).Name;
                     IEnumerable<ZaehlerstandMonat> tempList =  this.DatabaseIntern.GetCollection<ZaehlerstandMonat>(collectionName).FindAll().OrderBy(o => o.Month).ThenBy(t => t.Year).ThenBy(d => d.Day).ThenBy(v => v.Verbrauch);
                     result = new Dictionary<string, double>();
-                    foreach (ZaehlerstandMonat item in tempList.GroupBy(p => new { p.Year, p.Month }).Select(g => g.Last()).OrderBy(v => v.Verbrauch))
+                    foreach (ZaehlerstandMonat item in tempList.GroupBy(p => new { p.Year, p.Month}).Select(g => g.Last()).OrderBy(v => v.Verbrauch))
                     {
                         result.Add($"{item.Year}.{item.Month}", item.Verbrauch);
                     }

@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Diagnostics;
     using System.Globalization;
     using System.Linq;
     using System.Windows;
@@ -11,6 +12,7 @@
     using System.Windows.Media.Imaging;
     using System.Windows.Shapes;
 
+    [DebuggerDisplay("Title: {this.Title}")]
     public class ChartLine
     {
         public string Title { get; set; }
@@ -19,6 +21,7 @@
         public double StrokeThickness { get; set; } = 2;
     }
 
+    [DebuggerDisplay("Category: {this.Category}; Value: {this.Value}")]
     public class ChartPoint
     {
         public string Category { get; set; }   // X-Achse
