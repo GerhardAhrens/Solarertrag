@@ -94,7 +94,7 @@ namespace Solarertrag.ViewModel
                 using (SolarertragMonatRepository repository = new SolarertragMonatRepository(App.DatabasePath))
                 {
                     IEnumerable <ZaehlerstandMonat> verbrauchGesamt = repository.ListZaehlerstandAll();
-                    var summeVerbrauchProJahr = verbrauchGesamt.GroupBy(g => g.Year).Select(g => new { Year = g.Key, Verbrauch = g.Sum(s => s.Verbrauch)}).ToList().OrderBy(o => o.Year);
+                    var summeVerbrauchProJahr = verbrauchGesamt.GroupBy(g => g.Year).Select(g => new { Year = g.Key, VerbrauchMin = g.Min(s => s.Verbrauch), VerbrauchMax = g.Max(s => s.Verbrauch) }).ToList().OrderBy(o => o.Year);
 
                     IEnumerable < SolarertragMonat > ertragGesamt = repository.List().ToList();
                     var summeErtragProJahr = ertragGesamt.GroupBy(g => g.Year).Select(g => new { Year = g.Key, Ertrag = g.Sum(s => s.Ertrag) }).ToList().OrderBy(o => o.Year);
@@ -106,7 +106,7 @@ namespace Solarertrag.ViewModel
 
                     foreach (var item in summeVerbrauchProJahr)
                     {
-                        chartLineV.Values.Add(new ChartPoint { Category = item.Year.ToString(), Value = item.Verbrauch });
+                        chartLineV.Values.Add(new ChartPoint { Category = item.Year.ToString(), Value = item.VerbrauchMax-item.VerbrauchMin });
                     }
 
                     this.ChartLinesSource.Add(chartLineV);
