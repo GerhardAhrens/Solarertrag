@@ -3,11 +3,11 @@
     using System.Windows.Controls;
 
     /// <summary>
-    /// Interaktionslogik für LineChart.xaml
+    /// Interaktionslogik für LineChartYear.xaml
     /// </summary>
-    public partial class LineChart : UserControl
+    public partial class LineChartYear : UserControl
     {
-        public LineChart()
+        public LineChartYear()
         {
             this.InitializeComponent();
         }

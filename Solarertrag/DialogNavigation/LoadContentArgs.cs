@@ -94,7 +94,7 @@ namespace Solarertrag.Core
         public static ControlContentArgs LineChart()
         {
             ControlContentArgs overviewArgs = new ControlContentArgs();
-            overviewArgs.TargetPage = CommandButtons.LineChart;
+            overviewArgs.TargetPage = CommandButtons.LineChartYear;
             overviewArgs.RowPosition = RowItemPosition.None;
             overviewArgs.EntityId = Guid.Empty;
             return overviewArgs;

@@ -35,13 +35,13 @@ namespace Solarertrag.ViewModel
     using Solarertrag.Model;
 
     [ViewModel]
-    public class LineChartVM : ViewModelBase<LineChartVM>, IViewModel
+    public class LineChartYearVM : ViewModelBase<LineChartYearVM>, IViewModel
     {
         private readonly Window mainWindow = null;
         /// <summary>
-        /// Initializes a new instance of the <see cref="LineChartVM"/> class.
+        /// Initializes a new instance of the <see cref="LineChartYearVM"/> class.
         /// </summary>
-        public LineChartVM(ControlContentArgs args)
+        public LineChartYearVM(ControlContentArgs args)
         {
             this.mainWindow = Application.Current.Windows.LastActiveWindow();
             this.DialogDescription = ResourceObject.GetAs<string>("DialogDescriptionLineChart");
@@ -142,7 +142,7 @@ namespace Solarertrag.ViewModel
                         EntityId = Guid.Empty,
                         RowPosition = -1,
                         DataType = this as IViewModel,
-                        FromPage = CommandButtons.LineChart,
+                        FromPage = CommandButtons.LineChartYear,
                         TargetPage = CommandButtons.MainOverview
                     });
             }

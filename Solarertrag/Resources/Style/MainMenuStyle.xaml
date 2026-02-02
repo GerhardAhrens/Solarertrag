@@ -41,9 +41,14 @@
             Icon="{StaticResource ResourceKey=IconEditItem}" />
 
         <MenuItem
-            Command="{Binding Path=CmdAgg[LineChartCommand]}"
-            Header="{StaticResource ResourceKey=WindowMainLineChartTT}"
-            Icon="{StaticResource ResourceKey=IconLineChart}" />
+            Command="{Binding Path=CmdAgg[LineChartYearCommand]}"
+            Header="{StaticResource ResourceKey=WindowMainLineChartYearTT}"
+            Icon="{StaticResource ResourceKey=IconLineChartYear}" />
+
+        <MenuItem
+            Command="{Binding Path=CmdAgg[LineChartMonthCommand]}"
+            Header="{StaticResource ResourceKey=WindowMainLineChartMonthTT}"
+            Icon="{StaticResource ResourceKey=IconLineChartMonth}" />
 
         <Separator />
 

@@ -106,7 +106,7 @@ namespace Solarertrag.ViewModel
             this.CmdAgg.AddOrSetCommand(MenuCommands.Settings, new RelayCommand(p1 => this.SettingsHandler(), p2 => true));
             this.CmdAgg.AddOrSetCommand(MenuCommands.ZaehlerstandEditDetail, new RelayCommand(p1 => this.ZaehlerstandEditHandler(), p2 => true));
             this.CmdAgg.AddOrSetCommand(MenuCommands.ZaehlerstandOverview, new RelayCommand(p1 => this.ZaehlerstandOverviewHandler(), p2 => true));
-            this.CmdAgg.AddOrSetCommand(MenuCommands.LineChart, new RelayCommand(p1 => this.LineChartHandler(), p2 => true));
+            this.CmdAgg.AddOrSetCommand(MenuCommands.LineChartYear, new RelayCommand(p1 => this.LineChartYearHandler(), p2 => true));
         }
 
         private void WindowCloseHandler()
@@ -182,7 +182,7 @@ namespace Solarertrag.ViewModel
             this.LoadContent(LoadContentArgs.ZaehlerstandOverview(Guid.Empty, 0));
         }
 
-        private void LineChartHandler()
+        private void LineChartYearHandler()
         {
             this.LoadContent(LoadContentArgs.LineChart());
         }
@@ -227,9 +227,9 @@ namespace Solarertrag.ViewModel
                         ZaehlerStandOverviewVM controlVM = new ZaehlerStandOverviewVM(args);
                         this.CurrentControl.DataContext = controlVM;
                     }
-                    else if (args.TargetPage == CommandButtons.LineChart)
+                    else if (args.TargetPage == CommandButtons.LineChartYear)
                     {
-                        LineChartVM controlVM = new LineChartVM(args);
+                        LineChartYearVM controlVM = new LineChartYearVM(args);
                         this.CurrentControl.DataContext = controlVM;
                     }
                     else if (args.TargetPage == CommandButtons.Settings)
