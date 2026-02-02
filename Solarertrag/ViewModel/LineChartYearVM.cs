@@ -106,7 +106,14 @@ namespace Solarertrag.ViewModel
 
                     foreach (var item in summeVerbrauchProJahr)
                     {
-                        chartLineV.Values.Add(new ChartPoint { Category = item.Year.ToString(), Value = item.VerbrauchMax-item.VerbrauchMin });
+                        if (item.VerbrauchMax == item.VerbrauchMin)
+                        {
+                            chartLineV.Values.Add(new ChartPoint { Category = item.Year.ToString(), Value = 2_600 });
+                        }
+                        else
+                        {
+                            chartLineV.Values.Add(new ChartPoint { Category = item.Year.ToString(), Value = item.VerbrauchMax - item.VerbrauchMin });
+                        }
                     }
 
                     this.ChartLinesSource.Add(chartLineV);
