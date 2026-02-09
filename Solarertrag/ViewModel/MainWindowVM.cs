@@ -107,6 +107,7 @@ namespace Solarertrag.ViewModel
             this.CmdAgg.AddOrSetCommand(MenuCommands.ZaehlerstandEditDetail, new RelayCommand(p1 => this.ZaehlerstandEditHandler(), p2 => true));
             this.CmdAgg.AddOrSetCommand(MenuCommands.ZaehlerstandOverview, new RelayCommand(p1 => this.ZaehlerstandOverviewHandler(), p2 => true));
             this.CmdAgg.AddOrSetCommand(MenuCommands.LineChartYear, new RelayCommand(p1 => this.LineChartYearHandler(), p2 => true));
+            this.CmdAgg.AddOrSetCommand(MenuCommands.LineChartMonth, new RelayCommand(p1 => this.LineChartMonthHandler(), p2 => true));
         }
 
         private void WindowCloseHandler()
@@ -184,7 +185,12 @@ namespace Solarertrag.ViewModel
 
         private void LineChartYearHandler()
         {
-            this.LoadContent(LoadContentArgs.LineChart());
+            this.LoadContent(LoadContentArgs.LineChartYear());
+        }
+
+        private void LineChartMonthHandler()
+        {
+            this.LoadContent(LoadContentArgs.LineChartMonth());
         }
 
         private void LoadContent(ControlContentArgs args)

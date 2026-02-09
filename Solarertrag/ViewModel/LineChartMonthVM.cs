@@ -36,13 +36,13 @@ namespace Solarertrag.ViewModel
     using Solarertrag.Model;
 
     [ViewModel]
-    public class LineChartYearVM : ViewModelBase<LineChartYearVM>, IViewModel
+    public class LineChartMonthVM : ViewModelBase<LineChartMonthVM>, IViewModel
     {
         private readonly Window mainWindow = null;
         /// <summary>
-        /// Initializes a new instance of the <see cref="LineChartYearVM"/> class.
+        /// Initializes a new instance of the <see cref="LineChartMonthVM"/> class.
         /// </summary>
-        public LineChartYearVM(ControlContentArgs args)
+        public LineChartMonthVM(ControlContentArgs args)
         {
             this.mainWindow = Application.Current.Windows.LastActiveWindow();
             this.DialogDescription = ResourceObject.GetAs<string>("DialogDescriptionLineChart");

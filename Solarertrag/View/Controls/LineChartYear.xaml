@@ -77,7 +77,6 @@
             GridLineThickness="1"
             HorizontalGridLineCount="4"
             ItemSource="{Binding Path=ChartLinesSource}"
-            VerticalGridLineCount="6"
             XAxisTitle="Jahr"
             XAxisTitleAlignment="Center"
             XAxisTitleBrush="DarkGreen"

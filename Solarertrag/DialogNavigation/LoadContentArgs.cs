@@ -91,10 +91,19 @@ namespace Solarertrag.Core
             return overviewArgs;
         }
 
-        public static ControlContentArgs LineChart()
+        public static ControlContentArgs LineChartYear()
         {
             ControlContentArgs overviewArgs = new ControlContentArgs();
             overviewArgs.TargetPage = CommandButtons.LineChartYear;
+            overviewArgs.RowPosition = RowItemPosition.None;
+            overviewArgs.EntityId = Guid.Empty;
+            return overviewArgs;
+        }
+
+        public static ControlContentArgs LineChartMonth()
+        {
+            ControlContentArgs overviewArgs = new ControlContentArgs();
+            overviewArgs.TargetPage = CommandButtons.LineChartMonth;
             overviewArgs.RowPosition = RowItemPosition.None;
             overviewArgs.EntityId = Guid.Empty;
             return overviewArgs;

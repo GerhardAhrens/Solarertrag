@@ -72,6 +72,9 @@
     <Compile Update="Core\Base\ViewObjects.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="ViewModel\LineChartMonthVM.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="ViewModel\LineChartYearVM.cs">
       <SubType>Code</SubType>
     </Compile>

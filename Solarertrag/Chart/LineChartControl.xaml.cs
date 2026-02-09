@@ -3,8 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Diagnostics;
     using System.Globalization;
-    using System.IO;
     using System.Linq;
     using System.Windows;
     using System.Windows.Controls;
@@ -12,6 +12,7 @@
     using System.Windows.Media.Imaging;
     using System.Windows.Shapes;
 
+    [DebuggerDisplay("Titel: {this.Title}; Anzahl: {this.Values.Count}")]
     public class ChartLine
     {
         public string Title { get; set; }
@@ -20,6 +21,7 @@
         public double StrokeThickness { get; set; } = 2;
     }
 
+    [DebuggerDisplay("Category: {this.Category}; Value: {this.Value}")]
     public class ChartPoint
     {
         public string Category { get; set; }   // X-Achse
@@ -29,14 +31,6 @@
         public double Y { get; set; }       // z.B. 30
         public double PosX { get; set; }
         public double PosY { get; set; }
-    }
-
-    public class LineSeries
-    {
-        public string Title { get; set; }
-        public Brush Stroke { get; set; } = Brushes.Blue;
-        public double StrokeThickness { get; set; } = 2;
-        public IList<ChartPoint> Values { get; set; } = new List<ChartPoint>();
     }
 
     public enum AxisTitleAlignment
@@ -420,18 +414,18 @@
             double min = ItemSource.SelectMany(l => l.Values).Min(p => p.Value);
             double max = ItemSource.SelectMany(l => l.Values).Max(p => p.Value);
 
-            for (int i = 0; i <= HorizontalGridLineCount; i++)
+            for (int i = 0; i <= this.HorizontalGridLineCount; i++)
             {
-                double value = max - i * (max - min) / HorizontalGridLineCount;
-                double y = TOPMARGIN + i * plotHeight / HorizontalGridLineCount;
+                double value = max - i * (max - min) / this.HorizontalGridLineCount;
+                double y = TOPMARGIN + i * plotHeight / this.HorizontalGridLineCount;
 
                 var tb = new TextBlock
                 {
-                    Text = value.ToString("0.##", CultureInfo.CurrentCulture),
+                    Text = value.ToString("N0", CultureInfo.CurrentCulture),
                     FontSize = 11
                 };
 
-                Canvas.SetLeft(tb, 5);
+                Canvas.SetLeft(tb, -5);
                 Canvas.SetTop(tb, y - 8);
 
                 this.ChartCanvas.Children.Add(tb);
@@ -500,7 +494,7 @@
                         Category = line.Values[i].Category,
                         Value = line.Values[i].Value,
                         PosX = x,
-                        PosY = y
+                        PosY = y,
                     };
 
                     var dataPoint = new Ellipse
@@ -531,13 +525,15 @@
             {
                 for (int i = 0; i < linePoint.Count; i++)
                 {
-                    Ellipse dp = _dataPoints[i];
-                    ChartPoint p = (ChartPoint)_dataPoints[i].Tag;
-                    Canvas.SetLeft(dp, p.PosX - POINTRADIUS);
-                    Canvas.SetTop(dp, p.PosY - POINTRADIUS);
-                    ToolTipService.SetInitialShowDelay(dp, 100);
-                    ToolTipService.SetShowDuration(dp, 1500);
-                    ToolTipService.SetToolTip(dp, $"Kategorie: {p.Category}\nWert: {p.Value}");
+                    Dispatcher.BeginInvoke(new Action(() => {
+                        Ellipse dp = _dataPoints[i];
+                        ChartPoint p = (ChartPoint)_dataPoints[i].Tag;
+                        Canvas.SetLeft(dp, p.PosX - POINTRADIUS);
+                        Canvas.SetTop(dp, p.PosY - POINTRADIUS);
+                        ToolTipService.SetInitialShowDelay(dp, 100);
+                        ToolTipService.SetShowDuration(dp, 1500);
+                        ToolTipService.SetToolTip(dp, $"Kategorie: {p.Category}\nWert: {p.Value}");
+                    }), System.Windows.Threading.DispatcherPriority.Loaded);
                 }
             }
         }
