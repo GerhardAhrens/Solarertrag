@@ -3,8 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
-    using System.Diagnostics;
     using System.Globalization;
+    using System.IO;
     using System.Linq;
     using System.Windows;
     using System.Windows.Controls;
@@ -12,7 +12,6 @@
     using System.Windows.Media.Imaging;
     using System.Windows.Shapes;
 
-    [DebuggerDisplay("Title: {this.Title}")]
     public class ChartLine
     {
         public string Title { get; set; }
@@ -21,7 +20,6 @@
         public double StrokeThickness { get; set; } = 2;
     }
 
-    [DebuggerDisplay("Category: {this.Category}; Value: {this.Value}")]
     public class ChartPoint
     {
         public string Category { get; set; }   // X-Achse
@@ -29,6 +27,8 @@
 
         public string X { get; set; }      // z.B. "2021"
         public double Y { get; set; }       // z.B. 30
+        public double PosX { get; set; }
+        public double PosY { get; set; }
     }
 
     public class LineSeries
@@ -52,10 +52,12 @@
     public partial class LineChartControl : UserControl
     {
         // Plot-Ränder
-        private const double LeftMargin = 30;
-        private const double BottomMargin = 35;
-        private const double TopMargin = 10;
-        private const double RightMargin = 10;
+        private const double LEFTMARGIN = 30;
+        private const double BOTTOMMARGIN = 35;
+        private const double TOPMARGIN = 10;
+        private const double RIGHTMARGIN = 10;
+        private const double POINTRADIUS = 6;
+        private readonly List<Ellipse> _dataPoints = new();
 
         public LineChartControl()
         {
@@ -65,28 +67,15 @@
 
         #region Dependency Properties
 
-        public IEnumerable<LineSeries> Series
+        public ObservableCollection<ChartLine> ItemSource
         {
-            get => (IEnumerable<LineSeries>)GetValue(SeriesProperty);
-            set => SetValue(SeriesProperty, value);
+            get => (ObservableCollection<ChartLine>)GetValue(ItemSourceProperty);
+            set => SetValue(ItemSourceProperty, value);
         }
 
-        public static readonly DependencyProperty SeriesProperty =
+        public static readonly DependencyProperty ItemSourceProperty =
             DependencyProperty.Register(
-                nameof(Series),
-                typeof(IEnumerable<LineSeries>),
-                typeof(LineChartControl),
-                new PropertyMetadata(null, (_, __) => ((LineChartControl)_).Redraw()));
-
-        public ObservableCollection<ChartLine> Lines
-        {
-            get => (ObservableCollection<ChartLine>)GetValue(LinesProperty);
-            set => SetValue(LinesProperty, value);
-        }
-
-        public static readonly DependencyProperty LinesProperty =
-            DependencyProperty.Register(
-                nameof(Lines),
+                nameof(ItemSource),
                 typeof(ObservableCollection<ChartLine>),
                 typeof(LineChartControl),
                 new PropertyMetadata(null, OnChartPropertyChanged));
@@ -143,9 +132,7 @@
                 typeof(LineChartControl),
                 new PropertyMetadata(1.0, OnChartPropertyChanged));
 
-        private static void OnChartPropertyChanged(
-            DependencyObject d,
-            DependencyPropertyChangedEventArgs e)
+        private static void OnChartPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ((LineChartControl)d).Redraw();
         }
@@ -267,7 +254,7 @@
         {
             this.ChartCanvas.Children.Clear();
 
-            if (this.Lines == null || this.Lines.Count == 0)
+            if (this.ItemSource == null || this.ItemSource.Count == 0)
             {
                 return;
             }
@@ -280,8 +267,8 @@
                 return;
             }
 
-            double plotWidth = width - LeftMargin - RightMargin;
-            double plotHeight = height - TopMargin - BottomMargin;
+            double plotWidth = width - LEFTMARGIN - RIGHTMARGIN;
+            double plotHeight = height - TOPMARGIN - BOTTOMMARGIN;
 
             if (plotWidth <= 0 || plotHeight <= 0)
             {
@@ -323,13 +310,13 @@
 
             double x = XAxisTitleAlignment switch
             {
-                AxisTitleAlignment.Start => LeftMargin,
-                AxisTitleAlignment.End => LeftMargin + plotWidth - text.DesiredSize.Width,
-                _ => LeftMargin + plotWidth / 2 - text.DesiredSize.Width / 2
+                AxisTitleAlignment.Start => LEFTMARGIN,
+                AxisTitleAlignment.End => LEFTMARGIN + plotWidth - text.DesiredSize.Width,
+                _ => LEFTMARGIN + plotWidth / 2 - text.DesiredSize.Width / 2
             };
 
             Canvas.SetLeft(text, x);
-            Canvas.SetTop(text, TopMargin + plotHeight + BottomMargin - text.DesiredSize.Height);
+            Canvas.SetTop(text, TOPMARGIN + plotHeight + BOTTOMMARGIN - text.DesiredSize.Height);
 
             this.ChartCanvas.Children.Add(text);
         }
@@ -354,9 +341,9 @@
 
             double y = YAxisTitleAlignment switch
             {
-                AxisTitleAlignment.Start => TopMargin + plotHeight - text.DesiredSize.Width,
-                AxisTitleAlignment.End => TopMargin,
-                _ => TopMargin + plotHeight / 2 - text.DesiredSize.Width / 2
+                AxisTitleAlignment.Start => TOPMARGIN + plotHeight - text.DesiredSize.Width,
+                AxisTitleAlignment.End => TOPMARGIN,
+                _ => TOPMARGIN + plotHeight / 2 - text.DesiredSize.Width / 2
             };
 
             Canvas.SetLeft(text, -20); // links außerhalb
@@ -370,10 +357,10 @@
             // Y-Achse
             this.ChartCanvas.Children.Add(new Line
             {
-                X1 = LeftMargin,
-                X2 = LeftMargin,
-                Y1 = TopMargin,
-                Y2 = TopMargin + plotHeight,
+                X1 = LEFTMARGIN,
+                X2 = LEFTMARGIN,
+                Y1 = TOPMARGIN,
+                Y2 = TOPMARGIN + plotHeight,
                 Stroke = Brushes.Black,
                 StrokeThickness = 1
             });
@@ -381,10 +368,10 @@
             // X-Achse
             this.ChartCanvas.Children.Add(new Line
             {
-                X1 = LeftMargin,
-                X2 = LeftMargin + plotWidth,
-                Y1 = TopMargin + plotHeight,
-                Y2 = TopMargin + plotHeight,
+                X1 = LEFTMARGIN,
+                X2 = LEFTMARGIN + plotWidth,
+                Y1 = TOPMARGIN + plotHeight,
+                Y2 = TOPMARGIN + plotHeight,
                 Stroke = Brushes.Black,
                 StrokeThickness = 1
             });
@@ -392,8 +379,8 @@
 
         private void DrawGridLines(double plotWidth, double plotHeight)
         {
-            double left = LeftMargin;
-            double top = TopMargin;
+            double left = LEFTMARGIN;
+            double top = TOPMARGIN;
 
             // Horizontal
             for (int i = 0; i <= HorizontalGridLineCount; i++)
@@ -430,13 +417,13 @@
 
         private void DrawYAxisLabels(double plotHeight)
         {
-            double min = Lines.SelectMany(l => l.Values).Min(p => p.Value);
-            double max = Lines.SelectMany(l => l.Values).Max(p => p.Value);
+            double min = ItemSource.SelectMany(l => l.Values).Min(p => p.Value);
+            double max = ItemSource.SelectMany(l => l.Values).Max(p => p.Value);
 
             for (int i = 0; i <= HorizontalGridLineCount; i++)
             {
                 double value = max - i * (max - min) / HorizontalGridLineCount;
-                double y = TopMargin + i * plotHeight / HorizontalGridLineCount;
+                double y = TOPMARGIN + i * plotHeight / HorizontalGridLineCount;
 
                 var tb = new TextBlock
                 {
@@ -453,7 +440,7 @@
 
         private void DrawXAxisLabels(double plotWidth, double plotHeight)
         {
-            var referenceLine = Lines.FirstOrDefault();
+            var referenceLine = ItemSource.FirstOrDefault();
             if (referenceLine == null || referenceLine.Values.Count < 2)
             {
                 return;
@@ -464,7 +451,7 @@
 
             for (int i = 0; i < count; i++)
             {
-                double x = LeftMargin + i * step;
+                double x = LEFTMARGIN + i * step;
 
                 var tb = new TextBlock
                 {
@@ -474,7 +461,7 @@
                 };
 
                 Canvas.SetLeft(tb, x - 20);
-                Canvas.SetTop(tb, TopMargin + plotHeight + 5);
+                Canvas.SetTop(tb, TOPMARGIN + plotHeight + 5);
 
                 this.ChartCanvas.Children.Add(tb);
             }
@@ -482,15 +469,15 @@
 
         private void DrawLines(double plotWidth, double plotHeight)
         {
-            double min = this.Lines.SelectMany(l => l.Values).Min(p => p.Value);
-            double max = this.Lines.SelectMany(l => l.Values).Max(p => p.Value);
+            double min = this.ItemSource.SelectMany(l => l.Values).Min(p => p.Value);
+            double max = this.ItemSource.SelectMany(l => l.Values).Max(p => p.Value);
 
             if (Math.Abs(max - min) < double.Epsilon)
             {
                 return;
             }
 
-            foreach (var line in Lines)
+            foreach (var line in this.ItemSource)
             {
                 if (line.Values.Count < 2)
                 {
@@ -505,13 +492,53 @@
 
                 for (int i = 0; i < line.Values.Count; i++)
                 {
-                    double x = LeftMargin + i * plotWidth / (line.Values.Count - 1);
-                    double y = TopMargin + plotHeight - (line.Values[i].Value - min) / (max - min) * plotHeight;
+                    double x = LEFTMARGIN + i * plotWidth / (line.Values.Count - 1);
+                    double y = TOPMARGIN + plotHeight - (line.Values[i].Value - min) / (max - min) * plotHeight;
+
+                    ChartPoint cp = new ChartPoint()
+                    {
+                        Category = line.Values[i].Category,
+                        Value = line.Values[i].Value,
+                        PosX = x,
+                        PosY = y
+                    };
+
+                    var dataPoint = new Ellipse
+                    {
+                        Width = POINTRADIUS * 2,
+                        Height = POINTRADIUS * 2,
+                        Fill = Brushes.DarkGreen,
+                        Stroke = Brushes.Black,
+                        StrokeThickness = 2,
+                        Tag = cp,
+                    };
 
                     polyline.Points.Add(new Point(x, y));
+                    _dataPoints.Add(dataPoint);
+                    this.ChartCanvas.Children.Add(dataPoint);
                 }
 
                 this.ChartCanvas.Children.Add(polyline);
+            }
+
+            this.UpdateLayoutPositions();
+        }
+
+        private void UpdateLayoutPositions()
+        {
+            var linePoint = this.ChartCanvas.Children.OfType<Polyline>().SelectMany(pl => pl.Points).ToList();
+            if (linePoint != null)
+            {
+                for (int i = 0; i < linePoint.Count; i++)
+                {
+                    Ellipse dp = _dataPoints[i];
+                    ChartPoint p = (ChartPoint)_dataPoints[i].Tag;
+                    Canvas.SetLeft(dp, p.PosX - POINTRADIUS);
+                    Canvas.SetTop(dp, p.PosY - POINTRADIUS);
+                    ToolTipService.SetInitialShowDelay(dp, 100);
+                    ToolTipService.SetShowDuration(dp, 1500);
+                    ToolTipService.SetToolTip(dp, $"Kategorie: {p.Category}\nWert: {p.Value}");
+                }
             }
         }
 

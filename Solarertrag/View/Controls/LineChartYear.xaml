@@ -76,7 +76,7 @@
             GridLineBrush="Gainsboro"
             GridLineThickness="1"
             HorizontalGridLineCount="4"
-            Lines="{Binding Path=ChartLinesSource}"
+            ItemSource="{Binding Path=ChartLinesSource}"
             VerticalGridLineCount="6"
             XAxisTitle="Jahr"
             XAxisTitleAlignment="Center"
