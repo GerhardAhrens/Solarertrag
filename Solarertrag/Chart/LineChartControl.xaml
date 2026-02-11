@@ -19,6 +19,7 @@
         <Canvas
             x:Name="ChartCanvas"
             Background="White"
+            ClipToBounds="True"
             SizeChanged="ChartCanvas_SizeChanged" />
 
         <!--  Legende  -->
@@ -34,7 +35,10 @@
                             Height="3"
                             VerticalAlignment="Center"
                             Fill="{Binding Path=Stroke}" />
-                        <TextBlock Margin="6,0,0,0" Text="{Binding Path=Title}" />
+                        <TextBlock
+                            Margin="6,0,0,0"
+                            FontWeight="Medium"
+                            Text="{Binding Path=Title}" />
                     </StackPanel>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

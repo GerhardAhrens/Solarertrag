@@ -434,6 +434,7 @@
             this.DrawXAxisLabels(plotWidth, plotHeight);
             this.DrawAxisTitles(plotWidth, plotHeight);
             this.DrawLines(plotWidth, plotHeight);
+            this.UpdateLayoutPositions();
         }
 
         #region Drawing
@@ -652,6 +653,8 @@
                     {
                         Category = line.Values[i].Category,
                         Value = line.Values[i].Value,
+                        X = line.Values[i].Category,
+                        Y = line.Values[i].Value,
                         PosX = x,
                         PosY = y,
                     };
@@ -667,14 +670,12 @@
                     };
 
                     polyline.Points.Add(new Point(x, y));
-                    _dataPoints.Add(dataPoint);
+                    this._dataPoints.Add(dataPoint);
                     this.ChartCanvas.Children.Add(dataPoint);
                 }
 
                 this.ChartCanvas.Children.Add(polyline);
             }
-
-            this.UpdateLayoutPositions();
         }
 
         private void UpdateLayoutPositions()
@@ -684,15 +685,13 @@
             {
                 for (int i = 0; i < linePoint.Count; i++)
                 {
-                    Dispatcher.BeginInvoke(new Action(() => {
-                        Ellipse dp = _dataPoints[i];
-                        ChartPoint p = (ChartPoint)_dataPoints[i].Tag;
+                        Ellipse dp = linePoint[i];
+                        ChartPoint p = (ChartPoint)linePoint[i].Tag;
                         Canvas.SetLeft(dp, p.PosX - POINTRADIUS);
                         Canvas.SetTop(dp, p.PosY - POINTRADIUS);
                         ToolTipService.SetInitialShowDelay(dp, 100);
                         ToolTipService.SetShowDuration(dp, 1500);
                         ToolTipService.SetToolTip(dp, $"Kategorie: {p.Category}\nWert: {p.Value}");
-                    }), System.Windows.Threading.DispatcherPriority.Loaded);
                 }
             }
         }
