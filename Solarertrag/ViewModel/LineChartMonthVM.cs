@@ -74,6 +74,25 @@ namespace Solarertrag.ViewModel
         }
 
         [PropertyBinding]
+        public Dictionary<int, string> YearSource
+        {
+            get => base.Get<Dictionary<int, string>>();
+            set => base.Set(value);
+        }
+
+        [PropertyBinding]
+        public int YearSelected
+        {
+            get => base.Get<int>();
+            set => base.Set(value, this.SelectedYearKey);
+        }
+
+        private void SelectedYearKey(int obj)
+        {
+            int currentYear = (int)obj;
+        }
+
+        [PropertyBinding]
         public ObservableCollection<ChartLine> ChartLinesSource
         {
             get => base.Get<ObservableCollection<ChartLine>>();
@@ -95,6 +114,10 @@ namespace Solarertrag.ViewModel
                 using (SolarertragMonatRepository repository = new SolarertragMonatRepository(App.DatabasePath))
                 {
                     IEnumerable <ZaehlerstandMonat> verbrauchGesamt = repository.ListZaehlerstandAll();
+                    this.YearSource = verbrauchGesamt.GroupBy(g => g.Year).ToDictionary(k => k.Key, g => g.Key.ToString());
+                    this.YearSelected = DateTime.Now.Year;
+
+                    /*
                     var summeVerbrauchProJahr = verbrauchGesamt.GroupBy(g => g.Year).Select(g => new { Year = g.Key, VerbrauchMin = g.Min(s => s.Verbrauch), VerbrauchMax = g.Max(s => s.Verbrauch) }).ToList().OrderBy(o => o.Year);
 
                     IEnumerable < SolarertragMonat > ertragGesamt = repository.List().ToList();
@@ -128,6 +151,7 @@ namespace Solarertrag.ViewModel
                     }
 
                     this.ChartLinesSource.Add(chartLineE);
+                    */
                 }
             }
             catch (Exception ex)

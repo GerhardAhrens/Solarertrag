@@ -65,6 +65,9 @@ namespace Solarertrag.Core
             result = CommandButtons.LineChartYear;
             viewObjectsSource.Add(result.Key, result.Name, result.Description, typeof(LineChartYear));
 
+            result = CommandButtons.LineChartMonth;
+            viewObjectsSource.Add(result.Key, result.Name, result.Description, typeof(LineChartMonth));
+
             Views = viewObjectsSource.Views;
         }
 

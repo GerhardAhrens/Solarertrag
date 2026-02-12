@@ -1,0 +1,97 @@
+﻿<UserControl
+    x:Class="Solarertrag.View.Controls.LineChartMonth"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:chart="clr-namespace:Solarertrag.Chart"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:libConverter="clr-namespace:EasyPrototypingNET.WPF.Converter;assembly=EasyPrototypingNET"
+    xmlns:libCore="clr-namespace:EasyPrototypingNET.Core;assembly=EasyPrototypingNET"
+    xmlns:libWPF="clr-namespace:EasyPrototypingNET.WPF;assembly=EasyPrototypingNET"
+    xmlns:local="clr-namespace:Solarertrag.View.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <libWPF:SimpleGrid Columns="*" Rows="Auto,Auto,*">
+        <!--#region Toolbar-->
+        <ToolBar Grid.Row="0">
+            <ToolBar.Resources>
+                <Style TargetType="{x:Type ToolBarPanel}">
+                    <Setter Property="Orientation" Value="Horizontal" />
+                </Style>
+            </ToolBar.Resources>
+
+            <libWPF:GeometryButton
+                x:Name="BtnCloseDetail"
+                Width="100"
+                Height="30"
+                Command="{Binding Path=CmdAgg[CloseDetailCommand]}"
+                Foreground="Black"
+                PathData="{StaticResource ResourceKey=DialogClose}"
+                Text="Schließen"
+                WindowChrome.IsHitTestVisibleInChrome="True" />
+
+            <libWPF:GeometryButton
+                Width="100"
+                Height="30"
+                Command="{Binding Path=CmdAgg[SaveChartCommand]}"
+                Foreground="Black"
+                PathData="{StaticResource ResourceKey=IconLineChartInfo}"
+                Text="Export"
+                WindowChrome.IsHitTestVisibleInChrome="True" />
+
+            <libWPF:ComboBoxEx
+                Width="100"
+                DisplayMemberPath="Value"
+                ItemsSource="{Binding Path=YearSource}"
+                SelectedValue="{Binding Path=YearSelected}"
+                SelectedValuePath="Key" />
+        </ToolBar>
+        <!--#endregion Toolbar-->
+
+        <!--#region Dialogtitel and Icon-->
+        <DockPanel
+            Grid.Row="1"
+            Height="Auto"
+            Background="LightYellow"
+            LastChildFill="False">
+            <TextBlock
+                x:Name="tbDialogDescription"
+                Grid.Row="0"
+                Margin="5,0"
+                VerticalAlignment="Center"
+                DockPanel.Dock="Left"
+                FontSize="22"
+                FontWeight="Medium"
+                Text="{Binding Path=DialogDescription, UpdateSourceTrigger=PropertyChanged}" />
+
+            <libWPF:GeometryLabel
+                Grid.Row="0"
+                Grid.Column="0"
+                Width="30"
+                Height="30"
+                VerticalAlignment="Center"
+                DockPanel.Dock="Right"
+                PathData="{StaticResource ResourceKey=IconLineChartInfo}" />
+        </DockPanel>
+        <!--#endregion Dialogtitel and Icon-->
+
+        <chart:LineChartControl
+            x:Name="MyLineChart"
+            Grid.Row="2"
+            Grid.ColumnSpan="2"
+            GridLineBrush="Gainsboro"
+            GridLineThickness="1"
+            HorizontalGridLineCount="4"
+            ItemSource="{Binding Path=ChartLinesSource}"
+            XAxisTitle="Jahr"
+            XAxisTitleAlignment="Center"
+            XAxisTitleBrush="DarkGreen"
+            XAxisTitleFontSize="14"
+            YAxisTitle="Verbrauch/Ertrag"
+            YAxisTitleAlignment="Center"
+            YAxisTitleBrush="DarkRed"
+            YAxisTitleFontSize="14" />
+
+    </libWPF:SimpleGrid>
+</UserControl>

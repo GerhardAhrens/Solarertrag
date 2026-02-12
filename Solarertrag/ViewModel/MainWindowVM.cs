@@ -238,6 +238,11 @@ namespace Solarertrag.ViewModel
                         LineChartYearVM controlVM = new LineChartYearVM(args);
                         this.CurrentControl.DataContext = controlVM;
                     }
+                    else if (args.TargetPage == CommandButtons.LineChartMonth)
+                    {
+                        LineChartMonthVM controlVM = new LineChartMonthVM(args);
+                        this.CurrentControl.DataContext = controlVM;
+                    }
                     else if (args.TargetPage == CommandButtons.Settings)
                     {
                         SettingsVM controlVM = new SettingsVM();
