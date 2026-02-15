@@ -26,7 +26,7 @@ namespace Solarertrag.Core
         public static readonly CommandButtons ZaehlerstandOverview = new ZaehlerstandOverviewButton();
         public static readonly CommandButtons ZaehlerstandEdit = new ZaehlerstandEditButton();
         public static readonly CommandButtons LineChartYear = new LineChartYearButton();
-        public static readonly CommandButtons LineChartMonth = new LineChartYearButton();
+        public static readonly CommandButtons LineChartMonth = new LineChartMonthButton();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CommandButtons"/> class.
@@ -120,7 +120,7 @@ namespace Solarertrag.Core
 
         private class LineChartMonthButton : CommandButtons
         {
-            public LineChartMonthButton() : base(8, "Auswertung", "Liniendiagramm (Monate in einem Jahr)")
+            public LineChartMonthButton() : base(9, "Auswertung", "Liniendiagramm (Monate in einem Jahr)")
             {
             }
 

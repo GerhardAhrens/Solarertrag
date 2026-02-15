@@ -87,11 +87,6 @@ namespace Solarertrag.ViewModel
             set => base.Set(value, this.SelectedYearKey);
         }
 
-        private void SelectedYearKey(int obj)
-        {
-            int currentYear = (int)obj;
-        }
-
         [PropertyBinding]
         public ObservableCollection<ChartLine> ChartLinesSource
         {
@@ -99,6 +94,16 @@ namespace Solarertrag.ViewModel
             set => base.Set(value);
         }
 
+        [PropertyBinding]
+        public string YAchseTitel
+        {
+            get { return this.Get<string>(); }
+            set { this.Set(value); }
+        }
+
+
+        public IEnumerable<ZaehlerstandMonat> VerbrauchGesamt { get; set; }
+        public IEnumerable<SolarertragMonat> ErtragGesamt { get; set; }
         #endregion Get/Set Properties
 
         protected sealed override void InitCommands()
@@ -113,45 +118,11 @@ namespace Solarertrag.ViewModel
             {
                 using (SolarertragMonatRepository repository = new SolarertragMonatRepository(App.DatabasePath))
                 {
-                    IEnumerable <ZaehlerstandMonat> verbrauchGesamt = repository.ListZaehlerstandAll();
-                    this.YearSource = verbrauchGesamt.GroupBy(g => g.Year).ToDictionary(k => k.Key, g => g.Key.ToString());
+                    this.VerbrauchGesamt = repository.ListZaehlerstandAll();
+                    this.ErtragGesamt = repository.List().ToList();
+
+                    this.YearSource = this.VerbrauchGesamt.GroupBy(g => g.Year).ToDictionary(k => k.Key, g => g.Key.ToString());
                     this.YearSelected = DateTime.Now.Year;
-
-                    /*
-                    var summeVerbrauchProJahr = verbrauchGesamt.GroupBy(g => g.Year).Select(g => new { Year = g.Key, VerbrauchMin = g.Min(s => s.Verbrauch), VerbrauchMax = g.Max(s => s.Verbrauch) }).ToList().OrderBy(o => o.Year);
-
-                    IEnumerable < SolarertragMonat > ertragGesamt = repository.List().ToList();
-                    var summeErtragProJahr = ertragGesamt.GroupBy(g => g.Year).Select(g => new { Year = g.Key, Ertrag = g.Sum(s => s.Ertrag) }).ToList().OrderBy(o => o.Year);
-
-                    this.ChartLinesSource = new ObservableCollection<ChartLine>();
-                    ChartLine chartLineV = new ChartLine();
-                    chartLineV.Title = "Verbrauch";
-                    chartLineV.Stroke = System.Windows.Media.Brushes.Red;
-
-                    foreach (var item in summeVerbrauchProJahr)
-                    {
-                        if (item.VerbrauchMax == item.VerbrauchMin)
-                        {
-                            chartLineV.Values.Add(new ChartPoint { Category = item.Year.ToString(), Value = 2_600 });
-                        }
-                        else
-                        {
-                            chartLineV.Values.Add(new ChartPoint { Category = item.Year.ToString(), Value = (item.VerbrauchMax - item.VerbrauchMin).ToInt() });
-                        }
-                    }
-
-                    this.ChartLinesSource.Add(chartLineV);
-
-                    ChartLine chartLineE = new ChartLine();
-                    chartLineE.Title = "Solar Ertrag";
-                    chartLineE.Stroke = System.Windows.Media.Brushes.Green;
-                    foreach (var item in summeErtragProJahr)
-                    {
-                        chartLineE.Values.Add(new ChartPoint { Category = item.Year.ToString(), Value = item.Ertrag.ToInt() });
-                    }
-
-                    this.ChartLinesSource.Add(chartLineE);
-                    */
                 }
             }
             catch (Exception ex)
@@ -160,6 +131,139 @@ namespace Solarertrag.ViewModel
                 throw;
             }
         }
+
+        private void SelectedYearKey(int obj)
+        {
+            int currentYear = (int)obj;
+            this.YAchseTitel = $"Monat {currentYear}†";
+
+            var summeVerbrauchImJahr = this.VerbrauchGesamt.Where(w => w.Year == currentYear).GroupBy(g => g.Month).Select(g => new { Monat = g.Key, VerbrauchMin = g.Min(s => s.Verbrauch), VerbrauchMax = g.Max(s => s.Verbrauch) }).ToList().OrderBy(o => o.Monat);
+            var summeErtragImJahr = this.ErtragGesamt.Where(w => w.Year == currentYear).GroupBy(g => g.Month).Select(g => new { Monat = g.Key, Ertrag = g.Sum(s => s.Ertrag) }).ToList().OrderBy(o => o.Monat);
+
+            this.ChartLinesSource = null;
+            this.ChartLinesSource = new ObservableCollection<ChartLine>();
+            ChartLine chartLineV = new ChartLine();
+            chartLineV.Title = "Verbrauch (in KW/h)";
+            chartLineV.Stroke = System.Windows.Media.Brushes.Red;
+
+            foreach (var item in summeVerbrauchImJahr)
+            {
+                chartLineV.Values.Add(new ChartPoint { Category = item.Monat.ToString(), Value = (item.VerbrauchMax - item.VerbrauchMin).ToInt() });
+            }
+
+            if (chartLineV.Values.Any(a => a.Category == "1") == false)
+            {
+                chartLineV.Values.Add(new ChartPoint { Category = "1", Value = 0 });
+            }
+            if (chartLineV.Values.Any(a => a.Category == "2") == false)
+            {
+                chartLineV.Values.Add(new ChartPoint { Category = "2", Value = 0 });
+            }
+            if (chartLineV.Values.Any(a => a.Category == "3") == false)
+            {
+                chartLineV.Values.Add(new ChartPoint { Category = "3", Value = 0 });
+            }
+            if (chartLineV.Values.Any(a => a.Category == "4") == false)
+            {
+                chartLineV.Values.Add(new ChartPoint { Category = "4", Value = 0 });
+            }
+            if (chartLineV.Values.Any(a => a.Category == "5") == false)
+            {
+                chartLineV.Values.Add(new ChartPoint { Category = "5", Value = 0 });
+            }
+            if (chartLineV.Values.Any(a => a.Category == "6") == false)
+            {
+                chartLineV.Values.Add(new ChartPoint { Category = "6", Value = 0 });
+            }
+            if (chartLineV.Values.Any(a => a.Category == "7") == false)
+            {
+                chartLineV.Values.Add(new ChartPoint { Category = "7", Value = 0 });
+            }
+            if (chartLineV.Values.Any(a => a.Category == "8") == false)
+            {
+                chartLineV.Values.Add(new ChartPoint { Category = "8", Value = 0 });
+            }
+            if (chartLineV.Values.Any(a => a.Category == "9") == false)
+            {
+                chartLineV.Values.Add(new ChartPoint { Category = "9", Value = 0 });
+            }
+            if (chartLineV.Values.Any(a => a.Category == "10") == false)
+            {
+                chartLineV.Values.Add(new ChartPoint { Category = "10", Value = 0 });
+            }
+            if (chartLineV.Values.Any(a => a.Category == "11") == false)
+            {
+                chartLineV.Values.Add(new ChartPoint { Category = "11", Value = 0 });
+            }
+            if (chartLineV.Values.Any(a => a.Category == "12") == false)
+            {
+                chartLineV.Values.Add(new ChartPoint { Category = "12", Value = 0 });
+            }
+
+            chartLineV.Values.OrderBy(m =>m.Category);
+            this.ChartLinesSource.Add(chartLineV);
+
+            ChartLine chartLineE = new ChartLine();
+            chartLineE.Title = "Solar Ertrag (KW/h)";
+            chartLineE.Stroke = System.Windows.Media.Brushes.Green;
+            foreach (var item in summeErtragImJahr)
+            {
+                chartLineE.Values.Add(new ChartPoint { Category = item.Monat.ToString(), Value = item.Ertrag.ToInt() });
+            }
+
+            if (chartLineE.Values.Any(a => a.Category == "1") == false)
+            {
+                chartLineE.Values.Add(new ChartPoint { Category = "1", Value = 0 });
+            }
+            if (chartLineE.Values.Any(a => a.Category == "2") == false)
+            {
+                chartLineE.Values.Add(new ChartPoint { Category = "2", Value = 0 });
+            }
+            if (chartLineE.Values.Any(a => a.Category == "3") == false)
+            {
+                chartLineE.Values.Add(new ChartPoint { Category = "3", Value = 0 });
+            }
+            if (chartLineE.Values.Any(a => a.Category == "4") == false)
+            {
+                chartLineE.Values.Add(new ChartPoint { Category = "4", Value = 0 });
+            }
+            if (chartLineE.Values.Any(a => a.Category == "5") == false)
+            {
+                chartLineE.Values.Add(new ChartPoint { Category = "5", Value = 0 });
+            }
+            if (chartLineE.Values.Any(a => a.Category == "6") == false)
+            {
+                chartLineE.Values.Add(new ChartPoint { Category = "6", Value = 0 });
+            }
+            if (chartLineE.Values.Any(a => a.Category == "7") == false)
+            {
+                chartLineE.Values.Add(new ChartPoint { Category = "7", Value = 0 });
+            }
+            if (chartLineE.Values.Any(a => a.Category == "8") == false)
+            {
+                chartLineE.Values.Add(new ChartPoint { Category = "8", Value = 0 });
+            }
+            if (chartLineE.Values.Any(a => a.Category == "9") == false)
+            {
+                chartLineE.Values.Add(new ChartPoint { Category = "9", Value = 0 });
+            }
+            if (chartLineE.Values.Any(a => a.Category == "10") == false)
+            {
+                chartLineE.Values.Add(new ChartPoint { Category = "10", Value = 0 });
+            }
+            if (chartLineE.Values.Any(a => a.Category == "11") == false)
+            {
+                chartLineE.Values.Add(new ChartPoint { Category = "11", Value = 0 });
+            }
+            if (chartLineE.Values.Any(a => a.Category == "12") == false)
+            {
+                chartLineE.Values.Add(new ChartPoint { Category = "12", Value = 0 });
+            }
+
+            chartLineE.Values.OrderBy(m => m.Category);
+            this.ChartLinesSource.Add(chartLineE);
+        }
+
 
         #region Command Handler
         private void CloseHandler()
