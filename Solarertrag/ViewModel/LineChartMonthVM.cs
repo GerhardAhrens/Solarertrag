@@ -22,9 +22,11 @@ namespace Solarertrag.ViewModel
     using System.Collections.ObjectModel;
     using System.Linq;
     using System.Windows;
+    using System.Windows.Documents;
 
     using EasyPrototypingNET.BaseClass;
     using EasyPrototypingNET.Core;
+    using EasyPrototypingNET.Core.Collection;
     using EasyPrototypingNET.ExceptionHandling;
     using EasyPrototypingNET.Interface;
     using EasyPrototypingNET.WPF;
@@ -140,9 +142,10 @@ namespace Solarertrag.ViewModel
             var summeVerbrauchImJahr = this.VerbrauchGesamt.Where(w => w.Year == currentYear).GroupBy(g => g.Month).Select(g => new { Monat = g.Key, VerbrauchMin = g.Min(s => s.Verbrauch), VerbrauchMax = g.Max(s => s.Verbrauch) }).ToList().OrderBy(o => o.Monat);
             var summeErtragImJahr = this.ErtragGesamt.Where(w => w.Year == currentYear).GroupBy(g => g.Month).Select(g => new { Monat = g.Key, Ertrag = g.Sum(s => s.Ertrag) }).ToList().OrderBy(o => o.Monat);
 
-            this.ChartLinesSource.Clear();
+            ObservableCollection < ChartLine > chartData = new ObservableCollection<ChartLine> ();
+
             ChartLine chartLineV = new ChartLine();
-            chartLineV.Title = "Verbrauch (in KW/h)";
+            chartLineV.Title = "Verbrauch";
             chartLineV.Stroke = System.Windows.Media.Brushes.Red;
 
             foreach (var item in summeVerbrauchImJahr)
@@ -199,11 +202,10 @@ namespace Solarertrag.ViewModel
                 chartLineV.Values.Add(new ChartPoint { Category = "12", Value = 0 });
             }
 
-            ChartLine aa = (ChartLine)chartLineV.Values.OrderBy(m =>m.Category);
-            this.ChartLinesSource.Add(chartLineV);
+            chartData.Add(chartLineV);
 
             ChartLine chartLineE = new ChartLine();
-            chartLineE.Title = "Solar Ertrag (KW/h)";
+            chartLineE.Title = "Solar Ertrag";
             chartLineE.Stroke = System.Windows.Media.Brushes.Green;
             foreach (var item in summeErtragImJahr)
             {
@@ -260,7 +262,14 @@ namespace Solarertrag.ViewModel
             }
 
             chartLineE.Values.OrderBy(m => m.Category);
-            this.ChartLinesSource.Add(chartLineE);
+            chartData.Add(chartLineE);
+
+            foreach (ChartLine item in chartData)
+            {
+                item.Values.Sort((x, y) => x.Category.CompareTo(y.Category));
+            }
+
+            this.ChartLinesSource = chartData;
         }
 
 

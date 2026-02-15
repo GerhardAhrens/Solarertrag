@@ -33,9 +33,9 @@
             }
         }
 
-        private IList<ChartPoint> _Values = new List<ChartPoint>();
+        private List<ChartPoint> _Values = new List<ChartPoint>();
 
-        public IList<ChartPoint> Values
+        public List<ChartPoint> Values
         {
             get { return this._Values; }
             set
