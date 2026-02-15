@@ -14,6 +14,7 @@
     using System.Windows.Media.Imaging;
     using System.Windows.Shapes;
 
+    #region MyRegion
     [DebuggerDisplay("Titel: {this.Title}; Anzahl: {this.Values.Count}")]
     public class ChartLine : INotifyPropertyChanged
     {
@@ -22,8 +23,8 @@
         public string Title
         {
             get { return this._Title; }
-            set 
-            { 
+            set
+            {
                 if (this._Title != value)
                 {
                     this._Title = value;
@@ -37,7 +38,7 @@
         public IList<ChartPoint> Values
         {
             get { return this._Values; }
-            set 
+            set
             {
                 if (this._Values != value)
                 {
@@ -52,7 +53,7 @@
         public Brush Stroke
         {
             get { return this._Stroke; }
-            set 
+            set
             {
                 if (this._Stroke != value)
                 {
@@ -67,7 +68,7 @@
         public double StrokeThickness
         {
             get { return this._StrokeThickness; }
-            set 
+            set
             {
                 if (this._StrokeThickness != value)
                 {
@@ -93,8 +94,8 @@
         public string Category
         {
             get { return this._Category; }
-            set 
-            { 
+            set
+            {
                 if (this._Category != value)
                 {
                     this._Category = value;
@@ -111,8 +112,8 @@
         public double Value
         {
             get { return this._Value; }
-            set 
-            { 
+            set
+            {
                 if (this._Value != value)
                 {
                     this._Value = value;
@@ -129,8 +130,8 @@
         public string X
         {
             get { return this._X; }
-            set 
-            { 
+            set
+            {
                 if (this._X != value)
                 {
                     this._X = value;
@@ -147,8 +148,8 @@
         public double Y
         {
             get { return this._Y; }
-            set 
-            { 
+            set
+            {
                 if (this._Y != value)
                 {
                     this._Y = value;
@@ -162,7 +163,7 @@
         public double PosX
         {
             get { return this._PosX; }
-            set 
+            set
             {
                 if (this._PosX != value)
                 {
@@ -177,8 +178,8 @@
         public double PosY
         {
             get { return this._PosY; }
-            set 
-            { 
+            set
+            {
                 if (this._PosY != value)
                 {
                     this._PosY = value;
@@ -198,6 +199,7 @@
         Center,
         End
     }
+    #endregion
 
     /// <summary>
     /// Interaktionslogik für LineChartUC.xaml
@@ -215,7 +217,15 @@
         public LineChartControl()
         {
             this.InitializeComponent();
-            SizeChanged += (_, _) => this.Redraw();
+            this.Loaded += this.LineChartControl_Loaded;
+            this.SizeChanged += (_, _) => this.Redraw();
+        }
+
+        ~LineChartControl()
+        {
+            this.Loaded -= this.LineChartControl_Loaded;
+            this.SizeChanged -= (_, _) => this.Redraw();
+            this.ItemSource.CollectionChanged -= this.ItemSource_CollectionChanged;
         }
 
         #region Dependency Properties
@@ -398,20 +408,34 @@
 
         #endregion
 
-        private void ChartCanvas_SizeChanged(object sender, SizeChangedEventArgs e)
+        private void LineChartControl_Loaded(object sender, RoutedEventArgs e)
         {
-            Redraw();
+            this.ItemSource.CollectionChanged += this.ItemSource_CollectionChanged;
         }
 
-        private void Redraw()
+        private void ItemSource_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            this.ChartCanvas.Children.Clear();
-
             if (this.ItemSource == null || this.ItemSource.Count == 0)
             {
                 return;
             }
 
+            this.Redraw();
+        }
+
+        private void ChartCanvas_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            this.Redraw();
+        }
+
+        private void Redraw()
+        {
+            if (this.ItemSource == null || this.ItemSource.Count == 0)
+            {
+                return;
+            }
+
+            this.ChartCanvas.Children.Clear();
             double width = this.ChartCanvas.ActualWidth;
             double height = this.ChartCanvas.ActualHeight;
 

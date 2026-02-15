@@ -83,7 +83,7 @@
             GridLineBrush="Gainsboro"
             GridLineThickness="1"
             HorizontalGridLineCount="4"
-            ItemSource="{Binding Path=ChartLinesSource, UpdateSourceTrigger=PropertyChanged}"
+            ItemSource="{Binding Path=ChartLinesSource, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
             XAxisTitle="Monat"
             XAxisTitleAlignment="Center"
             XAxisTitleBrush="DarkGreen"

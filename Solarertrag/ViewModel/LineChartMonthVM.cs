@@ -22,7 +22,6 @@ namespace Solarertrag.ViewModel
     using System.Collections.ObjectModel;
     using System.Linq;
     using System.Windows;
-    using System.Windows.Media;
 
     using EasyPrototypingNET.BaseClass;
     using EasyPrototypingNET.Core;
@@ -121,7 +120,8 @@ namespace Solarertrag.ViewModel
                     this.VerbrauchGesamt = repository.ListZaehlerstandAll();
                     this.ErtragGesamt = repository.List().ToList();
 
-                    this.YearSource = this.VerbrauchGesamt.GroupBy(g => g.Year).ToDictionary(k => k.Key, g => g.Key.ToString());
+                    this.ChartLinesSource = new ObservableCollection<ChartLine>();
+                    this.YearSource = this.VerbrauchGesamt.GroupBy(g => g.Year).OrderByDescending(o => o.Key).ToDictionary(k => k.Key, g => g.Key.ToString());
                     this.YearSelected = DateTime.Now.Year;
                 }
             }
@@ -140,52 +140,51 @@ namespace Solarertrag.ViewModel
             var summeVerbrauchImJahr = this.VerbrauchGesamt.Where(w => w.Year == currentYear).GroupBy(g => g.Month).Select(g => new { Monat = g.Key, VerbrauchMin = g.Min(s => s.Verbrauch), VerbrauchMax = g.Max(s => s.Verbrauch) }).ToList().OrderBy(o => o.Monat);
             var summeErtragImJahr = this.ErtragGesamt.Where(w => w.Year == currentYear).GroupBy(g => g.Month).Select(g => new { Monat = g.Key, Ertrag = g.Sum(s => s.Ertrag) }).ToList().OrderBy(o => o.Monat);
 
-            this.ChartLinesSource = null;
-            this.ChartLinesSource = new ObservableCollection<ChartLine>();
+            this.ChartLinesSource.Clear();
             ChartLine chartLineV = new ChartLine();
             chartLineV.Title = "Verbrauch (in KW/h)";
             chartLineV.Stroke = System.Windows.Media.Brushes.Red;
 
             foreach (var item in summeVerbrauchImJahr)
             {
-                chartLineV.Values.Add(new ChartPoint { Category = item.Monat.ToString(), Value = (item.VerbrauchMax - item.VerbrauchMin).ToInt() });
+                chartLineV.Values.Add(new ChartPoint { Category = item.Monat.ToString("00"), Value = (item.VerbrauchMax - item.VerbrauchMin).ToInt() });
             }
 
-            if (chartLineV.Values.Any(a => a.Category == "1") == false)
+            if (chartLineV.Values.Any(a => a.Category == "01") == false)
             {
-                chartLineV.Values.Add(new ChartPoint { Category = "1", Value = 0 });
+                chartLineV.Values.Add(new ChartPoint { Category = "01", Value = 0 });
             }
-            if (chartLineV.Values.Any(a => a.Category == "2") == false)
+            if (chartLineV.Values.Any(a => a.Category == "02") == false)
             {
-                chartLineV.Values.Add(new ChartPoint { Category = "2", Value = 0 });
+                chartLineV.Values.Add(new ChartPoint { Category = "02", Value = 0 });
             }
-            if (chartLineV.Values.Any(a => a.Category == "3") == false)
+            if (chartLineV.Values.Any(a => a.Category == "03") == false)
             {
-                chartLineV.Values.Add(new ChartPoint { Category = "3", Value = 0 });
+                chartLineV.Values.Add(new ChartPoint { Category = "03", Value = 0 });
             }
-            if (chartLineV.Values.Any(a => a.Category == "4") == false)
+            if (chartLineV.Values.Any(a => a.Category == "04") == false)
             {
-                chartLineV.Values.Add(new ChartPoint { Category = "4", Value = 0 });
+                chartLineV.Values.Add(new ChartPoint { Category = "04", Value = 0 });
             }
-            if (chartLineV.Values.Any(a => a.Category == "5") == false)
+            if (chartLineV.Values.Any(a => a.Category == "05") == false)
             {
-                chartLineV.Values.Add(new ChartPoint { Category = "5", Value = 0 });
+                chartLineV.Values.Add(new ChartPoint { Category = "05", Value = 0 });
             }
-            if (chartLineV.Values.Any(a => a.Category == "6") == false)
+            if (chartLineV.Values.Any(a => a.Category == "06") == false)
             {
-                chartLineV.Values.Add(new ChartPoint { Category = "6", Value = 0 });
+                chartLineV.Values.Add(new ChartPoint { Category = "06", Value = 0 });
             }
-            if (chartLineV.Values.Any(a => a.Category == "7") == false)
+            if (chartLineV.Values.Any(a => a.Category == "07") == false)
             {
-                chartLineV.Values.Add(new ChartPoint { Category = "7", Value = 0 });
+                chartLineV.Values.Add(new ChartPoint { Category = "07", Value = 0 });
             }
-            if (chartLineV.Values.Any(a => a.Category == "8") == false)
+            if (chartLineV.Values.Any(a => a.Category == "08") == false)
             {
-                chartLineV.Values.Add(new ChartPoint { Category = "8", Value = 0 });
+                chartLineV.Values.Add(new ChartPoint { Category = "08", Value = 0 });
             }
-            if (chartLineV.Values.Any(a => a.Category == "9") == false)
+            if (chartLineV.Values.Any(a => a.Category == "09") == false)
             {
-                chartLineV.Values.Add(new ChartPoint { Category = "9", Value = 0 });
+                chartLineV.Values.Add(new ChartPoint { Category = "09", Value = 0 });
             }
             if (chartLineV.Values.Any(a => a.Category == "10") == false)
             {
@@ -200,7 +199,7 @@ namespace Solarertrag.ViewModel
                 chartLineV.Values.Add(new ChartPoint { Category = "12", Value = 0 });
             }
 
-            chartLineV.Values.OrderBy(m =>m.Category);
+            ChartLine aa = (ChartLine)chartLineV.Values.OrderBy(m =>m.Category);
             this.ChartLinesSource.Add(chartLineV);
 
             ChartLine chartLineE = new ChartLine();
@@ -208,44 +207,44 @@ namespace Solarertrag.ViewModel
             chartLineE.Stroke = System.Windows.Media.Brushes.Green;
             foreach (var item in summeErtragImJahr)
             {
-                chartLineE.Values.Add(new ChartPoint { Category = item.Monat.ToString(), Value = item.Ertrag.ToInt() });
+                chartLineE.Values.Add(new ChartPoint { Category = item.Monat.ToString("00"), Value = item.Ertrag.ToInt() });
             }
 
-            if (chartLineE.Values.Any(a => a.Category == "1") == false)
+            if (chartLineE.Values.Any(a => a.Category == "01") == false)
             {
-                chartLineE.Values.Add(new ChartPoint { Category = "1", Value = 0 });
+                chartLineE.Values.Add(new ChartPoint { Category = "01", Value = 0 });
             }
-            if (chartLineE.Values.Any(a => a.Category == "2") == false)
+            if (chartLineE.Values.Any(a => a.Category == "02") == false)
             {
-                chartLineE.Values.Add(new ChartPoint { Category = "2", Value = 0 });
+                chartLineE.Values.Add(new ChartPoint { Category = "02", Value = 0 });
             }
-            if (chartLineE.Values.Any(a => a.Category == "3") == false)
+            if (chartLineE.Values.Any(a => a.Category == "03") == false)
             {
-                chartLineE.Values.Add(new ChartPoint { Category = "3", Value = 0 });
+                chartLineE.Values.Add(new ChartPoint { Category = "03", Value = 0 });
             }
-            if (chartLineE.Values.Any(a => a.Category == "4") == false)
+            if (chartLineE.Values.Any(a => a.Category == "04") == false)
             {
-                chartLineE.Values.Add(new ChartPoint { Category = "4", Value = 0 });
+                chartLineE.Values.Add(new ChartPoint { Category = "04", Value = 0 });
             }
-            if (chartLineE.Values.Any(a => a.Category == "5") == false)
+            if (chartLineE.Values.Any(a => a.Category == "05") == false)
             {
-                chartLineE.Values.Add(new ChartPoint { Category = "5", Value = 0 });
+                chartLineE.Values.Add(new ChartPoint { Category = "05", Value = 0 });
             }
-            if (chartLineE.Values.Any(a => a.Category == "6") == false)
+            if (chartLineE.Values.Any(a => a.Category == "06") == false)
             {
-                chartLineE.Values.Add(new ChartPoint { Category = "6", Value = 0 });
+                chartLineE.Values.Add(new ChartPoint { Category = "06", Value = 0 });
             }
-            if (chartLineE.Values.Any(a => a.Category == "7") == false)
+            if (chartLineE.Values.Any(a => a.Category == "07") == false)
             {
-                chartLineE.Values.Add(new ChartPoint { Category = "7", Value = 0 });
+                chartLineE.Values.Add(new ChartPoint { Category = "07", Value = 0 });
             }
-            if (chartLineE.Values.Any(a => a.Category == "8") == false)
+            if (chartLineE.Values.Any(a => a.Category == "08") == false)
             {
-                chartLineE.Values.Add(new ChartPoint { Category = "8", Value = 0 });
+                chartLineE.Values.Add(new ChartPoint { Category = "08", Value = 0 });
             }
-            if (chartLineE.Values.Any(a => a.Category == "9") == false)
+            if (chartLineE.Values.Any(a => a.Category == "09") == false)
             {
-                chartLineE.Values.Add(new ChartPoint { Category = "9", Value = 0 });
+                chartLineE.Values.Add(new ChartPoint { Category = "09", Value = 0 });
             }
             if (chartLineE.Values.Any(a => a.Category == "10") == false)
             {
