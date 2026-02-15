@@ -207,7 +207,7 @@
     public partial class LineChartControl : UserControl
     {
         // Plot-Ränder
-        private const double LEFTMARGIN = 30;
+        private const double LEFTMARGIN = 40;
         private const double BOTTOMMARGIN = 35;
         private const double TOPMARGIN = 10;
         private const double RIGHTMARGIN = 10;
@@ -410,7 +410,10 @@
 
         private void LineChartControl_Loaded(object sender, RoutedEventArgs e)
         {
-            this.ItemSource.CollectionChanged += this.ItemSource_CollectionChanged;
+            if (this.ItemSource != null)
+            {
+                this.ItemSource.CollectionChanged += this.ItemSource_CollectionChanged;
+            }
         }
 
         private void ItemSource_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -524,7 +527,7 @@
                 _ => TOPMARGIN + plotHeight / 2 - text.DesiredSize.Width / 2
             };
 
-            Canvas.SetLeft(text, -20); // links außerhalb
+            Canvas.SetLeft(text, -1); // links außerhalb
             Canvas.SetTop(text, y);
 
             this.ChartCanvas.Children.Add(text);
@@ -609,7 +612,7 @@
                     FontSize = 11
                 };
 
-                Canvas.SetLeft(tb, -5);
+                Canvas.SetLeft(tb, 13);
                 Canvas.SetTop(tb, y - 8);
 
                 this.ChartCanvas.Children.Add(tb);
