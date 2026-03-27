@@ -13,6 +13,7 @@
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
     using System.Windows.Shapes;
+    using System.Windows.Threading;
 
     #region MyRegion
     [DebuggerDisplay("Titel: {this.Title}; Anzahl: {this.Values.Count}")]
@@ -223,9 +224,12 @@
 
         ~LineChartControl()
         {
-            this.Loaded -= this.LineChartControl_Loaded;
-            this.SizeChanged -= (_, _) => this.Redraw();
-            this.ItemSource.CollectionChanged -= this.ItemSource_CollectionChanged;
+            this.Dispatcher.BeginInvoke((Action)(() => {
+                this.Loaded -= this.LineChartControl_Loaded;
+                this.SizeChanged -= (_, _) => this.Redraw();
+                this.ItemSource.CollectionChanged -= this.ItemSource_CollectionChanged;
+            }), DispatcherPriority.Send);
+
         }
 
         #region Dependency Properties

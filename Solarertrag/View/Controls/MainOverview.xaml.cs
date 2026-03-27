@@ -35,7 +35,7 @@
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            Dispatcher.BeginInvoke((Action)(() => {
+            this.Dispatcher.BeginInvoke((Action)(() => {
                 this.lvwMain.Focusable = true;
                 this.lvwMain.Focus();
                 this.lvwMain.SelectedIndex = 0;
