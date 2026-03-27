@@ -18,6 +18,9 @@ In dem Projekt wird noch ein zusätzliche Pakete verwendet
 
 Das kleine Programm ist in einer Monolithische Architekr als "Singel-Page-Application" erstellt. Für die Applikation selbst gibt es nur eine ausführbares Programm ohne weitere Aufteilung der Fuktionen.
 
+![Version](https://img.shields.io/badge/Version-1.3.2025.16-yellow.svg)</br>
+- Auswertungs Chart für Jahr und Monat
+
 ![Version](https://img.shields.io/badge/Version-1.3.2025.11-yellow.svg)</br>
 - Wechsel auf NET 10
 
